@@ -80,8 +80,10 @@ def _run_browser(console: Console, service: MapService) -> str | None:
             elif key == "enter":
                 detail_concept = concepts[current]
                 detail_current = 0
-            elif key in ("esc", "tab", "q"):
+            elif key == "tab":
                 return "back"
+            elif key in ("esc", "q"):
+                return None
 
 
 def _get_related_concepts(
