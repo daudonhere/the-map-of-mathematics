@@ -8,6 +8,7 @@ import termios
 import tty
 
 from rich.console import Console
+from rich.text import Text
 
 from themath.core.i18n import t
 
@@ -71,7 +72,8 @@ def _render(
     if tw >= 65:
         for b in BANNER:
             content.append((b, "bold cyan"))
-        indent = max(0, int(tw * 0.2))
+        content.append((None, None))
+        indent = max(0, int(tw * 0.1))
         content.append((" " * indent + "Learning Weapon For You", "italic"))
         content.append((None, None))
 
@@ -104,19 +106,23 @@ def _render(
             content = [(x, y) for x, y in content if y != "bold cyan"]
 
     for _ in range(min(top_pad, th - 1)):
-        console.print()
+        console.print(" " * tw)
 
     for text, style in content:
         if text is None:
-            console.print()
+            console.print(" " * tw)
+        elif style == "reverse":
+            rt = Text(text, style="reverse")
+            rt.append(" " * (tw - len(text)))
+            console.print(rt)
         else:
-            console.print(text, style=style)
+            console.print(text.ljust(tw), style=style)
 
     used = top_pad + len(content)
     for _ in range(max(0, th - 1 - used)):
-        console.print()
+        console.print(" " * tw)
 
-    console.print(keybar_line, end="")
+    console.print(keybar_line.ljust(tw), end="")
 
 
 def run_launcher(locale: str = "en") -> str | None:
@@ -124,6 +130,11 @@ def run_launcher(locale: str = "en") -> str | None:
         return "terminal"
 
     console = Console()
+
+    sys.stdout.write("\x1b[2J\x1b[H")
+    sys.stdout.write("\x1b[?25l")
+    sys.stdout.flush()
+
     items = [
         t("terminal_mode", locale),
         t("desktop_mode", locale),
@@ -133,8 +144,6 @@ def run_launcher(locale: str = "en") -> str | None:
     in_lang_menu = False
     lang_current = 0
 
-    sys.stdout.write("\x1b[?25l")
-    sys.stdout.flush()
     try:
         while True:
             if in_lang_menu:
@@ -179,6 +188,6 @@ def run_launcher(locale: str = "en") -> str | None:
     except Exception:
         return "terminal"
     finally:
-        console.clear()
+        sys.stdout.write("\x1b[2J\x1b[H")
         sys.stdout.write("\x1b[?25h")
         sys.stdout.flush()
