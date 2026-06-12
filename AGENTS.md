@@ -61,7 +61,7 @@ pip install -e ".[dev]"   # install with dev deps
 - `_render()` uses `\x1b[H` (cursor home, no clear) each frame; screen is fully cleared once at startup (`\x1b[2J\x1b[H` in `run_launcher`).
 - Each line is padded to full terminal width with `.ljust(tw)` or `" " * tw` for blanks to overwrite shell decorations.
 - Selection highlight (`"reverse"`) only covers the text content (via `rich.text.Text`), not the full line.
-- Keymap bar at bottom line (`end=""` to avoid scroll). Keymap text: `↑ Up   ↓ Down   ↵ Select   Esc Exit` (Nano-style).
+- Keymap bar at bottom line (`end=""` to avoid scroll). Keymap text: `↑ Up   ↓ Down   ↵ Select   ↹ Back   Esc Exit` / `Esc Back` (Nano-style with Unicode icons).
 
 ### Trimming priority (when terminal too short)
 blanks → description → subtitle → banner

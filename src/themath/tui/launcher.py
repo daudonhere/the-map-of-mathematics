@@ -50,8 +50,8 @@ def _read_key() -> str:
 
 def _keybar(lang_menu: bool) -> str:
     if lang_menu:
-        return "\u2191 Up   \u2193 Down   \u21b5 Select   Esc Back"
-    return "\u2191 Up   \u2193 Down   \u21b5 Select   Esc Exit"
+        return "\u2191 Up   \u2193 Down   \u21b5 Select   \u21b9 Back   Esc Back"
+    return "\u2191 Up   \u2193 Down   \u21b5 Select   \u21b9 Back   Esc Exit"
 
 
 def _render(
