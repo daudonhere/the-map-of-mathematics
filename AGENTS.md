@@ -81,6 +81,18 @@ blanks → description → subtitle → banner
 - Navigation identical to launcher: arrow keys, Enter, Esc/Tab back.
 - Related concepts are selectable — Enter navigates to the related concept, Esc returns to list.
 - Same style as launcher: left-aligned, padded to full width, reverse highlight on text only.
+- When Enter on a concept that has detailed content (`core/content.py`), launches the topic screen.
+
+### Topic Screen (`src/themath/tui/topic_screen.py`)
+- Sub-topic list view (navigation with ↑↓) with explanation + examples preview below.
+- Detail view on Enter: full explanation, example list, playground prompt.
+- Same style as launcher/browser.
+
+### Content (`src/themath/core/content.py`)
+- `SubTopic` dataclass: title, explanation, examples, optional playground id.
+- `TopicContent` grouped by concept_id via `get_content()`.
+- Currently populated: Arithmetic (9 sub-topics).
+- `# ruff: noqa: RUF001` for math symbols (×, −, etc.).
 
 ### Fonts
 - STIX Two Text OTF fonts in `gui/fonts/` for scientific typesetting, loaded via `QFontDatabase`.

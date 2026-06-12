@@ -10,9 +10,11 @@ import tty
 from rich.console import Console
 from rich.text import Text
 
+from themath.core.content import get_content
 from themath.core.models import MathConcept
 from themath.core.service import MapService
 from themath.tui.launcher import BANNER
+from themath.tui.topic_screen import run_topic_screen
 
 
 def _read_key() -> str:
@@ -78,7 +80,13 @@ def _run_browser(console: Console, service: MapService) -> str | None:
             elif key == "down":
                 current = (current + 1) % len(concepts)
             elif key == "enter":
-                detail_concept = concepts[current]
+                concept = concepts[current]
+                if get_content(concept.id) is not None:
+                    result = run_topic_screen(console, concept.id)
+                    if result == "back":
+                        continue
+                    return None
+                detail_concept = concept
                 detail_current = 0
             elif key == "tab":
                 return "back"
