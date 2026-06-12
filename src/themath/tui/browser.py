@@ -71,7 +71,7 @@ def _run_browser(console: Console, service: MapService) -> str | None:
                 detail_concept = None
                 detail_current = 0
         else:
-            _render_list(console, service, concepts, current)
+            _render_list(console, concepts, current)
             key = _read_key()
             if key == "up":
                 current = (current - 1) % len(concepts)
@@ -96,7 +96,6 @@ def _get_related_concepts(
 
 def _render_list(
     console: Console,
-    service: MapService,
     concepts: list[MathConcept],
     current: int,
 ) -> None:
@@ -114,10 +113,6 @@ def _render_list(
         indent = max(0, int(tw * 0.1))
         content.append((" " * indent + "Learning Weapon For You", "italic"))
         content.append((None, None))
-
-    content.append((service._("app_title"), "bold cyan"))
-    content.append((service._("subtitle"), "dim"))
-    content.append((None, None))
 
     for i, c in enumerate(concepts):
         prefix = "> " if i == current else "  "
