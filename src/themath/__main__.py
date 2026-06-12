@@ -24,15 +24,21 @@ def main() -> None:
 
     from themath.tui.launcher import run_launcher
 
-    mode = run_launcher(locale)
-    if mode == "terminal":
-        from themath.cli.main import main as cli_main
+    while True:
+        mode = run_launcher(locale)
+        if mode == "terminal":
+            from themath.cli.main import main as cli_main
 
-        cli_main(locale)
-    elif mode == "gui":
-        from themath.gui.main import main as gui_main
+            result = cli_main(locale)
+            if result != "back":
+                break
+        elif mode == "gui":
+            from themath.gui.main import main as gui_main
 
-        gui_main(locale)
+            gui_main(locale)
+            break
+        else:
+            break
 
 
 if __name__ == "__main__":

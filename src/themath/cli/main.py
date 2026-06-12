@@ -6,11 +6,11 @@ from themath.core.service import MapService
 from themath.tui.browser import run_browser
 
 
-def main(locale: str = "id") -> None:
+def main(locale: str = "id") -> str | None:
     repo = Repository()
     seed_repo(repo)
     service = MapService(repo, locale)
-    run_browser(service)
+    return run_browser(service)
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@
 | `python -m themath --lang en` | TUI launcher in English |
 | `python src/themath/cli/commands/{explore,search,visualize}.py` | Standalone Typer commands (not wired to `__main__`; broken - no seeding) |
 
-Routing in `src/themath/__main__.py`: extracts `--lang en|id`, strips `--gui`, dispatches to launcher (or directly to GUI if `--gui`).
+Routing in `src/themath/__main__.py`: extracts `--lang en|id`, strips `--gui`, dispatches to launcher (or directly to GUI if `--gui`). After launcher, loops: browser returns `"back"` → re-enter launcher; browser returns `None` → exit.
 
 ## Architecture
 

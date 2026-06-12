@@ -12,6 +12,7 @@ from rich.text import Text
 
 from themath.core.models import MathConcept
 from themath.core.service import MapService
+from themath.tui.launcher import BANNER
 
 
 def _read_key() -> str:
@@ -40,10 +41,10 @@ def _read_key() -> str:
         termios.tcsetattr(fd, termios.TCSADRAIN, old)
 
 
-def _run_browser(console: Console, service: MapService) -> None:
+def _run_browser(console: Console, service: MapService) -> str | None:
     concepts = service.list_concepts()
     if not concepts:
-        return
+        return None
 
     current = 0
     detail_concept: MathConcept | None = None
@@ -80,7 +81,7 @@ def _run_browser(console: Console, service: MapService) -> None:
                 detail_concept = concepts[current]
                 detail_current = 0
             elif key in ("esc", "tab", "q"):
-                break
+                return "back"
 
 
 def _get_related_concepts(
@@ -105,6 +106,14 @@ def _render_list(
     sys.stdout.write("\x1b[H")
 
     content: list[tuple[str | None, str | None]] = []
+
+    if tw >= 65:
+        for b in BANNER:
+            content.append((b, "bold cyan"))
+        content.append((None, None))
+        indent = max(0, int(tw * 0.1))
+        content.append((" " * indent + "Learning Weapon For You", "italic"))
+        content.append((None, None))
 
     content.append((service._("app_title"), "bold cyan"))
     content.append((service._("subtitle"), "dim"))
@@ -165,6 +174,8 @@ def _render_content(
             trimmed.append((txt, sty))
         content = trimmed
         if len(content) > max_content:
+            content = [(x, y) for x, y in content if y != "italic"]
+        if len(content) > max_content:
             content = [(x, y) for x, y in content if y != "dim"]
         if len(content) > max_content:
             content = [(x, y) for x, y in content if y != "bold"]
@@ -191,7 +202,10 @@ def _render_content(
     console.print(keybar_line.ljust(tw), end="")
 
 
-def run_browser(service: MapService) -> None:
+def run_browser(service: MapService) -> str | None:
+    if not sys.stdin.isatty():
+        return None
+
     console = Console()
 
     sys.stdout.write("\x1b[2J\x1b[H")
@@ -199,9 +213,9 @@ def run_browser(service: MapService) -> None:
     sys.stdout.flush()
 
     try:
-        _run_browser(console, service)
+        return _run_browser(console, service)
     except (EOFError, KeyboardInterrupt):
-        pass
+        return None
     finally:
         sys.stdout.write("\x1b[2J\x1b[H")
         sys.stdout.write("\x1b[?25h")
