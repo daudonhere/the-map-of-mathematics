@@ -76,5 +76,11 @@ blanks → description → subtitle → banner
 - Fill to terminal height
 - Keymap bar at bottom
 
+### Browser (`src/themath/tui/browser.py`)
+- Two views: concept list (all locale-filtered concepts) and concept detail (name, category, description, related list).
+- Navigation identical to launcher: arrow keys, Enter, Esc/Tab back.
+- Related concepts are selectable — Enter navigates to the related concept, Esc returns to list.
+- Same style as launcher: left-aligned, padded to full width, reverse highlight on text only.
+
 ### Fonts
 - STIX Two Text OTF fonts in `gui/fonts/` for scientific typesetting, loaded via `QFontDatabase`.
