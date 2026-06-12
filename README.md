@@ -1,6 +1,6 @@
 # The Map of Mathematics
 
-An interactive desktop application to explore, search, and visualize mathematical concepts - available as both a **CLI** (Typer + Rich) and **GUI** (Kivy).
+Interactive CLI application to explore mathematical concepts. Pilih topik dari menu, baca deskripsi, dan lihat koneksi antar cabang matematika.
 
 ## Quick Start
 
@@ -10,14 +10,34 @@ source .venv/bin/activate
 pip install -e ".[dev]"
 ```
 
-### CLI Mode
+## Usage
 
 ```bash
-python -m themap --help
-python -m themap search "algebra"
-python -m themap explore "geometry"
-python -m themap visualize "calc stats"
+python -m themap
 ```
+
+Menampilkan menu interaktif 14 cabang matematika:
+
+```
+Map of Mathematics
+   1   Aritmatika
+   2   Aljabar
+   3   Geometri Euclid
+   4   Trigonometri
+   5   Kalkulus
+   6   Aljabar Linear
+   7   Matematika Diskrit
+   8   Probabilitas & Statistika
+   9   Analisis Real
+  10   Aljabar Abstrak
+  11   Topologi
+  12   Teori Bilangan
+  13   Geometri Diferensial
+  14   Analisis Kompleks
+   0   Exit
+```
+
+Pilih angka untuk melihat deskripsi dan topik terkait. `0` untuk keluar.
 
 ### GUI Mode
 
@@ -29,19 +49,19 @@ python -m themap --gui
 
 ```
 src/themap/
-├── __main__.py     # Entry point: CLI or --gui
-├── cli/            # Typer + Rich
+├── __main__.py     # Entry point
+├── cli/            # Rich-based menu
 ├── gui/            # Kivy screens
-├── core/           # Shared domain logic
-└── utils/          # Config, logger
-tests/              # pytest suite
+├── core/           # Models, service, repository
+└── utils/
+tests/
 ```
 
 ## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
-| CLI | Typer + Rich |
+| CLI | Rich |
 | GUI | Kivy |
 | Language | Python 3.12+ |
 | Testing | pytest |
@@ -50,7 +70,7 @@ tests/              # pytest suite
 ## Development
 
 ```bash
-ruff check .       # Lint
-ruff format .      # Format
-pytest tests/ -v   # Test
+ruff check .
+ruff format .
+pytest tests/ -v
 ```

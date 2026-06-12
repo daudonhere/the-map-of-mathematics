@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "the-map-of-mathematics"
 version = "0.1.0"
-description = "Interactive map of mathematics - explore, search, and visualize mathematical concepts"
+description = "Interactive map of mathematics: explore, search, and visualize mathematical concepts"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.12"
