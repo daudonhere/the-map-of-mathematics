@@ -1,6 +1,6 @@
 # The Map of Mathematics
 
-An interactive desktop application to explore, search, and visualize mathematical concepts — available as both a **CLI** (Typer + Rich) and **GUI** (Kivy).
+An interactive desktop application to explore, search, and visualize mathematical concepts - available as both a **CLI** (Typer + Rich) and **GUI** (Kivy).
 
 ## Quick Start
 

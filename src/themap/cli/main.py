@@ -14,7 +14,7 @@ def _print_greeting() -> None:
 
 app = typer.Typer(
     name="themap",
-    help="The Map of Mathematics — explore, search, and visualize mathematical concepts",
+    help="The Map of Mathematics - explore, search, and visualize mathematical concepts",
     callback=_print_greeting,
 )
 app.command(name="explore")(explore_cmd)
