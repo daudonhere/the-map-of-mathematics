@@ -41,3 +41,6 @@ class MapService:
 
     def get_concept(self, concept_id: str) -> MathConcept | None:
         return self._repo.get_by_id(concept_id)
+
+    def list_concepts(self) -> list[MathConcept]:
+        return self._repo.get_all()

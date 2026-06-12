@@ -1,6 +1,6 @@
 # The Map of Mathematics
 
-Interactive CLI application to explore mathematical concepts. Pilih topik dari menu, baca deskripsi, dan lihat koneksi antar cabang matematika.
+Interactive CLI and desktop application to explore mathematical concepts. Select topics from the menu, read descriptions, and view connections between branches of mathematics.
 
 ## Quick Start
 
@@ -12,32 +12,34 @@ pip install -e ".[dev]"
 
 ## Usage
 
+### CLI Mode
+
 ```bash
 python -m themap
 ```
 
-Menampilkan menu interaktif 14 cabang matematika:
+Displays an interactive menu with 14 mathematical fields:
 
 ```
 Map of Mathematics
-   1   Aritmatika
-   2   Aljabar
-   3   Geometri Euclid
-   4   Trigonometri
-   5   Kalkulus
-   6   Aljabar Linear
-   7   Matematika Diskrit
-   8   Probabilitas & Statistika
-   9   Analisis Real
-  10   Aljabar Abstrak
-  11   Topologi
-  12   Teori Bilangan
-  13   Geometri Diferensial
-  14   Analisis Kompleks
+   1   Arithmetic
+   2   Algebra
+   3   Euclidean Geometry
+   4   Trigonometry
+   5   Calculus
+   6   Linear Algebra
+   7   Discrete Mathematics
+   8   Probability & Statistics
+   9   Real Analysis
+  10   Abstract Algebra
+  11   Topology
+  12   Number Theory
+  13   Differential Geometry
+  14   Complex Analysis
    0   Exit
 ```
 
-Pilih angka untuk melihat deskripsi dan topik terkait. `0` untuk keluar.
+Select a number to view descriptions and related topics. `0` to exit.
 
 ### GUI Mode
 
@@ -45,24 +47,12 @@ Pilih angka untuk melihat deskripsi dan topik terkait. `0` untuk keluar.
 python -m themap --gui
 ```
 
-## Project Structure
-
-```
-src/themap/
-├── __main__.py     # Entry point
-├── cli/            # Rich-based menu
-├── gui/            # Kivy screens
-├── core/           # Models, service, repository
-└── utils/
-tests/
-```
-
 ## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
 | CLI | Rich |
-| GUI | Kivy |
+| GUI | PyQt6 |
 | Language | Python 3.12+ |
 | Testing | pytest |
 | Linter | Ruff |

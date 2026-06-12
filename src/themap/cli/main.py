@@ -31,28 +31,28 @@ def _show_menu(repo: Repository, service: MapService) -> None:
             Panel(
                 table,
                 title="[bold yellow]Map of Mathematics[/]",
-                subtitle="Pilih topik untuk eksplorasi",
+                subtitle="Select a topic to explore",
             )
         )
         try:
-            choice = input("[?] Masukkan angka: ").strip()
+            choice = input("[?] Enter number: ").strip()
         except (EOFError, KeyboardInterrupt):
-            console.print("\n[red]Sampai jumpa, Professor![/]")
+            console.print("\n[red]See you later, Professor![/]")
             sys.exit(0)
 
         if choice == "0":
-            console.print("[red]Sampai jumpa, Professor![/]")
+            console.print("[red]See you later, Professor![/]")
             break
 
         try:
             num = int(choice)
         except ValueError:
-            console.print("[red]Masukkan angka yang valid.[/]")
+            console.print("[red]Enter a valid number.[/]")
             continue
 
         concept_id = mapping.get(num)
         if concept_id is None:
-            console.print("[red]Pilihan tidak tersedia.[/]")
+            console.print("[red]Choice not available.[/]")
             continue
 
         concept = service.get_concept(concept_id)
