@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import typer
 
-from themap.cli.utils import console, print_graph
-from themap.core.repository import Repository
-from themap.core.service import MapService
+from themath.cli.utils import console, print_graph
+from themath.core.repository import Repository
+from themath.core.service import MapService
 
 
 def visualize_cmd(

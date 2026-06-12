@@ -9,7 +9,7 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
-from themap.core.service import MapService
+from themath.core.service import MapService
 
 
 class ExploreScreen(QWidget):
@@ -24,7 +24,7 @@ class ExploreScreen(QWidget):
         layout = QVBoxLayout()
         layout.setContentsMargins(40, 24, 40, 24)
 
-        back_btn = QPushButton("\u2190  Back to Home")
+        back_btn = QPushButton("\u2190  " + self.service._("back"))
         back_btn.setStyleSheet("text-align: left;")
         back_btn.clicked.connect(lambda: self.app.go_home())
         layout.addWidget(back_btn)
@@ -46,7 +46,7 @@ class ExploreScreen(QWidget):
         self.description_browser.setMaximumHeight(120)
         layout.addWidget(self.description_browser)
 
-        related_title = QLabel("Related Concepts")
+        related_title = QLabel(self.service._("related_concepts"))
         related_title.setStyleSheet(
             "font-size: 16px; font-weight: bold; padding-top: 16px;"
         )
@@ -62,10 +62,12 @@ class ExploreScreen(QWidget):
         self._current_id = concept_id
         concept = self.service.get_concept(concept_id)
         if not concept:
-            self.name_label.setText("Concept not found")
+            self.name_label.setText(self.service._("concept_not_found"))
             return
         self.name_label.setText(concept.name)
-        self.category_label.setText(concept.category)
+        self.category_label.setText(
+            f"{self.service._('category')}: {concept.category}"
+        )
         self.description_browser.setText(concept.description)
         self.related_list.clear()
         for rid in concept.related_concepts:
@@ -77,8 +79,7 @@ class ExploreScreen(QWidget):
 
     def _on_related_selected(self, item) -> None:
         name = item.text()
-        concepts = self.service.list_concepts()
-        for c in concepts:
+        for c in self.service.list_concepts():
             if c.name == name:
                 self.show_concept(c.id)
                 return

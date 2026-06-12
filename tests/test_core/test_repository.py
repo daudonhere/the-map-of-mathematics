@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from themap.core.repository import Repository
+from themath.core.repository import Repository
 
 
 class TestRepository:

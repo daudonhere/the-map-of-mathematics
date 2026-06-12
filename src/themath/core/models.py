@@ -9,6 +9,7 @@ class MathConcept:
     name: str
     description: str
     category: str
+    locale: str = "id"
     related_concepts: list[str] = field(default_factory=list)
 
 

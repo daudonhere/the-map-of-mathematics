@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from themap.core.models import MathConcept
+from themath.core.models import MathConcept
 
 
 class Repository:

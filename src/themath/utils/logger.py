@@ -4,7 +4,7 @@ import logging
 import sys
 
 
-def setup_logger(name: str = "themap") -> logging.Logger:
+def setup_logger(name: str = "themath") -> logging.Logger:
     logger = logging.getLogger(name)
     if not logger.handlers:
         handler = logging.StreamHandler(sys.stderr)

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-from themap.core.models import MathConcept
-from themap.core.repository import Repository
+from themath.core.models import MathConcept
+from themath.core.repository import Repository
 
 
 @pytest.fixture

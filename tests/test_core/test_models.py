@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from themap.core.models import GraphData, MathConcept
+from themath.core.models import GraphData, MathConcept
 
 
 class TestMathConcept:

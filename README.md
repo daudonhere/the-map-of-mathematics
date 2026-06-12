@@ -1,6 +1,8 @@
-# The Map of Mathematics
+# The Map of Mathematics / Peta Matematika
 
-Interactive CLI and desktop application to explore mathematical concepts. Select topics from the menu, read descriptions, and view connections between branches of mathematics.
+Interactive CLI and desktop application to explore mathematical concepts. Select topics, read descriptions, and view connections between branches of mathematics.
+
+Aplikasi CLI dan desktop interaktif untuk mengeksplorasi konsep matematika. Pilih topik, baca deskripsi, dan lihat koneksi antar cabang matematika.
 
 ## Quick Start
 
@@ -10,46 +12,23 @@ source .venv/bin/activate
 pip install -e ".[dev]"
 ```
 
-## Usage
+## Usage / Penggunaan
 
-### CLI Mode
-
-```bash
-python -m themap
+CLI mode / Mode CLI:
+```
+python -m themath               # Indonesian (default)
+python -m themath --lang en     # English
 ```
 
-Displays an interactive menu with 14 mathematical fields:
-
+GUI mode / Mode GUI:
 ```
-Map of Mathematics
-   1   Arithmetic
-   2   Algebra
-   3   Euclidean Geometry
-   4   Trigonometry
-   5   Calculus
-   6   Linear Algebra
-   7   Discrete Mathematics
-   8   Probability & Statistics
-   9   Real Analysis
-  10   Abstract Algebra
-  11   Topology
-  12   Number Theory
-  13   Differential Geometry
-  14   Complex Analysis
-   0   Exit
-```
-
-Select a number to view descriptions and related topics. `0` to exit.
-
-### GUI Mode
-
-```bash
-python -m themap --gui
+python -m themath --gui              # Indonesian
+python -m themath --gui --lang en    # English
 ```
 
 ## Tech Stack
 
-| Layer | Technology |
+| Layer / Lapisan | Technology / Teknologi |
 |-------|-----------|
 | CLI | Rich |
 | GUI | PyQt6 |

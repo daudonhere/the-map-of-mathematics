@@ -1,18 +1,29 @@
 from __future__ import annotations
 
-from themap.core.graph import GraphBuilder
-from themap.core.models import GraphData, MathConcept
-from themap.core.repository import Repository
+from themath.core.graph import GraphBuilder
+from themath.core.i18n import t
+from themath.core.models import GraphData, MathConcept
+from themath.core.repository import Repository
 
 
 class MapService:
-    """Business logic untuk The Map of Mathematics."""
-
-    def __init__(self, repo: Repository) -> None:
+    def __init__(self, repo: Repository, locale: str = "id") -> None:
         self._repo = repo
+        self._locale = locale
+
+    @property
+    def locale(self) -> str:
+        return self._locale
+
+    def set_locale(self, locale: str) -> None:
+        self._locale = locale
+
+    def _(self, key: str) -> str:
+        return t(key, self._locale)
 
     def search(self, query: str) -> list[MathConcept]:
-        return self._repo.search(query)
+        results = self._repo.search(query)
+        return [c for c in results if c.locale == self._locale]
 
     def explore(self, node_id: str) -> GraphData:
         concept = self._repo.get_by_id(node_id)
@@ -43,4 +54,10 @@ class MapService:
         return self._repo.get_by_id(concept_id)
 
     def list_concepts(self) -> list[MathConcept]:
-        return self._repo.get_all()
+        return [c for c in self._repo.get_all() if c.locale == self._locale]
+
+    def get_all_locales(self) -> dict[str, list[MathConcept]]:
+        result: dict[str, list[MathConcept]] = {}
+        for c in self._repo.get_all():
+            result.setdefault(c.locale, []).append(c)
+        return result

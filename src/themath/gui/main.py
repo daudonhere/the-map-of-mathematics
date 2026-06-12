@@ -2,25 +2,24 @@ from __future__ import annotations
 
 import sys
 
+from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import QApplication, QMainWindow, QStackedWidget
 
-from themap.core.repository import Repository
-from themap.core.seed import seed_repo
-from themap.core.service import MapService
-from themap.gui.screens.explore import ExploreScreen
-from themap.gui.screens.home import HomeScreen
-from themap.gui.screens.visualize import VisualizeScreen
+from themath.core.repository import Repository
+from themath.core.seed import seed_repo
+from themath.core.service import MapService
+from themath.gui.fonts import load_fonts
+from themath.gui.screens.explore import ExploreScreen
+from themath.gui.screens.home import HomeScreen
+from themath.gui.screens.visualize import VisualizeScreen
 
 
 class TheMapApp(QMainWindow):
-    def __init__(self) -> None:
+    def __init__(self, service: MapService) -> None:
         super().__init__()
-        self.setWindowTitle("The Map of Mathematics")
+        self.service = service
+        self.setWindowTitle(self.service._("app_title"))
         self.resize(1000, 700)
-
-        repo = Repository()
-        seed_repo(repo)
-        self.service = MapService(repo)
 
         self.stack = QStackedWidget()
         self.setCentralWidget(self.stack)
@@ -47,8 +46,17 @@ class TheMapApp(QMainWindow):
         self.stack.setCurrentWidget(self.visualize_screen)
 
 
-def main() -> None:
+def main(locale: str = "id") -> None:
     app = QApplication(sys.argv)
-    window = TheMapApp()
+
+    families = load_fonts()
+    if "STIX Two Text" in families:
+        app.setFont(QFont("STIX Two Text", 13))
+
+    repo = Repository()
+    seed_repo(repo)
+    service = MapService(repo, locale)
+
+    window = TheMapApp(service)
     window.show()
     sys.exit(app.exec())

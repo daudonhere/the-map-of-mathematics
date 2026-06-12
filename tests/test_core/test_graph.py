@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from themap.core.graph import GraphBuilder
-from themap.core.models import MathConcept
+from themath.core.graph import GraphBuilder
+from themath.core.models import MathConcept
 
 
 class TestGraphBuilder:

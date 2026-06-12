@@ -4,7 +4,7 @@ from rich.console import Console
 from rich.table import Table
 from rich.tree import Tree
 
-from themap.core.models import GraphData, MathConcept
+from themath.core.models import GraphData, MathConcept
 
 console = Console()
 
