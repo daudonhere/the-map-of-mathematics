@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "the-map-of-mathematics"
+version = "0.1.0"
+description = "Interactive map of mathematics — explore, search, and visualize mathematical concepts"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.12"
+
+dependencies = [
+    "typer>=0.12",
+    "rich>=13.0",
+    "kivy>=2.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.4",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
