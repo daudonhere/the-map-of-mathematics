@@ -55,7 +55,7 @@ pip install -e ".[dev]"   # install with dev deps
 - **Launcher**: Black background (`on #000000`) everywhere — no chalkboard.
 - **Browser & Topic screens**: Three visual areas:
   - **Header** (banner + subtitle): Black background
-  - **Content** (concept list, detail, examples, playground): Green chalkboard background (`on #2d5a27`) with full-width horizontal `─` border lines at top and bottom of the content area
+  - **Content** (concept list, detail, examples, playground): Dark green chalkboard background (`on #1a3a1a`) with full-width horizontal `─` border lines at top and bottom of the content area, and side padding (`pad = max(2, tw // 20)`). Default text is white; styled text uses bright colors (`bold cyan`, `bold yellow`, etc.) on the green background.
   - **Footer** (keybar + credit): Black background
 - `_render_content()` in both `browser.py` and `topic_screen.py` accepts `chalkboard: bool` and `header_count: int` parameters. `header_count=8` when the MATHVERSE banner is visible (6 banner lines + blank + subtitle + blank), `header_count=0` when terminal is too narrow.
 - `_render_detail` in browser.py has no banner, so `header_count=0` — the entire content area gets green chalkboard.

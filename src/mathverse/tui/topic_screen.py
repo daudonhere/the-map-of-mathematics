@@ -782,7 +782,9 @@ def _render_content(
             content = [(x, y) for x, y in content if y != "bold cyan"]
 
     bg_black = "on #000000"
-    bg_green = "on #2d5a27"
+    bg_green = "on #1a3a1a"
+    fg_green = "white on #1a3a1a"
+    pad = max(2, tw // 20)
 
     for _ in range(min(top_pad, th - 1)):
         console.print(" " * tw, style=bg_black)
@@ -800,20 +802,24 @@ def _render_content(
                 combined = f"{style} {bg_black}" if style else bg_black
                 console.print(text.ljust(tw), style=combined)
 
-        console.print("\u2500" * tw, style=bg_green)
+        border = " " * pad + "\u2500" * (tw - 2 * pad) + " " * pad
+        console.print(border, style=fg_green)
 
         for text, style in content[hc:]:
             if text is None:
                 console.print(" " * tw, style=bg_green)
             elif style == "reverse":
-                rt = Text(text, style="reverse")
-                rt.append(" " * (tw - len(text)), style=bg_green)
+                padded = text.ljust(tw - 2 * pad)
+                rt = Text(" " * pad, style=bg_green)
+                rt.append(padded, style="reverse")
+                rt.append(" " * pad, style=bg_green)
                 console.print(rt)
             else:
-                combined = f"{style} {bg_green}" if style else bg_green
-                console.print(text.ljust(tw), style=combined)
+                padded = " " * pad + text.ljust(tw - 2 * pad) + " " * pad
+                combined = f"{style} on #1a3a1a" if style else fg_green
+                console.print(padded.ljust(tw), style=combined)
 
-        console.print("\u2500" * tw, style=bg_green)
+        console.print(border, style=fg_green)
 
         used = top_pad + len(content) + 2
         for _ in range(max(0, th - 1 - used)):
