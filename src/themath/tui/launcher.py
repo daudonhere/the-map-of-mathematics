@@ -145,9 +145,7 @@ def run_launcher(locale: str = "en") -> tuple[str, str] | None:
     try:
         while True:
             if in_lang_menu:
-                langs = [
-                    label for label, _ in [("English", "en"), ("Indonesia", "id")]
-                ]
+                langs = [label for label, _ in [("English", "en"), ("Indonesia", "id")]]
                 _render(console, langs, lang_current, locale, lang_menu=True)
                 key = _read_key()
                 if key == "up":

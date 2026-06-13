@@ -185,7 +185,7 @@ def _gen_question(playground: str) -> tuple[str, str, float]:
         elif kind == "square":
             sq = random.choice([1, 4, 9, 16, 25, 36, 49, 64, 81, 100])
             q = f"Which number squared equals {sq}?"
-            ans = int(sq ** 0.5)
+            ans = int(sq**0.5)
             return q, str(ans), ans
         elif kind == "even":
             n = random.choice([2, 4, 6, 8, 10, 12, 14, 16, 18, 20])
@@ -197,8 +197,24 @@ def _gen_question(playground: str) -> tuple[str, str, float]:
             return q, "odd", 0.0
 
     elif playground == "factors":
-        pairs = [(4, 6), (6, 8), (3, 4), (5, 6), (4, 5), (6, 10), (5, 7), (8, 10),
-                 (8, 12), (12, 18), (15, 25), (6, 9), (10, 15), (14, 21), (16, 24), (9, 15)]
+        pairs = [
+            (4, 6),
+            (6, 8),
+            (3, 4),
+            (5, 6),
+            (4, 5),
+            (6, 10),
+            (5, 7),
+            (8, 10),
+            (8, 12),
+            (12, 18),
+            (15, 25),
+            (6, 9),
+            (10, 15),
+            (14, 21),
+            (16, 24),
+            (9, 15),
+        ]
         kind = random.choice(["gcf", "lcm"])
         if kind == "gcf":
             a, b = random.choice(pairs)
@@ -293,8 +309,13 @@ def _gen_question(playground: str) -> tuple[str, str, float]:
         return q, str(ans), ans
 
     elif playground == "systems":
-        pairs = [((2, 3), (1, -1)), ((3, 5), (2, -3)), ((2, -1), (1, 2)),
-                 ((3, 2), (1, -1)), ((4, 1), (1, -2))]
+        pairs = [
+            ((2, 3), (1, -1)),
+            ((3, 5), (2, -3)),
+            ((2, -1), (1, 2)),
+            ((3, 2), (1, -1)),
+            ((4, 1), (1, -2)),
+        ]
         (a, b), (d, e) = random.choice(pairs)
         x = random.randint(2, 5)
         y = random.randint(1, 4)
@@ -356,13 +377,13 @@ def _gen_question(playground: str) -> tuple[str, str, float]:
         if kind == "exp":
             base = random.choice([2, 3, 4, 5])
             exp = random.choice([2, 3, 4])
-            ans = base ** exp
+            ans = base**exp
             q = f"Evaluate: {base}^{exp} = ?"
             return q, str(ans), ans
         else:
             base = random.choice([2, 3, 4, 5])
             exp = random.choice([2, 3, 4])
-            val = base ** exp
+            val = base**exp
             q = f"log_{base}({val}) = ?"
             ans = exp
             return q, str(ans), ans
@@ -386,13 +407,15 @@ def _playground(console: Console, playground: str, locale: str) -> None:
             (question, None),
             (None, None),
             (
-                f"Score: {correct}/{total} correct" if locale == "en"
+                f"Score: {correct}/{total} correct"
+                if locale == "en"
                 else f"Nilai: {correct}/{total} benar",
                 "reverse",
             ),
             (None, None),
             (
-                "Type your answer (Esc to exit):" if locale == "en"
+                "Type your answer (Esc to exit):"
+                if locale == "en"
                 else "Ketik jawaban (Esc untuk keluar):",
                 "dim",
             ),
@@ -422,12 +445,12 @@ def _playground(console: Console, playground: str, locale: str) -> None:
             (question, None),
             (None, None),
             (
-                f"Your answer: {result}" if locale == "en"
-                else f"Jawabanmu: {result}",
+                f"Your answer: {result}" if locale == "en" else f"Jawabanmu: {result}",
                 None,
             ),
             (
-                f"Correct answer: {answer_str}" if locale == "en"
+                f"Correct answer: {answer_str}"
+                if locale == "en"
                 else f"Jawaban benar: {answer_str}",
                 "dim",
             ),
@@ -440,13 +463,18 @@ def _playground(console: Console, playground: str, locale: str) -> None:
             ),
             (None, None),
             (
-                f"Score: {correct}/{total} correct" if locale == "en"
+                f"Score: {correct}/{total} correct"
+                if locale == "en"
                 else f"Nilai: {correct}/{total} benar",
                 "reverse",
             ),
             (None, None),
-            ("Press Enter to continue, Esc to exit" if locale == "en"
-             else "Tekan Enter untuk lanjut, Esc untuk keluar", "dim"),
+            (
+                "Press Enter to continue, Esc to exit"
+                if locale == "en"
+                else "Tekan Enter untuk lanjut, Esc untuk keluar",
+                "dim",
+            ),
         ]
         for _ in range(3):
             console.print(" " * tw)
@@ -539,7 +567,9 @@ def _render_list(
     for i, st in enumerate(subtopics):
         prefix = "> " if i == current else "  "
         style = "reverse" if i == current else None
-        content_lines.append((f"{prefix}{st.title.get(locale, st.title.get('en', ''))}", style))
+        content_lines.append(
+            (f"{prefix}{st.title.get(locale, st.title.get('en', ''))}", style)
+        )
 
     selected = subtopics[current]
     content_lines.append((None, None))
@@ -560,8 +590,13 @@ def _render_list(
 
     content_lines += preview
 
-    _render_content(console, tw, th, content_lines,
-                    "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit")
+    _render_content(
+        console,
+        tw,
+        th,
+        content_lines,
+        "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit",
+    )
 
 
 def _render_detail(
@@ -594,7 +629,9 @@ def _render_detail(
     content_lines.append((concept_name, "bold cyan"))
     content_lines.append((None, None))
 
-    content_lines.append((subtopic.title.get(locale, subtopic.title.get("en", "")), "bold"))
+    content_lines.append(
+        (subtopic.title.get(locale, subtopic.title.get("en", "")), "bold")
+    )
     content_lines.append((None, None))
 
     expl = subtopic.explanation.get(locale, subtopic.explanation.get("en", ""))
@@ -617,11 +654,14 @@ def _render_detail(
         content_lines.append((None, None))
         content_lines.append(("Playground" if locale == "en" else "Latihan", "bold"))
         content_lines.append((None, None))
-        content_lines.append((
-            "Press Enter to start playground" if locale == "en"
-            else "Tekan Enter untuk memulai latihan",
-            "italic yellow",
-        ))
+        content_lines.append(
+            (
+                "Press Enter to start playground"
+                if locale == "en"
+                else "Tekan Enter untuk memulai latihan",
+                "italic yellow",
+            )
+        )
 
     keybar = "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit"
     _render_content(console, tw, th, content_lines, keybar)

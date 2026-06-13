@@ -27,6 +27,12 @@ LABELS: dict[str, dict[str, str]] = {
         "terminal_mode": "Terminal Mode",
         "desktop_mode": "Desktop Mode",
         "select_language": "Select Language",
+        "explore_topics": "Explore Topics",
+        "topics": "Topics",
+        "description": "Description",
+        "examples": "Examples",
+        "playground": "Playground",
+        "press_enter_playground": "Press Enter to start playground",
     },
     "id": {
         "app_title": "Peta Matematika",
@@ -54,6 +60,12 @@ LABELS: dict[str, dict[str, str]] = {
         "terminal_mode": "Mode Terminal",
         "desktop_mode": "Mode Desktop",
         "select_language": "Pilih Bahasa",
+        "explore_topics": "Eksplorasi Topik",
+        "topics": "Topik",
+        "description": "Deskripsi",
+        "examples": "Contoh",
+        "playground": "Latihan",
+        "press_enter_playground": "Tekan Enter untuk memulai latihan",
     },
 }
 

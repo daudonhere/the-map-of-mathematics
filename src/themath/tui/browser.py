@@ -99,11 +99,7 @@ def _run_browser(console: Console, service: MapService) -> str | None:
 def _get_related_concepts(
     service: MapService, concept: MathConcept
 ) -> list[MathConcept]:
-    return [
-        c
-        for rid in concept.related_concepts
-        if (c := service.get_concept(rid))
-    ]
+    return [c for rid in concept.related_concepts if (c := service.get_concept(rid))]
 
 
 def _render_list(
@@ -130,7 +126,13 @@ def _render_list(
         prefix = "> " if i == current else "  "
         content.append((f"{prefix}{c.name}", "reverse" if i == current else None))
 
-    _render_content(console, tw, th, content, "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit")
+    _render_content(
+        console,
+        tw,
+        th,
+        content,
+        "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit",
+    )
 
 
 def _render_detail(
@@ -158,7 +160,13 @@ def _render_detail(
             prefix = "> " if i == current else "  "
             content.append((f"{prefix}{rc.name}", "reverse" if i == current else None))
 
-    _render_content(console, tw, th, content, "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit")
+    _render_content(
+        console,
+        tw,
+        th,
+        content,
+        "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit",
+    )
 
 
 def _render_content(

@@ -507,7 +507,10 @@ _algebra_subtopics = [
         playground="expressions",
     ),
     SubTopic(
-        title={"id": "Persamaan Linear Satu Variabel", "en": "Linear Equations in One Variable"},
+        title={
+            "id": "Persamaan Linear Satu Variabel",
+            "en": "Linear Equations in One Variable",
+        },
         description={
             "id": (
                 "Persamaan linear satu variabel memiliki bentuk ax + b = c. "
@@ -701,12 +704,8 @@ _algebra_subtopics = [
     SubTopic(
         title={"id": "Persamaan Kuadrat", "en": "Quadratic Equations"},
         description={
-            "id": (
-                "Persamaan kuadrat memiliki bentuk ax\u00b2 + bx + c = 0."
-            ),
-            "en": (
-                "A quadratic equation has the form ax\u00b2 + bx + c = 0."
-            ),
+            "id": ("Persamaan kuadrat memiliki bentuk ax\u00b2 + bx + c = 0."),
+            "en": ("A quadratic equation has the form ax\u00b2 + bx + c = 0."),
         },
         explanation={
             "id": (
@@ -807,12 +806,8 @@ _algebra_subtopics = [
     SubTopic(
         title={"id": "Pertidaksamaan", "en": "Inequalities"},
         description={
-            "id": (
-                "Pertidaksamaan menggunakan simbol >, <, \u2265, \u2264."
-            ),
-            "en": (
-                "Inequalities use symbols >, <, \u2265, \u2264."
-            ),
+            "id": ("Pertidaksamaan menggunakan simbol >, <, \u2265, \u2264."),
+            "en": ("Inequalities use symbols >, <, \u2265, \u2264."),
         },
         explanation={
             "id": (
