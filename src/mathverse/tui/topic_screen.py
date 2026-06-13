@@ -503,13 +503,19 @@ def _build_playground_content(
             )
         )
         content_lines.append((None, None))
+        result_word = (
+            "CORRECT!" if is_correct else "WRONG"
+        ) if locale == "en" else (
+            "BENAR!" if is_correct else "SALAH"
+        )
+        hint = (
+            "Press Enter for next question"
+            if locale == "en"
+            else "Tekan Enter untuk soal berikutnya"
+        )
+        spaces = max(0, inner_w - len(result_word) - len(hint))
         content_lines.append(
-            (
-                ("CORRECT!" if is_correct else "WRONG")
-                if locale == "en"
-                else ("BENAR!" if is_correct else "SALAH"),
-                "bold green" if is_correct else "bold red",
-            )
+            (result_word + " " * spaces + hint, "bold green" if is_correct else "bold red")
         )
     else:
         content_lines.append(
