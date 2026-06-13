@@ -62,25 +62,13 @@ subtopics: list[SubTopic] = [
                 "Bilangan asli dimulai dari 1: 1, 2, 3, 4, 5, ...\n"
                 "Bilangan cacah mencakup juga nol: 0, 1, 2, 3, 4, ...\n"
                 "Bilangan bulat mencakup bilangan negatif: ..., −3, −2, −1, 0, 1, 2, 3, ...\n"
-                "Bilangan genap habis dibagi 2: ..., −4, −2, 0, 2, 4, ...\n"
-                "Bilangan ganjil tidak habis dibagi 2: ..., −3, −1, 1, 3, 5, ...\n"
-                "Bilangan prima hanya memiliki 2 faktor: 2, 3, 5, 7, 11, 13, 17, 19, 23, ...\n"
-                "Bilangan komposit memiliki lebih dari 2 faktor: 4, 6, 8, 9, 10, 12, ...\n"
-                "Pecahan: 1/2, 3/4, 7/8, ... — terdiri dari pembilang dan penyebut.\n"
-                "Desimal: 0.5, 3.14, 2.718, ... — bilangan dengan tanda koma, bentuk lain dari pecahan.\n"
-                "Persen: 50%, 25%, 100%, ... — per seratus, sering digunakan dalam kehidupan sehari-hari."
+                "Bilangan genap habis dibagi 2: ..., −4, −2, 0, 2, 4, ..."
             ),
             "en": (
                 "Natural numbers start from 1: 1, 2, 3, 4, 5, ...\n"
                 "Whole numbers include zero: 0, 1, 2, 3, 4, ...\n"
                 "Integers include negatives: ..., −3, −2, −1, 0, 1, 2, 3, ...\n"
-                "Even numbers are divisible by 2: ..., −4, −2, 0, 2, 4, ...\n"
-                "Odd numbers are not divisible by 2: ..., −3, −1, 1, 3, 5, ...\n"
-                "Prime numbers have exactly 2 factors: 2, 3, 5, 7, 11, 13, 17, 19, 23, ...\n"
-                "Composite numbers have more than 2 factors: 4, 6, 8, 9, 10, 12, ...\n"
-                "Fractions: 1/2, 3/4, 7/8, ... — numerator over denominator.\n"
-                "Decimals: 0.5, 3.14, 2.718, ... — numbers with decimal point, another form of fractions.\n"
-                "Percentages: 50%, 25%, 100%, ... — per hundred, used widely in daily life."
+                "Even numbers are divisible by 2: ..., −4, −2, 0, 2, 4, ..."
             ),
         },
         examples={
@@ -89,24 +77,12 @@ subtopics: list[SubTopic] = [
                 "Bilangan cacah: 0, 1, 2, 3, 4, ...",
                 "Bilangan bulat: ..., −3, −2, −1, 0, 1, 2, 3, ...",
                 "Bilangan genap: ..., −4, −2, 0, 2, 4, ...",
-                "Bilangan ganjil: ..., −3, −1, 1, 3, 5, ...",
-                "Bilangan prima: 2, 3, 5, 7, 11, 13, 17, 19, 23, ...",
-                "Bilangan komposit: 4, 6, 8, 9, 10, 12, ...",
-                "Pecahan: 1/2, 3/4, 7/8, ...",
-                "Desimal: 0.5, 3.14, 2.718, ...",
-                "Persen: 50%, 25%, 100%, ...",
             ],
             "en": [
                 "Natural numbers: 1, 2, 3, 4, 5, ...",
                 "Whole numbers: 0, 1, 2, 3, 4, ...",
                 "Integers: ..., −3, −2, −1, 0, 1, 2, 3, ...",
                 "Even numbers: ..., −4, −2, 0, 2, 4, ...",
-                "Odd numbers: ..., −3, −1, 1, 3, 5, ...",
-                "Prime numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23, ...",
-                "Composite numbers: 4, 6, 8, 9, 10, 12, ...",
-                "Fractions: 1/2, 3/4, 7/8, ...",
-                "Decimals: 0.5, 3.14, 2.718, ...",
-                "Percentages: 50%, 25%, 100%, ...",
             ],
         },
         playground="number_types",
@@ -127,48 +103,30 @@ subtopics: list[SubTopic] = [
             "id": (
                 "Sifat komutatif: a + b = b + a — urutan penjumlahan tidak mengubah hasil.\n"
                 "8 + 5 = 5 + 8 = 13 — bukti sifat komutatif pada penjumlahan.\n"
-                "4 × 7 = 7 × 4 = 28 — bukti sifat komutatif pada perkalian.\n"
                 "Sifat asosiatif: (a + b) + c = a + (b + c) — pengelompokan tidak mengubah hasil.\n"
-                "(3 + 4) + 6 = 3 + (4 + 6) = 13 — bukti sifat asosiatif pada penjumlahan.\n"
-                "(2 × 5) × 3 = 2 × (5 × 3) = 30 — bukti sifat asosiatif pada perkalian.\n"
-                "Sifat distributif: a × (b + c) = a × b + a × c — perkalian disebar ke penjumlahan.\n"
-                "3 × (4 + 5) = 3 × 4 + 3 × 5 = 27 — bukti sifat distributif."
+                "(3 + 4) + 6 = 3 + (4 + 6) = 13 — bukti sifat asosiatif pada penjumlahan."
             ),
             "en": (
                 "Commutative: a + b = b + a — the order of addition does not change the result.\n"
                 "8 + 5 = 5 + 8 = 13 — proof of commutative property for addition.\n"
-                "4 × 7 = 7 × 4 = 28 — proof of commutative property for multiplication.\n"
                 "Associative: (a + b) + c = a + (b + c) — grouping does not change the result.\n"
-                "(3 + 4) + 6 = 3 + (4 + 6) = 13 — proof of associative property for addition.\n"
-                "(2 × 5) × 3 = 2 × (5 × 3) = 30 — proof of associative property for multiplication.\n"
-                "Distributive: a × (b + c) = a × b + a × c — multiplication distributes over addition.\n"
-                "3 × (4 + 5) = 3 × 4 + 3 × 5 = 27 — proof of distributive property."
+                "(3 + 4) + 6 = 3 + (4 + 6) = 13 — proof of associative property for addition."
             ),
         },
         examples={
             "id": [
                 "Komutatif (Pertukaran): a + b = b + a",
                 "  Contoh: 8 + 5 = 5 + 8 = 13",
-                "  Contoh: 4 × 7 = 7 × 4 = 28",
                 "",
                 "Asosiatif (Pengelompokan): (a + b) + c = a + (b + c)",
                 "  Contoh: (3 + 4) + 6 = 3 + (4 + 6) = 13",
-                "  Contoh: (2 × 5) × 3 = 2 × (5 × 3) = 30",
-                "",
-                "Distributif: a × (b + c) = a × b + a × c",
-                "  Contoh: 3 × (4 + 5) = 3 × 4 + 3 × 5 = 27",
             ],
             "en": [
                 "Commutative: a + b = b + a",
                 "  Example: 8 + 5 = 5 + 8 = 13",
-                "  Example: 4 × 7 = 7 × 4 = 28",
                 "",
                 "Associative: (a + b) + c = a + (b + c)",
                 "  Example: (3 + 4) + 6 = 3 + (4 + 6) = 13",
-                "  Example: (2 × 5) × 3 = 2 × (5 × 3) = 30",
-                "",
-                "Distributive: a × (b + c) = a × b + a × c",
-                "  Example: 3 × (4 + 5) = 3 × 4 + 3 × 5 = 27",
             ],
         },
         playground="properties",
@@ -189,36 +147,30 @@ subtopics: list[SubTopic] = [
             "id": (
                 "5\u00b2 berarti 5 dikalikan dirinya sendiri sebanyak 2 kali = 25 — pangkat menunjukkan jumlah perkalian berulang.\n"
                 "2\u00b3 berarti 2 × 2 × 2 = 8 — pangkat 3 disebut kubik.\n"
-                "10\u2074 = 10 × 10 × 10 × 10 = 10.000 — pangkat menunjukkan posisi digit.\n"
                 "\u221a25 = 5 karena 5\u00b2 = 25 — akar kuadrat adalah kebalikan dari pangkat 2.\n"
-                "\u221a144 = 12 karena 12\u00b2 = 144 — akar kuadrat dari bilangan kuadrat sempurna.\n"
-                "\u221b27 = 3 karena 3\u00b3 = 27 — akar kubik adalah kebalikan dari pangkat 3."
+                "\u221a144 = 12 karena 12\u00b2 = 144 — akar kuadrat dari bilangan kuadrat sempurna."
             ),
             "en": (
                 "5\u00b2 means 5 multiplied by itself twice = 25 — exponent shows repeated multiplication count.\n"
                 "2\u00b3 = 2 × 2 × 2 = 8 — exponent 3 is called cubed.\n"
-                "10\u2074 = 10 × 10 × 10 × 10 = 10,000 — exponent shows digit position.\n"
                 "\u221a25 = 5 because 5\u00b2 = 25 — square root is the inverse of squaring.\n"
-                "\u221a144 = 12 because 12\u00b2 = 144 — square root of a perfect square.\n"
-                "\u221b27 = 3 because 3\u00b3 = 27 — cube root is the inverse of cubing."
+                "\u221a144 = 12 because 12\u00b2 = 144 — square root of a perfect square."
             ),
         },
         examples={
             "id": [
                 "Pangkat: 5\u00b2 = 5 × 5 = 25",
                 "Pangkat: 2\u00b3 = 2 × 2 × 2 = 8",
-                "Pangkat: 10\u2074 = 10 × 10 × 10 × 10 = 10.000",
+                "",
                 "Akar: \u221a25 = 5 (karena 5\u00b2 = 25)",
                 "Akar: \u221a144 = 12 (karena 12\u00b2 = 144)",
-                "Akar: \u221b27 = 3 (karena 3\u00b3 = 27)",
             ],
             "en": [
                 "Power: 5\u00b2 = 5 × 5 = 25",
                 "Power: 2\u00b3 = 2 × 2 × 2 = 8",
-                "Power: 10\u2074 = 10 × 10 × 10 × 10 = 10,000",
+                "",
                 "Root: \u221a25 = 5 (since 5\u00b2 = 25)",
                 "Root: \u221a144 = 12 (since 12\u00b2 = 144)",
-                "Root: \u221b27 = 3 (since 3\u00b3 = 27)",
             ],
         },
         playground="powers",

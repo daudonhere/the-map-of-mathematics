@@ -31,7 +31,7 @@ def _render_content(
     chalkboard: bool = False,
     header_count: int = 8,
 ) -> None:
-    sys.stdout.write("\x1b[2J\x1b[H")
+    sys.stdout.write("\x1b[H")
     top_pad = 3
     max_content = max(1, th - 1 - top_pad)
 
@@ -56,7 +56,7 @@ def _render_content(
             content = content[:max_content]
 
     bg_black = "on #000000"
-    fg_green = "white on #1a3a1a"
+    fg_chalk = "white on #111111"
     pad = max(2, tw // 20)
 
     for _ in range(min(top_pad, th - 1)):
@@ -76,35 +76,35 @@ def _render_content(
                 console.print(text.ljust(tw), style=combined, markup=False)
 
         console.print(" " * pad, style=bg_black, end="")
-        console.print("┌" + "─" * (tw - 2 * pad - 2) + "┐", style=fg_green, end="")
+        console.print("┌" + "─" * (tw - 2 * pad - 2) + "┐", style=fg_chalk, end="")
         console.print(" " * pad, style=bg_black)
 
         for text, style in content[hc:]:
             if text is None:
                 console.print(" " * pad, style=bg_black, end="")
                 console.print(
-                    "│" + " " * (tw - 2 * pad - 2) + "│", style=fg_green, end=""
+                    "│" + " " * (tw - 2 * pad - 2) + "│", style=fg_chalk, end=""
                 )
                 console.print(" " * pad, style=bg_black)
             elif style == "reverse":
                 console.print(" " * pad, style=bg_black, end="")
-                console.print("│", style=fg_green, end="")
+                console.print("│", style=fg_chalk, end="")
                 rt = Text(text.ljust(tw - 2 * pad - 2), style="reverse")
                 console.print(rt, end="")
-                console.print("│", style=fg_green, end="")
+                console.print("│", style=fg_chalk, end="")
                 console.print(" " * pad, style=bg_black)
             else:
-                combined = f"{style} on #1a3a1a" if style else fg_green
+                combined = f"{style} on #111111" if style else fg_chalk
                 inner_w = tw - 2 * pad - 2
                 for segment in _wrap_text(text, inner_w):
                     console.print(" " * pad, style=bg_black, end="")
-                    console.print("│", style=fg_green, end="")
+                    console.print("│", style=fg_chalk, end="")
                     console.print(segment.ljust(inner_w), style=combined, end="", markup=False)
-                    console.print("│", style=fg_green, end="")
+                    console.print("│", style=fg_chalk, end="")
                     console.print(" " * pad, style=bg_black)
 
         console.print(" " * pad, style=bg_black, end="")
-        console.print("└" + "─" * (tw - 2 * pad - 2) + "┘", style=fg_green, end="")
+        console.print("└" + "─" * (tw - 2 * pad - 2) + "┘", style=fg_chalk, end="")
         console.print(" " * pad, style=bg_black)
 
         inner_w = tw - 2 * pad - 2

@@ -23,38 +23,30 @@ algebra_identity_subtopics: list[SubTopic] = [
         explanation={
             "id": (
                 "Jabarkan (x+3)² menjadi (x+3)(x+3), lalu gunakan sifat distributif.\n"
-                "x·x = x², x·3 = 3x, 3·x = 3x, lalu jumlahkan suku sejenis.\n"
                 "Hasil akhir: x² + 6x + 9 — ini bentuk kuadrat sempurna.\n"
                 "Sekarang untuk (2a+5)², jabarkan dengan pola yang sama.\n"
-                "(2a)² = 4a², 2·2a·5 = 20a, 5² = 25.\n"
                 "Hasil akhir: 4a² + 20a + 25 — sesuai rumus (a+b)²."
             ),
             "en": (
                 "Expand (x+3)² into (x+3)(x+3), then use the distributive property.\n"
-                "x·x = x², x·3 = 3x, 3·x = 3x, then combine like terms.\n"
                 "Final result: x² + 6x + 9 — this is a perfect square.\n"
                 "Now for (2a+5)², expand using the same pattern.\n"
-                "(2a)² = 4a², 2·2a·5 = 20a, 5² = 25.\n"
                 "Final result: 4a² + 20a + 25 — matching the (a+b)² formula."
             ),
         },
         examples={
             "id": [
                 "(x + 3)²",
-                "  = x² + 2·x·3 + 3²",
                 "  = x² + 6x + 9",
                 "",
                 "(2a + 5)²",
-                "  = (2a)² + 2·2a·5 + 5²",
                 "  = 4a² + 20a + 25",
             ],
             "en": [
                 "(x + 3)²",
-                "  = x² + 2·x·3 + 3²",
                 "  = x² + 6x + 9",
                 "",
                 "(2a + 5)²",
-                "  = (2a)² + 2·2a·5 + 5²",
                 "  = 4a² + 20a + 25",
             ],
         },
@@ -112,6 +104,55 @@ algebra_identity_subtopics: list[SubTopic] = [
                 "",
                 "9a² − 16",
                 "  = (3a)² − 4²",
+                "  = (3a − 4)(3a + 4)",
+            ],
+        },
+        playground="perfect_square",
+    ),
+    SubTopic(
+        title={
+            "id": "Identitas Selisih Dua Kuadrat",
+            "en": "Difference of Two Squares",
+        },
+        description={
+            "id": (
+                "Identitas selisih dua kuadrat menyatakan bahwa a² − b² = (a−b)(a+b). "
+                "Identitas ini berguna untuk memfaktorkan bentuk kuadrat yang merupakan "
+                "selisih dua bilangan kuadrat."
+            ),
+            "en": (
+                "The difference of two squares identity states that a² − b² = (a−b)(a+b). "
+                "This identity is useful for factoring quadratic forms that are the "
+                "difference of two squares."
+            ),
+        },
+        explanation={
+            "id": (
+                "x² − 25 adalah selisih dua kuadrat karena x² dan 25 adalah bilangan kuadrat.\n"
+                "Gunakan rumus a² − b² = (a−b)(a+b) dengan a=x, b=5.\n"
+                "Sekarang untuk 9a² − 16: 9a² = (3a)² dan 16 = 4².\n"
+                "Hasil faktorisasi: (3a − 4)(3a + 4)."
+            ),
+            "en": (
+                "x² − 25 is a difference of two squares because x² and 25 are square numbers.\n"
+                "Apply the formula a² − b² = (a−b)(a+b) with a=x, b=5.\n"
+                "Now for 9a² − 16: 9a² = (3a)² and 16 = 4².\n"
+                "Factored result: (3a − 4)(3a + 4)."
+            ),
+        },
+        examples={
+            "id": [
+                "x² − 25",
+                "  = (x − 5)(x + 5)",
+                "",
+                "9a² − 16",
+                "  = (3a − 4)(3a + 4)",
+            ],
+            "en": [
+                "x² − 25",
+                "  = (x − 5)(x + 5)",
+                "",
+                "9a² − 16",
                 "  = (3a − 4)(3a + 4)",
             ],
         },

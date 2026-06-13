@@ -156,7 +156,7 @@ def run_launcher(locale: str = "en") -> tuple[str, str] | None:
 
     console = Console()
 
-    sys.stdout.write("\x1b[2J\x1b[H")
+    sys.stdout.write("\x1b[H")
     sys.stdout.write("\x1b[?25l")
     sys.stdout.flush()
 

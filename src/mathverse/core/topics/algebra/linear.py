@@ -78,21 +78,13 @@ algebra_linear_subtopics: list[SubTopic] = [
                 "Persamaan pertama: jumlah x dan y adalah 10.\n"
                 "Persamaan kedua: selisih x dan y adalah 2.\n"
                 "Jumlahkan kedua persamaan untuk mengeliminasi y: 2x = 12, x = 6.\n"
-                "Substitusi x = 6 ke x + y = 10: y = 10 − 6 = 4.\n"
-                "Persamaan pertama sistem kedua: 2x + y = 7.\n"
-                "Persamaan kedua sistem kedua: x − y = 2.\n"
-                "Jumlahkan untuk eliminasi y: 3x = 9, x = 3.\n"
-                "Substitusi x = 3: 2(3) + y = 7 → 6 + y = 7 → y = 1."
+                "Substitusi x = 6 ke x + y = 10: y = 10 − 6 = 4."
             ),
             "en": (
                 "First equation: the sum of x and y is 10.\n"
                 "Second equation: the difference of x and y is 2.\n"
                 "Add both equations to eliminate y: 2x = 12, x = 6.\n"
-                "Substitute x = 6 into x + y = 10: y = 10 − 6 = 4.\n"
-                "First equation of the second system: 2x + y = 7.\n"
-                "Second equation of the second system: x − y = 2.\n"
-                "Add to eliminate y: 3x = 9, x = 3.\n"
-                "Substitute x = 3: 2(3) + y = 7 → 6 + y = 7 → y = 1."
+                "Substitute x = 6 into x + y = 10: y = 10 − 6 = 4."
             ),
         },
         examples={
@@ -102,12 +94,6 @@ algebra_linear_subtopics: list[SubTopic] = [
                 "",
                 "Jumlahkan: 2x = 12, x = 6",
                 "y = 10 − 6 = 4",
-                "",
-                "2x + y = 7",
-                "x − y = 2",
-                "",
-                "Jumlahkan: 3x = 9, x = 3",
-                "y = 7 − 2(3) = 1",
             ],
             "en": [
                 "x + y = 10",
@@ -115,12 +101,6 @@ algebra_linear_subtopics: list[SubTopic] = [
                 "",
                 "Add: 2x = 12, x = 6",
                 "y = 10 − 6 = 4",
-                "",
-                "2x + y = 7",
-                "x − y = 2",
-                "",
-                "Add: 3x = 9, x = 3",
-                "y = 7 − 2(3) = 1",
             ],
         },
         playground="systems_of_equations",

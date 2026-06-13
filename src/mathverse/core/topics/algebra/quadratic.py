@@ -22,19 +22,13 @@ algebra_quadratic_subtopics: list[SubTopic] = [
                 "x\u00b2 \u2212 5x + 6 = 0: cari dua bilangan yang hasil kalinya 6 dan jumlahnya 5.\n"
                 "Faktor dari 6 yang berjumlah 5 adalah 2 dan 3: (x \u2212 2)(x \u2212 3) = 0.\n"
                 "Dari faktor pertama: x \u2212 2 = 0 \u2192 x = 2.\n"
-                "Dari faktor kedua: x \u2212 3 = 0 \u2192 x = 3.\n"
-                "Gunakan rumus kuadrat: x = [\u2212(\u22125) \u00b1 \u221a((\u22125)\u00b2 \u2212 4\u00b71\u00b76)] / (2\u00b71).\n"
-                "Hitung diskriminan: D = 25 \u2212 24 = 1, \u221a1 = 1.\n"
-                "x = (5 \u00b1 1) / 2 = 3 dan 2, hasilnya sama dengan metode pemfaktoran."
+                "Dari faktor kedua: x \u2212 3 = 0 \u2192 x = 3."
             ),
             "en": (
                 "x\u00b2 \u2212 5x + 6 = 0: find two numbers whose product is 6 and sum is 5.\n"
                 "The factors of 6 that sum to 5 are 2 and 3: (x \u2212 2)(x \u2212 3) = 0.\n"
                 "From the first factor: x \u2212 2 = 0 \u2192 x = 2.\n"
-                "From the second factor: x \u2212 3 = 0 \u2192 x = 3.\n"
-                "Use the quadratic formula: x = [\u2212(\u22125) \u00b1 \u221a((\u22125)\u00b2 \u2212 4\u00b71\u00b76)] / (2\u00b71).\n"
-                "Calculate discriminant: D = 25 \u2212 24 = 1, \u221a1 = 1.\n"
-                "x = (5 \u00b1 1) / 2 = 3 and 2, same result as factoring."
+                "From the second factor: x \u2212 3 = 0 \u2192 x = 3."
             ),
         },
         examples={
@@ -44,10 +38,6 @@ algebra_quadratic_subtopics: list[SubTopic] = [
                 "Pemfaktoran: (x \u2212 2)(x \u2212 3) = 0",
                 "  x \u2212 2 = 0 \u2192 x = 2",
                 "  x \u2212 3 = 0 \u2192 x = 3",
-                "",
-                "Rumus kuadrat: x = (5 \u00b1 \u221a1) / 2",
-                "  x\u2081 = (5 + 1)/2 = 3",
-                "  x\u2082 = (5 \u2212 1)/2 = 2",
             ],
             "en": [
                 "x\u00b2 \u2212 5x + 6 = 0",
@@ -55,10 +45,6 @@ algebra_quadratic_subtopics: list[SubTopic] = [
                 "Factoring: (x \u2212 2)(x \u2212 3) = 0",
                 "  x \u2212 2 = 0 \u2192 x = 2",
                 "  x \u2212 3 = 0 \u2192 x = 3",
-                "",
-                "Quadratic formula: x = (5 \u00b1 \u221a1) / 2",
-                "  x\u2081 = (5 + 1)/2 = 3",
-                "  x\u2082 = (5 \u2212 1)/2 = 2",
             ],
         },
         playground="quadratic",

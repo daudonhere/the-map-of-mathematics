@@ -23,15 +23,13 @@ algebra_core_subtopics: list[SubTopic] = [
                 "x, y, z adalah variabel — simbol huruf yang mewakili bilangan yang belum diketahui nilainya.\n"
                 "5, 10, −3 adalah konstanta — bilangan tetap yang nilainya tidak berubah.\n"
                 "Dalam 3x + 5, x adalah variabel, 3 dan 5 adalah konstanta.\n"
-                "Koefisien adalah konstanta yang mengalikan variabel, seperti 3 pada 3x.\n"
-                "Pada 3x + 5, x adalah variabel, sementara 3 dan 5 adalah konstanta."
+                "Koefisien adalah konstanta yang mengalikan variabel, seperti 3 pada 3x."
             ),
             "en": (
                 "x, y, z are variables — letter symbols representing unknown values.\n"
                 "5, 10, −3 are constants — fixed numbers whose values do not change.\n"
                 "In 3x + 5, x is the variable, 3 and 5 are constants.\n"
-                "A coefficient is a constant that multiplies a variable, like 3 in 3x.\n"
-                "In 3x + 5, x is the variable while 3 and 5 are constants."
+                "A coefficient is a constant that multiplies a variable, like 3 in 3x."
             ),
         },
         examples={
@@ -40,7 +38,6 @@ algebra_core_subtopics: list[SubTopic] = [
                 "Konstanta: 5, 10, −3",
                 "",
                 "Bentuk: 3x + 5",
-                "  x = variabel",
                 "  3 dan 5 = konstanta",
             ],
             "en": [
@@ -48,7 +45,6 @@ algebra_core_subtopics: list[SubTopic] = [
                 "Constants: 5, 10, −3",
                 "",
                 "Expression: 3x + 5",
-                "  x = variable",
                 "  3 and 5 = constants",
             ],
         },

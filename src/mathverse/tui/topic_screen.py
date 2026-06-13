@@ -84,7 +84,6 @@ def _render_list(
         sub_left_pad = max(0, (tw - len(subtitle)) // 2)
         content_lines.append((" " * sub_left_pad + subtitle, "italic"))
         content_lines.append((None, None))
-        content_lines.append((None, None))
 
     concept_name = {
         "aritmatika": "Aritmatika",
@@ -158,7 +157,6 @@ def _render_detail(
         subtitle = "For minds losing their edge"
         sub_left_pad = max(0, (tw - len(subtitle)) // 2)
         content_lines.append((" " * sub_left_pad + subtitle, "italic"))
-        content_lines.append((None, None))
         content_lines.append((None, None))
 
     concept_name = {
