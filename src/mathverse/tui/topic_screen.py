@@ -86,6 +86,9 @@ def _read_input_at_cursor(fd: int, tw: int) -> str | None:
     old = termios.tcgetattr(fd)
     buf = ""
     pad = max(2, tw // 20)
+    black_bg = "\x1b[48;2;0;0;0m"
+    green_bg = "\x1b[48;2;26;58;26m"
+    white_fg = "\x1b[38;2;255;255;255m"
     try:
         tty.setraw(fd)
         while True:
@@ -97,7 +100,7 @@ def _read_input_at_cursor(fd: int, tw: int) -> str | None:
                     continue
                 return None
             elif ch in (b"\n", b"\r"):
-                sys.stdout.write("\r\n")
+                sys.stdout.write("\r\n" + "\x1b[0m")
                 sys.stdout.flush()
                 return buf
             elif ch == b"\t":
@@ -112,8 +115,11 @@ def _read_input_at_cursor(fd: int, tw: int) -> str | None:
                     continue
             gap = tw - 2 * pad - 2 - 3 - len(buf)
             sys.stdout.write(
-                "\r" + " " * tw + "\r"
-                + " " * pad + "\u2502" + ">> " + buf + " " * max(0, gap) + "\u2502" + " " * pad
+                "\r" + black_bg + " " * tw + "\r"
+                + black_bg + " " * pad
+                + green_bg + white_fg + "\u2502" + ">> " + buf + " " * max(0, gap) + "\u2502"
+                + black_bg + " " * pad
+                + f"\x1b[{pad + 5 + len(buf)}G"
             )
             sys.stdout.flush()
     finally:
