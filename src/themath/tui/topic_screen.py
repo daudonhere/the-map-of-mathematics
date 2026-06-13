@@ -524,7 +524,7 @@ def _render_list(
             content_lines.append((b, "bold cyan"))
         content_lines.append((None, None))
         indent = max(0, int(tw * 0.1))
-        content_lines.append((" " * indent + "Learning Weapon For You", "italic"))
+        content_lines.append((" " * indent + "For minds losing their edge", "italic"))
         content_lines.append((None, None))
 
     concept_name = {
@@ -582,7 +582,7 @@ def _render_detail(
             content_lines.append((b, "bold cyan"))
         content_lines.append((None, None))
         indent = max(0, int(tw * 0.1))
-        content_lines.append((" " * indent + "Learning Weapon For You", "italic"))
+        content_lines.append((" " * indent + "For minds losing their edge", "italic"))
         content_lines.append((None, None))
 
     concept_name = {

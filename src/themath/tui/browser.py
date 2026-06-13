@@ -123,7 +123,7 @@ def _render_list(
             content.append((b, "bold cyan"))
         content.append((None, None))
         indent = max(0, int(tw * 0.1))
-        content.append((" " * indent + "Learning Weapon For You", "italic"))
+        content.append((" " * indent + "For minds losing their edge", "italic"))
         content.append((None, None))
 
     for i, c in enumerate(concepts):
