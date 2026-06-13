@@ -152,7 +152,14 @@ def _render_detail(
 
     content.append((concept.name, "bold"))
     content.append((concept.category, "dim"))
-    content.append((concept.description, None))
+    pad = max(2, tw // 20)
+    inner_w = tw - 2 * pad - 2
+    desc = concept.description
+    if len(desc) > inner_w:
+        for chunk in [desc[i:i+inner_w] for i in range(0, len(desc), inner_w)]:
+            content.append((chunk, None))
+    else:
+        content.append((desc, None))
     content.append((None, None))
 
     related = _get_related_concepts(service, concept)

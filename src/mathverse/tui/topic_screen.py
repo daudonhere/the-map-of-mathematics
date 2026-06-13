@@ -684,11 +684,18 @@ def _render_list(
     content_lines.append(("\u2500" * min(tw, 60), "dim"))
     content_lines.append((None, None))
 
+    pad = max(2, tw // 20)
+    inner_w = tw - 2 * pad - 2
+
     preview: list[tuple[str | None, str | None]] = []
 
     expl = selected.description.get(locale, selected.description.get("en", ""))
     for line in expl.split("\n"):
-        preview.append((line, None))
+        if len(line) > inner_w:
+            for chunk in [line[i:i+inner_w] for i in range(0, len(line), inner_w)]:
+                preview.append((chunk, None))
+        else:
+            preview.append((line, None))
 
     preview_height = 8
     if len(preview) > preview_height:
