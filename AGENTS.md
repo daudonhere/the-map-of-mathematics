@@ -43,6 +43,7 @@ pip install -e ".[dev]"   # install with dev deps
 - `pathlib.Path` for filesystem ops.
 - Ruff rules: `select = ["E", "F", "I", "N", "W", "UP", "B", "SIM", "ARG", "RUF"]`.
 - STIX Two Text OTF fonts bundled in `gui/fonts/` for scientific typesetting - loaded via `QFontDatabase`.
+- **Never `git add` or `git commit` or `git push` unless the user explicitly says so.**
 
 ## Testing
 
@@ -57,7 +58,7 @@ pip install -e ".[dev]"   # install with dev deps
   - **Header** (banner + subtitle): Black background
   - **Content** (concept list, detail, examples, playground): Dark green chalkboard background (`on #1a3a1a`) enclosed in a box with `┌─┐` top border, `│` side walls, and `└─┘` bottom border. Side padding (`pad = max(2, tw // 20)`) outside the box walls keeps green area from touching terminal edges. Default text is white; styled text uses bright colors (`bold cyan`, `bold yellow`, etc.) on the green background.
   - **Footer** (keybar + credit): Black background
-- `_render_content()` in both `browser.py` and `topic_screen.py` accepts `chalkboard: bool` and `header_count: int` parameters. `header_count=8` when the MATHVERSE banner is visible (6 banner lines + blank + subtitle + blank), `header_count=0` when terminal is too narrow.
+- `chalkboard: bool` and `header_count: int` parameters. `header_count=8` when the MATHVERSE banner is visible (6 banner lines + blank + subtitle + blank), `header_count=0` when terminal is too narrow.
 - `_render_detail` in browser.py has no banner, so `header_count=0` — the entire content area gets green chalkboard.
 
 ## Launcher Details (`src/mathverse/tui/launcher.py`)
@@ -139,12 +140,26 @@ List (↑↓ arrows) → Enter → Detail view → Enter → Playground. Esc exi
 | Playground input | Exit app | Back to topic |
 | Playground feedback | Exit app | Back to topic |
 
+### Identity Playgrounds (`_playground_identity` in `topic_screen.py`)
+- Two phases: **Exploration** (input a/b, see chart) → **Quiz** (answer questions, no chart).
+- Exploration: user enters a/b values (or Enter for random), Tab goes back, Esc exits.
+- Chart: proportional box-diagram with `▓░▒` shading, compact (max 30 cells total), labels on outside (side + top).
+- `_build_identity_chart_lines()`: compact proportional chart with Unicode shade fill + box-drawing borders.
+- `_read_value_chalkboard(fd, tw, label)`: inline chalkboard input with ANSI backgrounds.
+- All playground input functions (`_read_input_at_cursor`, `_read_value_chalkboard`): show cursor (`?25h`) before input, hide (`?25l`) after via `finally`.
+
+### Playground input helpers
+- `_read_input_at_cursor(fd, tw)`: reads input at `>> ` prompt with line redraw + cursor show/hide.
+- `_read_value_chalkboard(fd, tw, label)`: reads numeric input inside chalkboard with display + cursor show/hide.
+- Tab returns `"\r"` → caller returns `0` (go back); Esc returns `None` → caller returns `None` (exit).
+- Cursor managed per-function: `\x1b[?25h` on entry, `\x1b[?25l` in `finally` (even on early return).
+
 ### Content (`src/mathverse/core/content.py`)
 - `SubTopic` dataclass: `title` (dict[str,str]), `description` (dict[str,str]), `explanation` (dict[str,str]), `examples` (dict[str,list[str]]), `playground` (str | None).
 - `TopicContent` grouped by concept_id via `get_content()`.
-- Currently populated: Arithmetic (9 sub-topics), Algebra (9 sub-topics).
+- Currently populated: Arithmetic (9 sub-topics), Algebra (6 sub-topics: Variables & Constants, Algebraic Forms, Algebraic Operations, Factoring, Perfect Square Identity, Difference of Two Squares).
 - Registered under both EN and ID concept IDs (e.g. `"algebra"` and `"aljabar"` share same subtopic list).
-- Playground IDs: `basic_ops`, `powers`, `mental_math`, `properties`, `number_types`, `factors`, `ratios`, `percentages`, `number_theory`, `expressions`, `equations`, `systems`, `polynomials`, `factoring`, `quadratics`, `functions`, `inequalities`, `exponents_logs`. See `_gen_question()` in topic_screen.py for implementations.
+- Playground IDs: `basic_ops`, `powers`, `mental_math`, `properties`, `number_types`, `factors`, `ratios`, `percentages`, `number_theory`, `variables`, `algebraic_forms`, `algebraic_ops`, `factoring`, `perfect_square`, `diff_squares`. See `_gen_question()` in topic_screen.py for implementations.
 - `# ruff: noqa: RUF001` for math symbols (×, −, etc.).
 
 ## Content Pattern — Arithmetic Template

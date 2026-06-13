@@ -465,447 +465,299 @@ _reg("aritmatika", _arithmetic_subtopics)
 
 _algebra_subtopics = [
     SubTopic(
-        title={"id": "Variabel dan Ekspresi", "en": "Variables and Expressions"},
+        title={"id": "Variabel dan Konstanta", "en": "Variables and Constants"},
         description={
             "id": (
-                "Variabel adalah simbol (biasanya huruf) yang mewakili bilangan yang tidak diketahui. "
-                "Ekspresi aljabar adalah kombinasi variabel, konstanta, dan operasi matematika."
+                "Variabel adalah simbol (huruf) yang mewakili bilangan tak diketahui. "
+                "Konstanta adalah bilangan tetap yang nilainya tidak berubah."
             ),
             "en": (
-                "A variable is a symbol (usually a letter) that represents an unknown number. "
-                "An algebraic expression is a combination of variables, constants, and mathematical operations."
+                "Variables are symbols (letters) that represent unknown numbers. "
+                "Constants are fixed numbers whose values do not change."
             ),
         },
         explanation={
             "id": (
-                "Ekspresi 2x + 3 memiliki variabel x, konstanta 3, dan koefisien 2.\n"
-                "5a\u00b2 \u2212 2b + 7 memiliki dua variabel a dan b dengan pangkat berbeda.\n"
-                "Evaluasi: jika x = 4, maka 3x + 2 = 3(4) + 2 = 14 — substitusi nilai x.\n"
-                "Suku sejenis: 3x + 2x = 5x — koefisien dijumlahkan, variabel tetap."
+                "x, y, z adalah variabel — simbol huruf yang mewakili bilangan yang belum diketahui nilainya.\n"
+                "5, 10, −3 adalah konstanta — bilangan tetap yang nilainya tidak berubah.\n"
+                "Dalam 3x + 5, x adalah variabel, 3 dan 5 adalah konstanta.\n"
+                "Koefisien adalah konstanta yang mengalikan variabel, seperti 3 pada 3x."
             ),
             "en": (
-                "Expression 2x + 3 has variable x, constant 3, and coefficient 2.\n"
-                "5a\u00b2 \u2212 2b + 7 has two variables a and b with different exponents.\n"
-                "Evaluate: if x = 4, then 3x + 2 = 3(4) + 2 = 14 — substitute x.\n"
-                "Like terms: 3x + 2x = 5x — coefficients are added, variable stays the same."
+                "x, y, z are variables — letter symbols representing unknown values.\n"
+                "5, 10, −3 are constants — fixed numbers whose values do not change.\n"
+                "In 3x + 5, x is the variable, 3 and 5 are constants.\n"
+                "A coefficient is a constant that multiplies a variable, like 3 in 3x."
             ),
         },
         examples={
             "id": [
-                "Ekspresi: 2x + 3 (x adalah variabel)",
-                "Ekspresi: 5a\u00b2 \u2212 2b + 7",
-                "Evaluasi: Jika x = 4, maka 3x + 2 = 3(4) + 2 = 14",
-                "Suku sejenis: 3x + 2x = 5x",
+                "Variabel: x, y, z",
+                "Konstanta: 5, 10, −3",
+                "",
+                "Bentuk: 3x + 5",
+                "  x = variabel",
+                "  3 dan 5 = konstanta",
             ],
             "en": [
-                "Expression: 2x + 3 (x is the variable)",
-                "Expression: 5a\u00b2 \u2212 2b + 7",
-                "Evaluate: If x = 4, then 3x + 2 = 3(4) + 2 = 14",
-                "Like terms: 3x + 2x = 5x",
+                "Variables: x, y, z",
+                "Constants: 5, 10, −3",
+                "",
+                "Expression: 3x + 5",
+                "  x = variable",
+                "  3 and 5 = constants",
             ],
         },
-        playground="expressions",
+        playground="variables",
     ),
     SubTopic(
-        title={
-            "id": "Persamaan Linear Satu Variabel",
-            "en": "Linear Equations in One Variable",
-        },
+        title={"id": "Bentuk Aljabar", "en": "Algebraic Forms"},
         description={
             "id": (
-                "Persamaan linear satu variabel memiliki bentuk ax + b = c. "
-                "Tujuannya adalah mencari nilai x yang memenuhi persamaan."
+                "Bentuk aljabar diklasifikasikan berdasarkan jumlah sukunya: "
+                "monomial (1 suku), binomial (2 suku), trinomial (3 suku), "
+                "dan polinomial (banyak suku)."
             ),
             "en": (
-                "A linear equation in one variable has the form ax + b = c. "
-                "The goal is to find the value of x that satisfies the equation."
+                "Algebraic forms are classified by the number of terms: "
+                "monomial (1 term), binomial (2 terms), trinomial (3 terms), "
+                "and polynomial (many terms)."
             ),
         },
         explanation={
             "id": (
-                "3x + 7 = 22: kurangi kedua ruas dengan 7 untuk mengisolasi suku yang mengandung x.\n"
-                "3x = 15 — suku x sudah terisolasi di ruas kiri.\n"
-                "x = 5 — bagi kedua ruas dengan 3 untuk mendapatkan nilai x.\n"
-                "5x − 8 = 2x + 10: kumpulkan suku x di kiri dan konstanta di kanan.\n"
-                "5x − 2x = 10 + 8 — pindahkan 2x ke kiri dan −8 ke kanan (tanda berubah).\n"
-                "3x = 18 — sederhanakan kedua ruas.\n"
-                "x = 6 — bagi kedua ruas dengan 3."
+                "Monomial memiliki satu suku: 5x, 7a² — hanya satu suku aljabar tanpa operasi tambah atau kurang.\n"
+                "Binomial memiliki dua suku yang dipisah oleh + atau −: x + 3, 2a − b.\n"
+                "Trinomial memiliki tiga suku: x² + 2x + 1 — sering muncul dalam persamaan kuadrat.\n"
+                "Polinomial memiliki banyak suku dengan pangkat berbeda: x⁴ + 2x³ − x + 7."
             ),
             "en": (
-                "3x + 7 = 22: subtract 7 from both sides to isolate the term with x.\n"
-                "3x = 15 — the x term is isolated on the left.\n"
-                "x = 5 — divide both sides by 3 to get the value of x.\n"
-                "5x − 8 = 2x + 10: gather x terms on left, constants on right.\n"
-                "5x − 2x = 10 + 8 — move 2x to the left and −8 to the right (signs change).\n"
-                "3x = 18 — simplify both sides.\n"
-                "x = 6 — divide both sides by 3."
+                "A monomial has one term: 5x, 7a² — a single algebraic term with no addition or subtraction.\n"
+                "A binomial has two terms separated by + or −: x + 3, 2a − b.\n"
+                "A trinomial has three terms: x² + 2x + 1 — common in quadratic equations.\n"
+                "A polynomial has many terms with different exponents: x⁴ + 2x³ − x + 7."
             ),
         },
         examples={
             "id": [
-                "Selesaikan 3x + 7 = 22",
-                "  3x = 22 \u2212 7 = 15",
-                "  x = 15 \u00f7 3 = 5",
+                "Monomial (1 suku): 5x, 7a²",
                 "",
-                "Selesaikan 5x \u2212 8 = 2x + 10",
-                "  5x \u2212 2x = 10 + 8",
-                "  3x = 18",
-                "  x = 6",
+                "Binomial (2 suku): x + 3, 2a − b",
+                "",
+                "Trinomial (3 suku): x² + 2x + 1",
+                "",
+                "Polinomial (banyak): x⁴ + 2x³ − x + 7",
             ],
             "en": [
-                "Solve 3x + 7 = 22",
-                "  3x = 22 \u2212 7 = 15",
-                "  x = 15 \u00f7 3 = 5",
+                "Monomial (1 term): 5x, 7a²",
                 "",
-                "Solve 5x \u2212 8 = 2x + 10",
-                "  5x \u2212 2x = 10 + 8",
-                "  3x = 18",
-                "  x = 6",
+                "Binomial (2 terms): x + 3, 2a − b",
+                "",
+                "Trinomial (3 terms): x² + 2x + 1",
+                "",
+                "Polynomial (many): x⁴ + 2x³ − x + 7",
             ],
         },
-        playground="equations",
+        playground="algebraic_forms",
     ),
     SubTopic(
-        title={"id": "Sistem Persamaan Linear", "en": "Systems of Linear Equations"},
+        title={"id": "Operasi Aljabar", "en": "Algebraic Operations"},
         description={
             "id": (
-                "Sistem persamaan linear terdiri dari dua atau lebih persamaan linear. "
-                "Solusinya adalah nilai variabel yang memenuhi semua persamaan."
+                "Operasi aljabar meliputi penjumlahan, pengurangan, perkalian, "
+                "dan pembagian suku-suku aljabar."
             ),
             "en": (
-                "A system of linear equations consists of two or more linear equations. "
-                "The solution is the values of variables that satisfy all equations."
+                "Algebraic operations include addition, subtraction, multiplication, "
+                "and division of algebraic terms."
             ),
         },
         explanation={
             "id": (
-                "Sistem persamaan linear terdiri dari dua persamaan yang harus diselesaikan bersama.\n"
-                "Metode eliminasi: jumlahkan persamaan untuk menghilangkan salah satu variabel.\n"
-                "2x = 12, maka x = 6 — nilai x ditemukan dari hasil eliminasi.\n"
-                "Substitusi x = 6 ke salah satu persamaan untuk mencari nilai y.\n"
-                "Solusi (6, 4) adalah pasangan nilai yang memenuhi kedua persamaan secara bersamaan."
+                "Penjumlahan: jumlahkan koefisien dari suku yang sejenis. 3x + 2x = 5x.\n"
+                "Pengurangan: kurangkan koefisien dari suku yang sejenis. 7y − 3y = 4y.\n"
+                "Perkalian: kalikan setiap suku menggunakan sifat distributif. (x + 2)(x + 3) = x² + 5x + 6.\n"
+                "Pembagian: bagi koefisien dan kurangkan pangkat variabel. (6x²)/(2x) = 3x."
             ),
             "en": (
-                "A system of linear equations consists of two equations solved together.\n"
-                "Elimination method: add equations to cancel out one variable.\n"
-                "2x = 12, so x = 6 — the value of x is found from elimination.\n"
-                "Substitute x = 6 into one equation to find the value of y.\n"
-                "Solution (6, 4) is the pair of values that satisfies both equations simultaneously."
+                "Addition: add coefficients of like terms. 3x + 2x = 5x.\n"
+                "Subtraction: subtract coefficients of like terms. 7y − 3y = 4y.\n"
+                "Multiplication: multiply each term using the distributive property. (x + 2)(x + 3) = x² + 5x + 6.\n"
+                "Division: divide coefficients and subtract exponents. (6x²)/(2x) = 3x."
             ),
         },
         examples={
             "id": [
-                "Sistem:  x + y = 10",
-                "          x \u2212 y = 2",
-                "Eliminasi: 2x = 12 \u2192 x = 6",
-                "Substitusi: 6 + y = 10 \u2192 y = 4",
-                "Solusi: (6, 4)",
+                "Penjumlahan: 3x + 2x = 5x",
+                "Pengurangan: 7y − 3y = 4y",
+                "",
+                "Perkalian: (x + 2)(x + 3)",
+                "  = x² + 5x + 6",
+                "",
+                "Pembagian: (6x²)/(2x) = 3x",
             ],
             "en": [
-                "System:  x + y = 10",
-                "         x \u2212 y = 2",
-                "Elimination: 2x = 12 \u2192 x = 6",
-                "Substitution: 6 + y = 10 \u2192 y = 4",
-                "Solution: (6, 4)",
-            ],
-        },
-        playground="systems",
-    ),
-    SubTopic(
-        title={"id": "Polinomial", "en": "Polynomials"},
-        description={
-            "id": (
-                "Polinomial adalah ekspresi aljabar dengan satu atau lebih suku. "
-                "Derajat polinomial ditentukan oleh pangkat tertinggi variabelnya."
-            ),
-            "en": (
-                "A polynomial is an algebraic expression with one or more terms. "
-                "The degree of a polynomial is determined by the highest exponent of its variable."
-            ),
-        },
-        explanation={
-            "id": (
-                "Monomial adalah polinomial yang hanya memiliki satu suku, seperti 5x\u00b3.\n"
-                "Binomial adalah polinomial dengan dua suku yang dipisah operasi tambah atau kurang.\n"
-                "Trinomial adalah polinomial dengan tiga suku, sering muncul dalam persamaan kuadrat.\n"
-                "Penjumlahan polinomial: jumlahkan koefisien dari suku-suku yang memiliki variabel sama.\n"
-                "Perkalian polinomial: kalikan setiap suku dalam kurung pertama dengan setiap suku dalam kurung kedua."
-            ),
-            "en": (
-                "A monomial is a polynomial with only one term, such as 5x\u00b3.\n"
-                "A binomial is a polynomial with two terms separated by addition or subtraction.\n"
-                "A trinomial is a polynomial with three terms, often seen in quadratic equations.\n"
-                "Adding polynomials: add the coefficients of terms that have the same variable and exponent.\n"
-                "Multiplying polynomials: multiply each term in the first parenthesis by each term in the second."
-            ),
-        },
-        examples={
-            "id": [
-                "Monomial: 5x\u00b3 (satu suku)",
-                "Binomial: 3x\u00b2 + 2x (dua suku)",
-                "Trinomial: x\u00b2 \u2212 5x + 6 (tiga suku)",
+                "Addition: 3x + 2x = 5x",
+                "Subtraction: 7y − 3y = 4y",
                 "",
-                "Penjumlahan: (2x\u00b2 + 3x \u2212 1) + (x\u00b2 \u2212 2x + 4) = 3x\u00b2 + x + 3",
-                "Perkalian: (x + 2)(x + 3) = x\u00b2 + 5x + 6",
-            ],
-            "en": [
-                "Monomial: 5x\u00b3 (one term)",
-                "Binomial: 3x\u00b2 + 2x (two terms)",
-                "Trinomial: x\u00b2 \u2212 5x + 6 (three terms)",
+                "Multiplication: (x + 2)(x + 3)",
+                "  = x² + 5x + 6",
                 "",
-                "Addition: (2x\u00b2 + 3x \u2212 1) + (x\u00b2 \u2212 2x + 4) = 3x\u00b2 + x + 3",
-                "Multiplication: (x + 2)(x + 3) = x\u00b2 + 5x + 6",
+                "Division: (6x²)/(2x) = 3x",
             ],
         },
-        playground="polynomials",
+        playground="algebraic_ops",
     ),
     SubTopic(
         title={"id": "Faktorisasi", "en": "Factoring"},
         description={
             "id": (
-                "Faktorisasi adalah proses memecah ekspresi aljabar menjadi faktor-faktor "
-                "yang jika dikalikan menghasilkan ekspresi awal."
+                "Faktorisasi mengubah bentuk aljabar panjang menjadi perkalian faktor-faktornya."
             ),
             "en": (
-                "Factoring is the process of breaking an algebraic expression into factors "
-                "that when multiplied produce the original expression."
+                "Factoring transforms a long algebraic expression into a product of its factors."
             ),
         },
         explanation={
             "id": (
-                "Faktor persekutuan: keluarkan faktor yang sama dari semua suku dalam ekspresi.\n"
-                "Selisih kuadrat: a\u00b2 \u2212 b\u00b2 = (a+b)(a\u2212b), berlaku ketika bentuk kuadrat dikurangkan.\n"
-                "Trinomial x\u00b2 + 5x + 6: cari dua bilangan yang hasil kalinya 6 dan jumlahnya 5.\n"
-                "Trinomial x\u00b2 \u2212 7x + 12: cari dua bilangan yang hasil kalinya 12 dan jumlahnya \u22127."
+                "Faktorisasi adalah kebalikan dari perkalian — mengembalikan ekspresi ke faktor-faktornya.\n"
+                "x² + 5x + 6 = (x + 2)(x + 3) — cari dua bilangan yang hasil kalinya 6 dan jumlahnya 5.\n"
+                "Faktor persekutuan: 6x² + 9x = 3x(2x + 3) — keluarkan faktor yang sama dari setiap suku."
             ),
             "en": (
-                "Common factor: factor out the term shared by all terms in the expression.\n"
-                "Difference of squares: a\u00b2 \u2212 b\u00b2 = (a+b)(a\u2212b), applies when subtracting squares.\n"
-                "Trinomial x\u00b2 + 5x + 6: find two numbers whose product is 6 and sum is 5.\n"
-                "Trinomial x\u00b2 \u2212 7x + 12: find two numbers whose product is 12 and sum is \u22127."
+                "Factoring is the reverse of multiplication — breaking an expression into its factors.\n"
+                "x² + 5x + 6 = (x + 2)(x + 3) — find two numbers whose product is 6 and sum is 5.\n"
+                "Common factor: 6x² + 9x = 3x(2x + 3) — factor out the common term from each term."
             ),
         },
         examples={
             "id": [
-                "Faktor persekutuan: 6x\u00b2 + 9x = 3x(2x + 3)",
-                "Selisih kuadrat: x\u00b2 \u2212 16 = (x + 4)(x \u2212 4)",
-                "Trinomial: x\u00b2 + 5x + 6 = (x + 2)(x + 3)",
-                "Trinomial: x\u00b2 \u2212 7x + 12 = (x \u2212 3)(x \u2212 4)",
+                "x² + 5x + 6",
+                "  = (x + 2)(x + 3)",
+                "",
+                "6x² + 9x",
+                "  = 3x(2x + 3)",
             ],
             "en": [
-                "Common factor: 6x\u00b2 + 9x = 3x(2x + 3)",
-                "Difference of squares: x\u00b2 \u2212 16 = (x + 4)(x \u2212 4)",
-                "Trinomial: x\u00b2 + 5x + 6 = (x + 2)(x + 3)",
-                "Trinomial: x\u00b2 \u2212 7x + 12 = (x \u2212 3)(x \u2212 4)",
+                "x² + 5x + 6",
+                "  = (x + 2)(x + 3)",
+                "",
+                "6x² + 9x",
+                "  = 3x(2x + 3)",
             ],
         },
         playground="factoring",
     ),
     SubTopic(
-        title={"id": "Persamaan Kuadrat", "en": "Quadratic Equations"},
+        title={"id": "Identitas Kuadrat Sempurna", "en": "Perfect Square Identity"},
         description={
-            "id": ("Persamaan kuadrat memiliki bentuk ax\u00b2 + bx + c = 0."),
-            "en": ("A quadratic equation has the form ax\u00b2 + bx + c = 0."),
+            "id": (
+                "Identitas kuadrat sempurna menyatakan bahwa (a+b)² = a² + 2ab + b². "
+                "Identitas ini menunjukkan hubungan antara kuadrat jumlah dua bilangan "
+                "dengan jumlah kuadrat masing-masing ditambah dua kali hasil kalinya."
+            ),
+            "en": (
+                "The perfect square identity states that (a+b)² = a² + 2ab + b². "
+                "It shows the relationship between the square of a sum and the sum of "
+                "individual squares plus twice their product."
+            ),
         },
         explanation={
             "id": (
-                "x\u00b2 − 5x + 6 = 0: cari dua bilangan yang hasil kali 6 dan jumlah −5.\n"
-                "(x − 2)(x − 3) = 0 — bentuk faktor: bilangan tersebut adalah −2 dan −3.\n"
-                "Jika hasil kali = 0, salah satu faktor harus = 0: x = 2 atau x = 3.\n"
-                "x\u00b2 + 6x + 5 = 0: selesaikan dengan rumus kuadrat.\n"
-                "x = (\u22126 \u00b1 \u221a(36 \u2212 20)) / 2 — substitusi a=1, b=6, c=5 ke rumus.\n"
-                "x = (\u22126 \u00b1 \u221a16)/2 = (\u22126 \u00b1 4)/2 — diskriminan = 16.\n"
-                "x = (\u22126 + 4)/2 = \u22121, x = (\u22126 \u2212 4)/2 = \u22125 — dua solusi berbeda."
+                "Jabarkan (x+3)² menjadi (x+3)(x+3), lalu gunakan sifat distributif.\n"
+                "x·x = x², x·3 = 3x, 3·x = 3x, lalu jumlahkan suku sejenis.\n"
+                "Hasil akhir: x² + 6x + 9 — ini bentuk kuadrat sempurna.\n"
+                "Sekarang untuk (2a+5)², jabarkan dengan pola yang sama.\n"
+                "(2a)² = 4a², 2·2a·5 = 20a, 5² = 25.\n"
+                "Hasil akhir: 4a² + 20a + 25 — sesuai rumus (a+b)²."
             ),
             "en": (
-                "x\u00b2 − 5x + 6 = 0: find two numbers whose product is 6 and sum is −5.\n"
-                "(x − 2)(x − 3) = 0 — factored form: those numbers are −2 and −3.\n"
-                "If product = 0, one factor must be 0: x = 2 or x = 3.\n"
-                "x\u00b2 + 6x + 5 = 0: solve using the quadratic formula.\n"
-                "x = (\u22126 \u00b1 \u221a(36 \u2212 20)) / 2 — substitute a=1, b=6, c=5 into the formula.\n"
-                "x = (\u22126 \u00b1 \u221a16)/2 = (\u22126 \u00b1 4)/2 — discriminant = 16.\n"
-                "x = (\u22126 + 4)/2 = \u22121, x = (\u22126 \u2212 4)/2 = \u22125 — two distinct solutions."
+                "Expand (x+3)² into (x+3)(x+3), then use the distributive property.\n"
+                "x·x = x², x·3 = 3x, 3·x = 3x, then combine like terms.\n"
+                "Final result: x² + 6x + 9 — this is a perfect square.\n"
+                "Now for (2a+5)², expand using the same pattern.\n"
+                "(2a)² = 4a², 2·2a·5 = 20a, 5² = 25.\n"
+                "Final result: 4a² + 20a + 25 — matching the (a+b)² formula."
             ),
         },
         examples={
             "id": [
-                "Faktorisasi: x\u00b2 \u2212 5x + 6 = 0",
-                "  (x \u2212 2)(x \u2212 3) = 0",
-                "  x = 2 atau x = 3",
+                "(x + 3)²",
+                "  = x² + 2·x·3 + 3²",
+                "  = x² + 6x + 9",
                 "",
-                "Rumus kuadrat: x\u00b2 + 6x + 5 = 0",
-                "  x = (\u22126 \u00b1 \u221a(36 \u2212 20)) / 2",
-                "  x = (\u22126 \u00b1 4) / 2",
-                "  x = \u22121 atau x = \u22125",
+                "(2a + 5)²",
+                "  = (2a)² + 2·2a·5 + 5²",
+                "  = 4a² + 20a + 25",
             ],
             "en": [
-                "Factoring: x\u00b2 \u2212 5x + 6 = 0",
-                "  (x \u2212 2)(x \u2212 3) = 0",
-                "  x = 2 or x = 3",
+                "(x + 3)²",
+                "  = x² + 2·x·3 + 3²",
+                "  = x² + 6x + 9",
                 "",
-                "Quadratic formula: x\u00b2 + 6x + 5 = 0",
-                "  x = (\u22126 \u00b1 \u221a(36 \u2212 20)) / 2",
-                "  x = (\u22126 \u00b1 4) / 2",
-                "  x = \u22121 or x = \u22125",
+                "(2a + 5)²",
+                "  = (2a)² + 2·2a·5 + 5²",
+                "  = 4a² + 20a + 25",
             ],
         },
-        playground="quadratics",
+        playground="perfect_square",
     ),
     SubTopic(
-        title={"id": "Fungsi", "en": "Functions"},
+        title={
+            "id": "Identitas Selisih Dua Kuadrat",
+            "en": "Difference of Two Squares",
+        },
         description={
             "id": (
-                "Fungsi adalah relasi yang memasangkan setiap input dengan tepat satu output."
+                "Identitas selisih dua kuadrat menyatakan bahwa a² − b² = (a−b)(a+b). "
+                "Identitas ini berguna untuk memfaktorkan bentuk kuadrat yang merupakan "
+                "selisih dua bilangan kuadrat."
             ),
             "en": (
-                "A function is a relation that pairs each input with exactly one output."
+                "The difference of two squares identity states that a² − b² = (a−b)(a+b). "
+                "This identity is useful for factoring quadratic forms that are the "
+                "difference of two squares."
             ),
         },
         explanation={
             "id": (
-                "f(x) = 2x + 1 adalah fungsi linear — grafiknya berupa garis lurus dengan kemiringan 2.\n"
-                "f(3) = 2(3) + 1 = 7 — substitusi x = 3 ke dalam rumus fungsi.\n"
-                "f(x) = x\u00b2 adalah fungsi kuadrat — grafiknya berbentuk parabola.\n"
-                "f(\u22123) = (\u22123)\u00b2 = 9 — bilangan negatif dikuadratkan menjadi positif.\n"
-                "Komposisi fungsi: f(g(x)) artinya g(x) dimasukkan ke dalam f(x).\n"
-                "f(g(3)) = f(4) = 8 — hitung g(3) = 4, lalu f(4) = 8."
+                "x² − 25 adalah selisih dua kuadrat karena x² dan 25 adalah bilangan kuadrat.\n"
+                "Tulis 25 sebagai 5², sehingga bentuknya menjadi x² − 5².\n"
+                "Gunakan rumus a² − b² = (a−b)(a+b) dengan a=x, b=5.\n"
+                "Sekarang untuk 9a² − 16: 9a² = (3a)² dan 16 = 4².\n"
+                "Tulis sebagai (3a)² − 4², dengan a=3a, b=4.\n"
+                "Hasil faktorisasi: (3a − 4)(3a + 4)."
             ),
             "en": (
-                "f(x) = 2x + 1 is a linear function — its graph is a straight line with slope 2.\n"
-                "f(3) = 2(3) + 1 = 7 — substitute x = 3 into the function formula.\n"
-                "f(x) = x\u00b2 is a quadratic function — its graph is a parabola.\n"
-                "f(\u22123) = (\u22123)\u00b2 = 9 — a negative number squared becomes positive.\n"
-                "Function composition: f(g(x)) means plug g(x) into f(x).\n"
-                "f(g(3)) = f(4) = 8 — compute g(3) = 4, then f(4) = 8."
+                "x² − 25 is a difference of two squares because x² and 25 are square numbers.\n"
+                "Write 25 as 5², so the expression becomes x² − 5².\n"
+                "Apply the formula a² − b² = (a−b)(a+b) with a=x, b=5.\n"
+                "Now for 9a² − 16: 9a² = (3a)² and 16 = 4².\n"
+                "Write as (3a)² − 4², with a=3a, b=4.\n"
+                "Factored result: (3a − 4)(3a + 4)."
             ),
         },
         examples={
             "id": [
-                "Fungsi linear: f(x) = 2x + 1",
-                "  f(3) = 2(3) + 1 = 7",
+                "x² − 25",
+                "  = x² − 5²",
+                "  = (x − 5)(x + 5)",
                 "",
-                "Fungsi kuadrat: f(x) = x\u00b2",
-                "  f(\u22123) = (\u22123)\u00b2 = 9",
-                "",
-                "Komposisi: f(x) = 2x, g(x) = x + 1",
-                "  f(g(3)) = f(4) = 8",
+                "9a² − 16",
+                "  = (3a)² − 4²",
+                "  = (3a − 4)(3a + 4)",
             ],
             "en": [
-                "Linear function: f(x) = 2x + 1",
-                "  f(3) = 2(3) + 1 = 7",
+                "x² − 25",
+                "  = x² − 5²",
+                "  = (x − 5)(x + 5)",
                 "",
-                "Quadratic function: f(x) = x\u00b2",
-                "  f(\u22123) = (\u22123)\u00b2 = 9",
-                "",
-                "Composition: f(x) = 2x, g(x) = x + 1",
-                "  f(g(3)) = f(4) = 8",
+                "9a² − 16",
+                "  = (3a)² − 4²",
+                "  = (3a − 4)(3a + 4)",
             ],
         },
-        playground="functions",
-    ),
-    SubTopic(
-        title={"id": "Pertidaksamaan", "en": "Inequalities"},
-        description={
-            "id": ("Pertidaksamaan menggunakan simbol >, <, \u2265, \u2264."),
-            "en": ("Inequalities use symbols >, <, \u2265, \u2264."),
-        },
-        explanation={
-            "id": (
-                "2x + 3 > 7: selesaikan seperti persamaan, tetapi perhatikan tanda >.\n"
-                "2x > 4 — kurangi kedua ruas dengan 3 (tanda tidak berubah).\n"
-                "x > 2 — bagi kedua ruas dengan 2, tanda tetap karena 2 positif.\n"
-                "\u22123x + 5 \u2264 11: perhatikan koefisien x negatif.\n"
-                "\u22123x \u2264 6 — kurangi kedua ruas dengan 5.\n"
-                "x \u2265 \u22122 — bagi dengan \u22123, tanda \u2264 dibalik menjadi \u2265.\n"
-                "Garis bilangan: x > 2 digambar dengan lingkaran kosong di 2, karena 2 tidak termasuk penyelesaian."
-            ),
-            "en": (
-                "2x + 3 > 7: solve like an equation, but keep the > sign.\n"
-                "2x > 4 — subtract 3 from both sides (sign unchanged).\n"
-                "x > 2 — divide both sides by 2, sign stays because 2 is positive.\n"
-                "\u22123x + 5 \u2264 11: note the coefficient of x is negative.\n"
-                "\u22123x \u2264 6 — subtract 5 from both sides.\n"
-                "x \u2265 \u22122 — divide by \u22123, the \u2264 sign reverses to \u2265.\n"
-                "Number line: x > 2 is drawn with an open circle at 2 since 2 is not included."
-            ),
-        },
-        examples={
-            "id": [
-                "Selesaikan 2x + 3 > 7",
-                "  2x > 4",
-                "  x > 2",
-                "",
-                "Selesaikan \u22123x + 5 \u2264 11",
-                "  \u22123x \u2264 6",
-                "  x \u2265 \u22122 (tanda dibalik)",
-                "",
-                "Garis bilangan: x > 2 digambar dengan lingkaran terbuka di 2",
-            ],
-            "en": [
-                "Solve 2x + 3 > 7",
-                "  2x > 4",
-                "  x > 2",
-                "",
-                "Solve \u22123x + 5 \u2264 11",
-                "  \u22123x \u2264 6",
-                "  x \u2265 \u22122 (sign reversed)",
-                "",
-                "Number line: x > 2 is drawn with an open circle at 2",
-            ],
-        },
-        playground="inequalities",
-    ),
-    SubTopic(
-        title={"id": "Eksponen dan Logaritma", "en": "Exponents and Logarithms"},
-        description={
-            "id": (
-                "Eksponen menunjukkan pangkat suatu bilangan. Logaritma adalah kebalikan "
-                "dari eksponen."
-            ),
-            "en": (
-                "Exponents represent the power of a number. Logarithms are the inverse "
-                "of exponents."
-            ),
-        },
-        explanation={
-            "id": (
-                "2\u00b3 = 2×2×2 = 8, 5\u00b2 = 5×5 = 25 — eksponen menghitung berapa kali bilangan dikalikan dengan dirinya sendiri.\n"
-                "2\u207b\u00b3 = 1/2\u00b3 = 1/8 — eksponen negatif adalah kebalikan dari eksponen positif.\n"
-                "7\u2070 = 1 — berapa pun bilangannya, jika dipangkatkan 0 hasilnya selalu 1.\n"
-                "log\u2082(8) = 3 karena 2\u00b3 = 8 — logaritma menjawab '2 dipangkatkan berapa supaya hasilnya 8?'.\n"
-                "ln(e) = 1 — logaritma natural (ln) menggunakan basis e (bilangan Euler ≈ 2,718).\n"
-                "log\u2082(32) = log\u2082(4×8) = log\u2082(4) + log\u2082(8) = 2 + 3 = 5 — logaritma perkalian sama dengan jumlah logaritma."
-            ),
-            "en": (
-                "2\u00b3 = 2×2×2 = 8, 5\u00b2 = 5×5 = 25 — exponents count how many times a number multiplies itself.\n"
-                "2\u207b\u00b3 = 1/2\u00b3 = 1/8 — a negative exponent gives the reciprocal of the positive power.\n"
-                "7\u2070 = 1 — any non-zero number raised to the power of 0 always equals 1.\n"
-                "log\u2082(8) = 3 because 2\u00b3 = 8 — logarithms answer 'to what power must 2 be raised to get 8?'.\n"
-                "ln(e) = 1 — natural log (ln) uses base e (Euler's number ≈ 2.718).\n"
-                "log\u2082(32) = log\u2082(4×8) = log\u2082(4) + log\u2082(8) = 2 + 3 = 5 — log of a product equals the sum of logs."
-            ),
-        },
-        examples={
-            "id": [
-                "Eksponen: 2\u00b3 = 8, 5\u00b2 = 25",
-                "Eksponen negatif: 2\u207b\u00b3 = 1/8",
-                "Eksponen nol: 7\u2070 = 1",
-                "",
-                "Logaritma: log\u2082(8) = 3 (karena 2\u00b3 = 8)",
-                "Logaritma natural: ln(e) = 1",
-                "Sifat: log\u2082(32) = log\u2082(4 \u00d7 8) = log\u2082(4) + log\u2082(8) = 2 + 3 = 5",
-            ],
-            "en": [
-                "Exponents: 2\u00b3 = 8, 5\u00b2 = 25",
-                "Negative exponents: 2\u207b\u00b3 = 1/8",
-                "Zero exponent: 7\u2070 = 1",
-                "",
-                "Logarithm: log\u2082(8) = 3 (since 2\u00b3 = 8)",
-                "Natural log: ln(e) = 1",
-                "Property: log\u2082(32) = log\u2082(4 \u00d7 8) = log\u2082(4) + log\u2082(8) = 2 + 3 = 5",
-            ],
-        },
-        playground="exponents_logs",
+        playground="diff_squares",
     ),
 ]
 

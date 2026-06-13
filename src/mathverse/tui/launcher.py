@@ -145,7 +145,9 @@ def _render(
             rt.append(" " * (tw - len(text)), style=bg_black)
             console.print(rt)
         else:
-            console.print(text.ljust(tw), style=f"{style} {bg_black}" if style else bg_black)
+            console.print(
+                text.ljust(tw), style=f"{style} {bg_black}" if style else bg_black
+            )
 
     used = top_pad + len(content)
     for _ in range(max(0, th - 1 - used)):

@@ -156,7 +156,7 @@ def _render_detail(
     inner_w = tw - 2 * pad - 2
     desc = concept.description
     if len(desc) > inner_w:
-        for chunk in [desc[i:i+inner_w] for i in range(0, len(desc), inner_w)]:
+        for chunk in [desc[i : i + inner_w] for i in range(0, len(desc), inner_w)]:
             content.append((chunk, None))
     else:
         content.append((desc, None))
@@ -237,7 +237,9 @@ def _render_content(
         for text, style in content[hc:]:
             if text is None:
                 console.print(" " * pad, style=bg_black, end="")
-                console.print("│" + " " * (tw - 2 * pad - 2) + "│", style=fg_green, end="")
+                console.print(
+                    "│" + " " * (tw - 2 * pad - 2) + "│", style=fg_green, end=""
+                )
                 console.print(" " * pad, style=bg_black)
             elif style == "reverse":
                 console.print(" " * pad, style=bg_black, end="")
