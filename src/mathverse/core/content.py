@@ -761,5 +761,323 @@ _algebra_subtopics = [
     ),
 ]
 
+_algebra_subtopics.append(
+    SubTopic(
+        title={"id": "Persamaan Linear", "en": "Linear Equations"},
+        description={
+            "id": (
+                "Persamaan linear adalah persamaan yang variabelnya berpangkat satu. "
+                "Bentuk umumnya ax + b = 0 dengan a ≠ 0."
+            ),
+            "en": (
+                "A linear equation is an equation where the variable has an exponent of one. "
+                "Its general form is ax + b = 0 where a ≠ 0."
+            ),
+        },
+        explanation={
+            "id": (
+                "Kurangi kedua ruas dengan 4 untuk mengisolasi suku 2x.\n"
+                "Bagi kedua ruas dengan 2 untuk mendapatkan nilai x.\n"
+                "x = 3 adalah solusi dari persamaan 2x + 4 = 10.\n"
+                "Tambahkan 7 ke kedua ruas untuk menghilangkan pengurangan.\n"
+                "Bagi kedua ruas dengan 3 untuk mendapatkan nilai x.\n"
+                "x = 5 adalah solusi dari persamaan 3x − 7 = 8."
+            ),
+            "en": (
+                "Subtract 4 from both sides to isolate the 2x term.\n"
+                "Divide both sides by 2 to find the value of x.\n"
+                "x = 3 is the solution to the equation 2x + 4 = 10.\n"
+                "Add 7 to both sides to eliminate the subtraction.\n"
+                "Divide both sides by 3 to find the value of x.\n"
+                "x = 5 is the solution to the equation 3x − 7 = 8."
+            ),
+        },
+        examples={
+            "id": [
+                "2x + 4 = 10",
+                "  Kurangi 4: 2x = 6",
+                "  x = 3",
+                "",
+                "3x − 7 = 8",
+                "  Tambah 7: 3x = 15",
+                "  x = 5",
+            ],
+            "en": [
+                "2x + 4 = 10",
+                "  Subtract 4: 2x = 6",
+                "  x = 3",
+                "",
+                "3x − 7 = 8",
+                "  Add 7: 3x = 15",
+                "  x = 5",
+            ],
+        },
+        playground="linear_equations",
+    ),
+)
+
+_algebra_subtopics.append(
+    SubTopic(
+        title={
+            "id": "Sistem Persamaan Linear",
+            "en": "Systems of Linear Equations",
+        },
+        description={
+            "id": (
+                "Sistem persamaan linear terdiri dari dua atau lebih persamaan linear "
+                "yang diselesaikan secara bersama-sama."
+            ),
+            "en": (
+                "A system of linear equations consists of two or more linear equations "
+                "solved simultaneously."
+            ),
+        },
+        explanation={
+            "id": (
+                "Persamaan pertama: jumlah x dan y adalah 10.\n"
+                "Persamaan kedua: selisih x dan y adalah 2.\n"
+                "Jumlahkan kedua persamaan untuk mengeliminasi y: 2x = 12, x = 6.\n"
+                "Substitusi x = 6 ke x + y = 10: y = 10 − 6 = 4.\n"
+                "Persamaan pertama sistem kedua: 2x + y = 7.\n"
+                "Persamaan kedua sistem kedua: x − y = 2.\n"
+                "Jumlahkan untuk eliminasi y: 3x = 9, x = 3.\n"
+                "Substitusi x = 3: 2(3) + y = 7 → 6 + y = 7 → y = 1."
+            ),
+            "en": (
+                "First equation: the sum of x and y is 10.\n"
+                "Second equation: the difference of x and y is 2.\n"
+                "Add both equations to eliminate y: 2x = 12, x = 6.\n"
+                "Substitute x = 6 into x + y = 10: y = 10 − 6 = 4.\n"
+                "First equation of the second system: 2x + y = 7.\n"
+                "Second equation of the second system: x − y = 2.\n"
+                "Add to eliminate y: 3x = 9, x = 3.\n"
+                "Substitute x = 3: 2(3) + y = 7 → 6 + y = 7 → y = 1."
+            ),
+        },
+        examples={
+            "id": [
+                "x + y = 10",
+                "x − y = 2",
+                "",
+                "Jumlahkan: 2x = 12, x = 6",
+                "y = 10 − 6 = 4",
+                "",
+                "2x + y = 7",
+                "x − y = 2",
+                "",
+                "Jumlahkan: 3x = 9, x = 3",
+                "y = 7 − 2(3) = 1",
+            ],
+            "en": [
+                "x + y = 10",
+                "x − y = 2",
+                "",
+                "Add: 2x = 12, x = 6",
+                "y = 10 − 6 = 4",
+                "",
+                "2x + y = 7",
+                "x − y = 2",
+                "",
+                "Add: 3x = 9, x = 3",
+                "y = 7 − 2(3) = 1",
+            ],
+        },
+        playground="systems_of_equations",
+    ),
+)
+
+_algebra_subtopics.append(
+    SubTopic(
+        title={"id": "Persamaan Kuadrat", "en": "Quadratic Equations"},
+        description={
+            "id": (
+                "Persamaan kuadrat adalah persamaan berpangkat dua dengan bentuk umum "
+                "ax\u00b2 + bx + c = 0, dengan a \u2260 0."
+            ),
+            "en": (
+                "A quadratic equation is a second-degree equation with the general form "
+                "ax\u00b2 + bx + c = 0, where a \u2260 0."
+            ),
+        },
+        explanation={
+            "id": (
+                "x\u00b2 \u2212 5x + 6 = 0: cari dua bilangan yang hasil kalinya 6 dan jumlahnya 5.\n"
+                "Faktor dari 6 yang berjumlah 5 adalah 2 dan 3: (x \u2212 2)(x \u2212 3) = 0.\n"
+                "Akar-akarnya adalah x = 2 dan x = 3, diperoleh dari (x \u2212 2) = 0 atau (x \u2212 3) = 0.\n"
+                "Gunakan rumus kuadrat: x = [\u2212(\u22125) \u00b1 \u221a((\u22125)\u00b2 \u2212 4\u00b71\u00b76)] / (2\u00b71).\n"
+                "Hitung diskriminan: D = 25 \u2212 24 = 1, \u221a1 = 1.\n"
+                "x = (5 \u00b1 1) / 2 = 3 dan 2, hasilnya sama dengan metode pemfaktoran."
+            ),
+            "en": (
+                "x\u00b2 \u2212 5x + 6 = 0: find two numbers whose product is 6 and sum is 5.\n"
+                "The factors of 6 that sum to 5 are 2 and 3: (x \u2212 2)(x \u2212 3) = 0.\n"
+                "The roots are x = 2 and x = 3, from (x \u2212 2) = 0 or (x \u2212 3) = 0.\n"
+                "Use the quadratic formula: x = [\u2212(\u22125) \u00b1 \u221a((\u22125)\u00b2 \u2212 4\u00b71\u00b76)] / (2\u00b71).\n"
+                "Calculate discriminant: D = 25 \u2212 24 = 1, \u221a1 = 1.\n"
+                "x = (5 \u00b1 1) / 2 = 3 and 2, same result as factoring."
+            ),
+        },
+        examples={
+            "id": [
+                "x\u00b2 \u2212 5x + 6 = 0",
+                "",
+                "Pemfaktoran: (x \u2212 2)(x \u2212 3) = 0",
+                "  x \u2212 2 = 0 \u2192 x = 2",
+                "  x \u2212 3 = 0 \u2192 x = 3",
+                "",
+                "Rumus kuadrat: x = (5 \u00b1 \u221a1) / 2",
+                "  x\u2081 = (5 + 1)/2 = 3",
+                "  x\u2082 = (5 \u2212 1)/2 = 2",
+            ],
+            "en": [
+                "x\u00b2 \u2212 5x + 6 = 0",
+                "",
+                "Factoring: (x \u2212 2)(x \u2212 3) = 0",
+                "  x \u2212 2 = 0 \u2192 x = 2",
+                "  x \u2212 3 = 0 \u2192 x = 3",
+                "",
+                "Quadratic formula: x = (5 \u00b1 \u221a1) / 2",
+                "  x\u2081 = (5 + 1)/2 = 3",
+                "  x\u2082 = (5 \u2212 1)/2 = 2",
+            ],
+        },
+        playground="quadratic",
+    ),
+)
+
+_algebra_subtopics.append(
+    SubTopic(
+        title={"id": "Fungsi", "en": "Functions"},
+        description={
+            "id": (
+                "Fungsi adalah hubungan antara input dan output di mana setiap input "
+                "memiliki tepat satu output."
+            ),
+            "en": (
+                "A function is a relationship between input and output where each input "
+                "has exactly one output."
+            ),
+        },
+        explanation={
+            "id": (
+                "f(x) = 2x + 1: untuk setiap nilai x, kalikan dengan 2 lalu tambah 1.\n"
+                "Jika x = 3, maka f(3) = 2\u00b73 + 1 = 7.\n"
+                "Jika x = \u22122, maka f(\u22122) = 2\u00b7(\u22122) + 1 = \u22123.\n"
+                "f(x) = x\u00b2: fungsi kuadrat, setiap x dipetakan ke kuadratnya.\n"
+                "f(4) = 4\u00b2 = 16, dan f(\u22124) = (\u22124)\u00b2 = 16.\n"
+                "f(x) = |x|: fungsi nilai mutlak, selalu menghasilkan nilai non-negatif.\n"
+                "f(\u22125) = |\u22125| = 5, dan f(3) = |3| = 3."
+            ),
+            "en": (
+                "f(x) = 2x + 1: for every x, multiply by 2 and add 1.\n"
+                "If x = 3, then f(3) = 2\u00b73 + 1 = 7.\n"
+                "If x = \u22122, then f(\u22122) = 2\u00b7(\u22122) + 1 = \u22123.\n"
+                "f(x) = x\u00b2: a quadratic function, each x maps to its square.\n"
+                "f(4) = 4\u00b2 = 16, and f(\u22124) = (\u22124)\u00b2 = 16.\n"
+                "f(x) = |x|: absolute value function, always non-negative.\n"
+                "f(\u22125) = |\u22125| = 5, and f(3) = |3| = 3."
+            ),
+        },
+        examples={
+            "id": [
+                "f(x) = 2x + 1",
+                "",
+                "Jika x = 3, f(3) = 2(3) + 1 = 7",
+                "Jika x = \u22122, f(\u22122) = 2(\u22122) + 1 = \u22123",
+                "",
+                "f(x) = x\u00b2",
+                "f(4) = 16, f(\u22124) = 16",
+                "",
+                "f(x) = |x|",
+                "f(\u22125) = 5, f(3) = 3",
+            ],
+            "en": [
+                "f(x) = 2x + 1",
+                "",
+                "If x = 3, f(3) = 2(3) + 1 = 7",
+                "If x = \u22122, f(\u22122) = 2(\u22122) + 1 = \u22123",
+                "",
+                "f(x) = x\u00b2",
+                "f(4) = 16, f(\u22124) = 16",
+                "",
+                "f(x) = |x|",
+                "f(\u22125) = 5, f(3) = 3",
+            ],
+        },
+        playground="functions",
+    ),
+)
+
+_algebra_subtopics.append(
+    SubTopic(
+        title={"id": "Eksponen dan Logaritma", "en": "Exponents and Logarithms"},
+        description={
+            "id": (
+                "Eksponen menunjukkan berapa kali suatu bilangan dikalikan dengan "
+                "dirinya sendiri. Logaritma adalah kebalikan (invers) dari eksponen."
+            ),
+            "en": (
+                "Exponents indicate how many times a number is multiplied by itself. "
+                "Logarithms are the inverse of exponents."
+            ),
+        },
+        explanation={
+            "id": (
+                "Eksponen: x\u00b2 = x \u00d7 x, dibaca x kuadrat.\n"
+                "Eksponen: x\u00b3 = x \u00d7 x \u00d7 x, dibaca x pangkat tiga.\n"
+                "Bilangan apa pun pangkat 0 sama dengan 1: x\u2070 = 1.\n"
+                "Eksponen negatif berarti kebalikan: 2\u207b\u00b9 = \u00bd.\n"
+                "Logaritma: log\u2082(8) = 3 karena 2\u00b3 = 8.\n"
+                "Logaritma: log\u2081\u2080(1000) = 3 karena 10\u00b3 = 1000.\n"
+                "Logaritma: log\u2083(9) = 2 karena 3\u00b2 = 9.\n"
+                "Secara umum: log\u2090(b) = c \u2194 a\u1d9c = b."
+            ),
+            "en": (
+                "Exponent: x\u00b2 = x \u00d7 x, read as x squared.\n"
+                "Exponent: x\u00b3 = x \u00d7 x \u00d7 x, read as x cubed.\n"
+                "Any number to the power of 0 equals 1: x\u2070 = 1.\n"
+                "Negative exponent means reciprocal: 2\u207b\u00b9 = \u00bd.\n"
+                "Logarithm: log\u2082(8) = 3 because 2\u00b3 = 8.\n"
+                "Logarithm: log\u2081\u2080(1000) = 3 because 10\u00b3 = 1000.\n"
+                "Logarithm: log\u2083(9) = 2 because 3\u00b2 = 9.\n"
+                "In general: log\u2090(b) = c \u2194 a\u1d9c = b."
+            ),
+        },
+        examples={
+            "id": [
+                "Eksponen:",
+                "  x\u00b2 = x \u00d7 x",
+                "  x\u00b3 = x \u00d7 x \u00d7 x",
+                "  2\u00b3 = 8",
+                "  5\u00b2 = 25",
+                "  10\u2070 = 1",
+                "  2\u207b\u00b9 = \u00bd",
+                "",
+                "Logaritma:",
+                "  log\u2082(8) = 3 \u2194 2\u00b3 = 8",
+                "  log\u2081\u2080(1000) = 3 \u2194 10\u00b3 = 1000",
+                "  log\u2083(9) = 2 \u2194 3\u00b2 = 9",
+                "  log\u2085(25) = 2 \u2194 5\u00b2 = 25",
+            ],
+            "en": [
+                "Exponents:",
+                "  x\u00b2 = x \u00d7 x",
+                "  x\u00b3 = x \u00d7 x \u00d7 x",
+                "  2\u00b3 = 8",
+                "  5\u00b2 = 25",
+                "  10\u2070 = 1",
+                "  2\u207b\u00b9 = \u00bd",
+                "",
+                "Logarithms:",
+                "  log\u2082(8) = 3 \u2194 2\u00b3 = 8",
+                "  log\u2081\u2080(1000) = 3 \u2194 10\u00b3 = 1000",
+                "  log\u2083(9) = 2 \u2194 3\u00b2 = 9",
+                "  log\u2085(25) = 2 \u2194 5\u00b2 = 25",
+            ],
+        },
+        playground="exponents_logs",
+    ),
+)
+
 _reg("algebra", _algebra_subtopics)
 _reg("aljabar", _algebra_subtopics)

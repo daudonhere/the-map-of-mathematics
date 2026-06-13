@@ -62,9 +62,6 @@ def _render(
     console: Console,
     items: list[str],
     current: int,
-    locale: str,
-    *,
-    lang_menu: bool = False,
 ) -> None:
     th = shutil.get_terminal_size().lines
     tw = shutil.get_terminal_size().columns
@@ -83,10 +80,6 @@ def _render(
         sub_left_pad = max(0, (tw - len(subtitle)) // 2)
         content.append((" " * sub_left_pad + subtitle, "italic"))
         content.append((None, None))
-        content.append((None, None))
-
-    if lang_menu:
-        content.append((t("select_language", locale), "bold"))
         content.append((None, None))
 
     max_item = max(len(f"> {item}") for item in items)
@@ -179,7 +172,7 @@ def run_launcher(locale: str = "en") -> tuple[str, str] | None:
         while True:
             if in_lang_menu:
                 langs = [label for label, _ in [("English", "en"), ("Indonesia", "id")]]
-                _render(console, langs, lang_current, locale, lang_menu=True)
+                _render(console, langs, lang_current)
                 key = _read_key()
                 if key == "up":
                     lang_current = (lang_current - 1) % 2
@@ -196,7 +189,7 @@ def run_launcher(locale: str = "en") -> tuple[str, str] | None:
                 elif key in ("esc", "tab", "q"):
                     in_lang_menu = False
             else:
-                _render(console, items, current, locale)
+                _render(console, items, current)
                 key = _read_key()
                 if key == "up":
                     current = (current - 1) % len(items)
