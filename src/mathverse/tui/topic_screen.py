@@ -104,7 +104,7 @@ def _read_input_at_cursor(fd: int, tw: int) -> str | None:
                 sys.stdout.flush()
                 return buf
             elif ch == b"\t":
-                return None
+                return "\r"
             elif ch == b"\x7f":
                 buf = buf[:-1]
             else:
@@ -563,6 +563,8 @@ def _playground(console: Console, playground: str, locale: str, title: str = "")
         result = _read_input_at_cursor(fd2, tw)
         if result is None:
             return None
+        if result == "\r":
+            return 0
 
         total += 1
         is_correct = result.strip() == answer_str
@@ -589,7 +591,9 @@ def _playground(console: Console, playground: str, locale: str, title: str = "")
             k = _read_key()
             if k == "enter":
                 break
-            elif k in ("esc", "tab", "q"):
+            elif k == "tab":
+                return 0
+            elif k in ("esc", "q"):
                 return None
 
 

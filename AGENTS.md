@@ -136,8 +136,8 @@ List (↑↓ arrows) → Enter → Detail view → Enter → Playground. Esc exi
 | Browser detail | Exit app | Back to list |
 | Topic list | Exit app | Back to browser |
 | Topic detail | Exit app | Back to list |
-| Playground input | Exit app | Exit app |
-| Playground feedback | Exit app | Exit app |
+| Playground input | Exit app | Back to topic |
+| Playground feedback | Exit app | Back to topic |
 
 ### Content (`src/mathverse/core/content.py`)
 - `SubTopic` dataclass: `title` (dict[str,str]), `description` (dict[str,str]), `explanation` (dict[str,str]), `examples` (dict[str,list[str]]), `playground` (str | None).
