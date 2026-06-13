@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from themath.core.models import GraphData, MathConcept
+from mathverse.core.models import GraphData, MathConcept
 
 
 class TestMathConcept:

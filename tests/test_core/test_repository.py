@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from themath.core.repository import Repository
+from mathverse.core.repository import Repository
 
 
 class TestRepository:

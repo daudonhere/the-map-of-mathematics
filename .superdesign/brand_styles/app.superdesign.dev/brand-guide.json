@@ -1,0 +1,28 @@
+{
+  "success": true,
+  "data": {
+    "colors": {
+      "background": "#fcfcfc",
+      "card": "#ffffff",
+      "button": "#000000",
+      "button-dark": "#18181b",
+      "border": "#e4e4e7",
+      "text-secondary": "#3f3f46",
+      "text-muted": "#707070"
+    },
+    "fonts": [
+      "Inter Variable"
+    ],
+    "logo": {
+      "url": "https://app.superdesign.dev/superdesign_logo.svg",
+      "needsDarkBackground": false
+    },
+    "screenshot": {
+      "url": "https://pquxfbbxflqvtidtlrhl.supabase.co/storage/v1/object/public/hmac-uploads/brand/9ecba65f-8a52-4d29-a7c3-cb4ab49dd53f/screenshot.png",
+      "width": 1920,
+      "height": 1080,
+      "sizeBytes": 32032,
+      "uploadedAt": "2026-06-13T02:32:54.924Z"
+    }
+  }
+}

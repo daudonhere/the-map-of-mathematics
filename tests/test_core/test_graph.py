@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from themath.core.graph import GraphBuilder
-from themath.core.models import MathConcept
+from mathverse.core.graph import GraphBuilder
+from mathverse.core.models import MathConcept
 
 
 class TestGraphBuilder:

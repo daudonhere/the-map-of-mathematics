@@ -1,80 +1,76 @@
-# Design System - The Map of Mathematics
+# Design System — The Map of Mathematics (GUI)
 
 ## Product Context
-A bilingual (EN/ID) terminal TUI + desktop GUI application for exploring, searching, and visualizing mathematical concepts. Users navigate a connected graph of 14 math concepts per locale.
-
-## Platform
-- **Primary**: Terminal/CLI (Rich text rendering)
-- **Secondary**: Desktop GUI (PyQt6)
-
-## Brand Typography
-- **Terminal**: Monospace font (terminal default, ~9-12pt)
-- **GUI**: STIX Two Text at 13pt (scientific typesetting font, bundled as OTF)
+Desktop application for exploring mathematics concepts. Dark-themed educational tool with bilingual support (English/Indonesian).
 
 ## Color Palette
+- Background: #1a1a2e (dark navy)
+- Surface/Card: #16213e (slightly lighter navy)
+- Accent/Primary: #FFD700 (gold) — used for borders, selection highlights, button outlines, titles
+- Accent Hover: #e6c200 (darker gold) — button hover state
+- Text Primary: #f0f0f0 (near white)
+- Text Secondary: #aaa (gray)
+- Text Muted: #888 (dimmer gray)
+- Border: #333 (dark gray)
+- Button Surface: #FFD700 text on transparent bg, gold border
+- Button Hover: filled #FFD700 with #1a1a2e text
+- Success: #00ff88 (green)
+- Error: #ff4444 (red)
 
-### Terminal Colors
-- Background: terminal default (typically dark bg, light text)
-- Cyan: `bold cyan` — banner, concept names, menu numbers
-- Yellow: `bold yellow` — panel titles, "Related" labels
-- Magenta: `bold magenta` — greeting text
-- Red: `bold red` / `red` — exit option, errors
-- Green: `green` — graph edges (relationships)
-- Dim: `dim` — keybind hints, category labels, secondary info
-- Reverse: `reverse` — selected menu item (inverted fg/bg)
-
-### GUI Colors
-- Background: default Qt light theme
-- Text: default black
-- Subtitle: `#666666`
-- Category: `#888888`
-- Link/connection: `#0066cc`
-- Buttons: default Qt style
-
-## ASCII Banner
-5 lines of fixed-width block letters spelling "THE MATH":
-```
-TTTTTTT H   H EEEEEE   M   M  AAAA  TTTTTTT H   H
-   T    H   H E        MM MM A   A    T    H   H
-   T    HHHHH EEEEE    M M M AAAAA    T    HHHHH
-   T    H   H E        M   M A   A    T    H   H
-   T    H   H EEEEEE   M   M A   A    T    H   H
-```
-Rendered in bold cyan, centered.
-
-## Layout Conventions
-
-### TUI Launcher
-- Full screen clear before render
-- Banner + blank line + menu items + blank line + keybind hints
-- Selected item: `> ` prefix + reverse style
-- Unselected item: `  ` prefix (2 spaces)
-- Keybind hints: dim style, centered
-
-### CLI Menu
-- Rich Panel with border
-- Panel title: app name (bold yellow)
-- Panel subtitle: instruction text
-- Numbered table (no borders, minimal padding)
-- 0 = exit (bold red)
-
-### GUI Screens
-- Content margins: 40px horizontal, 24px vertical
-- Title: 28px bold
-- Section header: 24px bold
-- Body: 14px
-- Secondary: 13px colored
-
-## Iconography
-No icons in terminal mode. GUI uses no custom icons (standard Qt widget text only).
+## Typography
+- Primary Font: STIX Two Text (scientific typesetting) at 13pt body
+- Monospace: used for ASCII banner elements
+- Title (h1): 64px bold, gold, centered — splash screen
+- Title (h2): 28px bold, gold, centered — screen headings
+- Subtitle: 16px italic, #888 (#666), centered — tagline
+- Body: 14-15px, #ccc/#f0f0f0
+- Muted: 13px, #888
 
 ## Spacing
-- Terminal blank lines: 1 newline between sections
-- Panel padding: (0, 2) for tables
-- GUI margins: 40px horizontal, 24px vertical (all screens)
+- Content margins: 40px horizontal, 16-24px vertical
+- Between sections: 12-16px
+- Between items in list: 8px padding
+- Button padding: 12px 24px (large), 8px 16px (default)
 
-## Language Support
-- Two locales: English (en) and Indonesian (id)
-- Labels defined in `src/themath/core/i18n.py`
-- Default locale: Indonesian (id)
-- Override via: `--lang en` flag or language menu in launcher
+## Components
+
+### Button Styles
+- **Primary (gold outline)**: transparent bg, 2px #FFD700 border, gold text, 8px border-radius, bold
+  - Hover: filled #FFD700 bg, #1a1a2e text
+- **Secondary (subtle back)**: transparent bg, 1px #555 border, #888 text, 8px border-radius
+  - Hover: border and text turn #FFD700
+- **Default dark**: #FFD700 bg, #1a1a2e text, no border, 6px border-radius
+  - Hover: #e6c200
+
+### List Items (QListWidget)
+- Dark bg (#16213e), gold border (#FFD700)
+- Items: 10px 14px padding, 4px border-radius
+- Selected: #FFD700 bg, #1a1a2e text
+- Hover: #2a2a4e bg
+
+### Text/Body Area (QTextBrowser)
+- Transparent bg, #ccc text
+- Border: none or 1px #333 with 8px padding
+
+### Separators (QFrame HLine)
+- Color: #333 or #444
+
+### Dialog (Playground)
+- Dark bg (#1a1a2e)
+- Header title: 22px bold gold
+- Input: dark bg (#16213e), gold border on focus
+- Buttons: gold filled for primary actions
+
+## Layout Patterns
+- **Splash Screen**: centered vertical layout with stretch
+  - Large "THE MATH" title
+  - Math symbols row
+  - Italic slogan
+  - Horizontal separator
+  - Start button (large, gold outline)
+  - Change Language button (subtle)
+- **Topic List Screen**: back button top-left, title centered, scrollable list, bottom bar with Back (left) and Visualize (right) buttons
+- **Explore Screen**: back button top-left, concept name centered, category center, description, "Explore Topics" button (if available), Related Concepts list
+- **Topic Screen**: back button, concept name, stacked list/detail views
+  - List: clickable subtopic list, separator, description preview
+  - Detail: back-to-list button, subtopic title, examples (dim) + explanations (italic), playground button

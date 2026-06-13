@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from themath.core.repository import Repository
-from themath.core.service import MapService
+from mathverse.core.repository import Repository
+from mathverse.core.service import MapService
 
 
 class TestMapService:

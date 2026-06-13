@@ -62,7 +62,7 @@ This is a terminal application with optional PyQt6 desktop GUI. Theme tokens ref
 - Category bottom padding: 8px
 
 ### Bundle Fonts
-- Location: `src/themath/gui/fonts/`
+- Location: `src/mathverse/gui/fonts/`
 - Format: OTF (OpenType)
 - Family: STIX Two Text (scientific typesetting)
 - Load method: QFontDatabase.addApplicationFont()

@@ -3,12 +3,12 @@
 This is a Python application with no web routing. Navigation is imperative (function calls and widget stacking).
 
 ## Entry Point
-- File: `src/themath/__main__.py`
-- `python -m themath` entry
+- File: `src/mathverse/__main__.py`
+- `python -m mathverse` entry
 
 ### Flow:
 ```
-python -m themath
+python -m mathverse
   |-- parses --lang en|id (default: id)
   |-- if --gui: -> GUI main() directly
   |-- else: -> TUI Launcher (run_launcher)

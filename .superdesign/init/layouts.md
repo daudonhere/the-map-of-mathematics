@@ -5,7 +5,7 @@ This is a terminal TUI and desktop GUI application. Layouts describe screen-leve
 ## Terminal Layouts
 
 ### TUI Launcher Layout
-- File: `src/themath/tui/launcher.py`
+- File: `src/mathverse/tui/launcher.py`
 - Structure:
   1. Clear screen
   2. Print 5-line ASCII banner "THE MATH" (bold cyan, centered)
@@ -16,7 +16,7 @@ This is a terminal TUI and desktop GUI application. Layouts describe screen-leve
 - Sub-layout: Language submenu (same banner) with title "Select Language" and 2 items (English, Indonesia), keybind hint: "Up/Down Navigate | Enter Select | Esc Back"
 
 ### CLI Menu Layout
-- File: `src/themath/cli/main.py`
+- File: `src/mathverse/cli/main.py`
 - Structure:
   1. Print greeting: "[bold magenta]Hello, Professor![/]"
   2. Loop:
@@ -27,14 +27,14 @@ This is a terminal TUI and desktop GUI application. Layouts describe screen-leve
      - On valid selection: print blank line, call print_concept(), print blank line
 
 ### CLI Explore View
-- File: `src/themath/cli/utils.py` (print_graph)
+- File: `src/mathverse/cli/utils.py` (print_graph)
 - Structure:
   - Rich Tree titled "[bold]Graph[/]"
   - For each node: branch with concept name (cyan), category (dim), description
   - For each edge: "[green]source -> target[/]"
   
 ### CLI Search View
-- File: `src/themath/cli/utils.py` (print_concept_table)
+- File: `src/mathverse/cli/utils.py` (print_concept_table)
 - Structure:
   - Rich Table titled "Concepts"
   - Columns: ID (dim), Name (cyan), Category (magenta), Description

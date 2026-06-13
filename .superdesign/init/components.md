@@ -5,7 +5,7 @@ This project is a Python terminal TUI (Text User Interface) and desktop GUI appl
 ## Terminal (Rich) Components
 
 ### TUI Launcher (ASCII Banner + Menu)
-- Source: `src/themath/tui/launcher.py` (131 lines)
+- Source: `src/mathverse/tui/launcher.py` (131 lines)
 - Description: Full-screen launcher with ASCII art banner, Rich console menu, and raw terminal key handling via termios/tty.
 
 Full source:
@@ -19,7 +19,7 @@ import tty
 from rich.console import Console
 from rich.text import Text
 
-from themath.core.i18n import t
+from mathverse.core.i18n import t
 
 BANNER = [
     "TTTTTTT H   H EEEEEE   M   M  AAAA  TTTTTTT H   H",
@@ -144,7 +144,7 @@ def run_launcher(locale: str = "id") -> str | None:
 ```
 
 ### CLI Menu (Rich Panel + Table)
-- Source: `src/themath/cli/main.py` (83 lines)
+- Source: `src/mathverse/cli/main.py` (83 lines)
 - Description: Numbered list of concepts displayed in a Rich Panel with Table, with input-based navigation.
 
 Full source:
@@ -157,10 +157,10 @@ from rich import print as rprint
 from rich.panel import Panel
 from rich.table import Table
 
-from themath.cli.utils import console, print_concept
-from themath.core.repository import Repository
-from themath.core.seed import seed_repo
-from themath.core.service import MapService
+from mathverse.cli.utils import console, print_concept
+from mathverse.core.repository import Repository
+from mathverse.core.seed import seed_repo
+from mathverse.core.service import MapService
 
 
 def _build_menu_table(service: MapService) -> tuple[Table, dict[int, str]]:
@@ -235,7 +235,7 @@ if __name__ == "__main__":
 ```
 
 ### CLI Utility Functions (print_concept, print_graph, print_concept_table)
-- Source: `src/themath/cli/utils.py` (42 lines)
+- Source: `src/mathverse/cli/utils.py` (42 lines)
 - Description: Shared Rich rendering functions for concept display, tables, and graph trees.
 
 Full source:
@@ -246,7 +246,7 @@ from rich.console import Console
 from rich.table import Table
 from rich.tree import Tree
 
-from themath.core.models import GraphData, MathConcept
+from mathverse.core.models import GraphData, MathConcept
 
 console = Console()
 
@@ -285,29 +285,29 @@ def print_graph(graph: GraphData) -> None:
 ```
 
 ### CLI Commands (Explore, Search, Visualize)
-- Source: `src/themath/cli/commands/explore.py` (20 lines)
-- Source: `src/themath/cli/commands/search.py` (20 lines)
-- Source: `src/themath/cli/commands/visualize.py` (22 lines)
+- Source: `src/mathverse/cli/commands/explore.py` (20 lines)
+- Source: `src/mathverse/cli/commands/search.py` (20 lines)
+- Source: `src/mathverse/cli/commands/visualize.py` (22 lines)
 - Description: Standalone Typer commands for explore, search, and visualize. Not wired to the main entry point.
 
 ## GUI (PyQt6) Components
 
 ### TheMapApp (Main Window)
-- Source: `src/themath/gui/main.py` (62 lines)
+- Source: `src/mathverse/gui/main.py` (62 lines)
 - Description: QMainWindow with QStackedWidget managing HomeScreen, ExploreScreen, VisualizeScreen.
 
 ### HomeScreen
-- Source: `src/themath/gui/screens/home.py` (66 lines)
+- Source: `src/mathverse/gui/screens/home.py` (66 lines)
 - Description: Concept list with QListWidget, title/subtitle labels, and visualize button.
 
 ### ExploreScreen
-- Source: `src/themath/gui/screens/explore.py` (85 lines)
+- Source: `src/mathverse/gui/screens/explore.py` (85 lines)
 - Description: Concept detail view with back button, name/category labels, QTextBrowser for description, related concepts list.
 
 ### VisualizeScreen
-- Source: `src/themath/gui/screens/visualize.py` (74 lines)
+- Source: `src/mathverse/gui/screens/visualize.py` (74 lines)
 - Description: All connections view with HTML-rendered concept relationships, refresh button.
 
 ### Font Loader
-- Source: `src/themath/gui/fonts/__init__.py` (16 lines)
+- Source: `src/mathverse/gui/fonts/__init__.py` (16 lines)
 - Description: Loads STIX Two Text OTF fonts from bundled `fonts/` directory via QFontDatabase.

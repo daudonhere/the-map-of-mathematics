@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-from themath.core.models import MathConcept
-from themath.core.repository import Repository
+from mathverse.core.models import MathConcept
+from mathverse.core.repository import Repository
 
 
 @pytest.fixture
