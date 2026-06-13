@@ -205,7 +205,6 @@ def _render_content(
             content = [(x, y) for x, y in content if y != "bold cyan"]
 
     bg_black = "on #000000"
-    bg_green = "on #1a3a1a"
     fg_green = "white on #1a3a1a"
     pad = max(2, tw // 20)
 
@@ -225,24 +224,33 @@ def _render_content(
                 combined = f"{style} {bg_black}" if style else bg_black
                 console.print(text.ljust(tw), style=combined)
 
-        border = " " * pad + "\u2500" * (tw - 2 * pad) + " " * pad
-        console.print(border, style=fg_green)
+        console.print(" " * pad, style=bg_black, end="")
+        console.print("┌" + "─" * (tw - 2 * pad - 2) + "┐", style=fg_green, end="")
+        console.print(" " * pad, style=bg_black)
 
         for text, style in content[hc:]:
             if text is None:
-                console.print(" " * tw, style=bg_green)
+                console.print(" " * pad, style=bg_black, end="")
+                console.print("│" + " " * (tw - 2 * pad - 2) + "│", style=fg_green, end="")
+                console.print(" " * pad, style=bg_black)
             elif style == "reverse":
-                padded = text.ljust(tw - 2 * pad)
-                rt = Text(" " * pad, style=bg_green)
-                rt.append(padded, style="reverse")
-                rt.append(" " * pad, style=bg_green)
-                console.print(rt)
+                console.print(" " * pad, style=bg_black, end="")
+                console.print("│", style=fg_green, end="")
+                rt = Text(text.ljust(tw - 2 * pad - 2), style="reverse")
+                console.print(rt, end="")
+                console.print("│", style=fg_green, end="")
+                console.print(" " * pad, style=bg_black)
             else:
-                padded = " " * pad + text.ljust(tw - 2 * pad) + " " * pad
                 combined = f"{style} on #1a3a1a" if style else fg_green
-                console.print(padded.ljust(tw), style=combined)
+                console.print(" " * pad, style=bg_black, end="")
+                console.print("│", style=fg_green, end="")
+                console.print(text.ljust(tw - 2 * pad - 2), style=combined, end="")
+                console.print("│", style=fg_green, end="")
+                console.print(" " * pad, style=bg_black)
 
-        console.print(border, style=fg_green)
+        console.print(" " * pad, style=bg_black, end="")
+        console.print("└" + "─" * (tw - 2 * pad - 2) + "┘", style=fg_green, end="")
+        console.print(" " * pad, style=bg_black)
 
         used = top_pad + len(content) + 2
         for _ in range(max(0, th - 1 - used)):
