@@ -549,8 +549,8 @@ def _playground(console: Console, playground: str, locale: str, title: str = "")
         prompt_idx = next(
             i for i, (t, _) in enumerate(content_lines) if t == ">> "
         )
-        target_line = 3 + prompt_idx
-        lines_up = th - 1 - target_line
+        target_line = 5 + prompt_idx
+        lines_up = th - target_line
         pad = max(2, tw // 20)
         if lines_up > 0:
             sys.stdout.write(f"\x1b[{lines_up}A\x1b[{pad + 5}G")
