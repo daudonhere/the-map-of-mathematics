@@ -48,10 +48,8 @@ def _read_key() -> str:
         termios.tcsetattr(fd, termios.TCSADRAIN, old)
 
 
-def _keybar(lang_menu: bool) -> str:
-    if lang_menu:
-        return "\u2191 Up   \u2193 Down   \u21b5 Select   \u21b9 Back   Esc Back"
-    return "\u2191 Up   \u2193 Down   \u21b5 Select   \u21b9 Back   Esc Exit"
+def _keybar() -> str:
+    return "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit"
 
 
 def _render(
@@ -86,7 +84,7 @@ def _render(
         content.append((f"{prefix}{item}", "reverse" if i == current else None))
 
     top_pad = 3
-    keybar_line = _keybar(lang_menu)
+    keybar_line = _keybar()
     max_content = th - 1 - top_pad
 
     if len(content) > max_content:
@@ -125,9 +123,9 @@ def _render(
     console.print(keybar_line.ljust(tw), end="")
 
 
-def run_launcher(locale: str = "en") -> str | None:
+def run_launcher(locale: str = "en") -> tuple[str, str] | None:
     if not sys.stdin.isatty():
-        return "terminal"
+        return ("terminal", locale)
 
     console = Console()
 
@@ -175,9 +173,9 @@ def run_launcher(locale: str = "en") -> str | None:
                     current = (current + 1) % len(items)
                 elif key == "enter":
                     if current == 0:
-                        return "terminal"
+                        return ("terminal", locale)
                     elif current == 1:
-                        return "gui"
+                        return ("gui", locale)
                     elif current == 2:
                         in_lang_menu = True
                         lang_current = 0
@@ -186,7 +184,7 @@ def run_launcher(locale: str = "en") -> str | None:
     except (EOFError, KeyboardInterrupt):
         return None
     except Exception:
-        return "terminal"
+        return ("terminal", locale)
     finally:
         sys.stdout.write("\x1b[2J\x1b[H")
         sys.stdout.write("\x1b[?25h")

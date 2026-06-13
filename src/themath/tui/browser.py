@@ -69,9 +69,11 @@ def _run_browser(console: Console, service: MapService) -> str | None:
                 if related:
                     detail_concept = related[detail_current]
                     detail_current = 0
-            elif key in ("esc", "tab", "q"):
+            elif key == "tab":
                 detail_concept = None
                 detail_current = 0
+            elif key in ("esc", "q"):
+                return None
         else:
             _render_list(console, concepts, current)
             key = _read_key()
@@ -82,7 +84,7 @@ def _run_browser(console: Console, service: MapService) -> str | None:
             elif key == "enter":
                 concept = concepts[current]
                 if get_content(concept.id) is not None:
-                    result = run_topic_screen(console, concept.id)
+                    result = run_topic_screen(console, concept.id, service.locale)
                     if result == "back":
                         continue
                     return None
@@ -128,7 +130,7 @@ def _render_list(
         prefix = "> " if i == current else "  "
         content.append((f"{prefix}{c.name}", "reverse" if i == current else None))
 
-    _render_content(console, tw, th, content, "\u2191 Up   \u2193 Down   \u21b5 Select   \u21b9 Back   Esc Exit")
+    _render_content(console, tw, th, content, "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit")
 
 
 def _render_detail(
@@ -156,7 +158,7 @@ def _render_detail(
             prefix = "> " if i == current else "  "
             content.append((f"{prefix}{rc.name}", "reverse" if i == current else None))
 
-    _render_content(console, tw, th, content, "\u2191 Up   \u2193 Down   \u21b5 Select   \u21b9 Back   Esc Exit")
+    _render_content(console, tw, th, content, "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit")
 
 
 def _render_content(

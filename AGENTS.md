@@ -84,15 +84,88 @@ blanks → description → subtitle → banner
 - When Enter on a concept that has detailed content (`core/content.py`), launches the topic screen.
 
 ### Topic Screen (`src/themath/tui/topic_screen.py`)
-- Sub-topic list view (navigation with ↑↓) with explanation + examples preview below.
-- Detail view on Enter: full explanation, example list, playground prompt.
-- Same style as launcher/browser.
+- **Flow**: List view (↑↓ arrows) → Enter on item → Detail view → Enter → Playground. Esc exits from ALL screens. Tab goes back one level.
+- **List view**: Banner (6-line Unicode) + "Learning Weapon For You" subtitle + concept name + scrollable subtopic list. Preview area (8 lines fixed height) shows `description` (general subtopic overview).
+- **Detail view**: Banner + subtitle + concept name + subtopic title. Each non-blank example line shown in `"dim"` style, immediately followed by its matching `explanation` line in `"italic"`. Blank example lines `""` become empty rows (group separators). Playground prompt shown at bottom.
+- **Playground**: Generates random questions based on playground ID string. Score tracking (correct/total). Esc exits, Enter continues to next question.
+- `_read_input()` for line-editing with backspace support in playground mode.
 
 ### Content (`src/themath/core/content.py`)
-- `SubTopic` dataclass: title, explanation, examples, optional playground id.
+- `SubTopic` dataclass: `title` (dict[str,str]), `description` (dict[str,str]), `explanation` (dict[str,str]), `examples` (dict[str,list[str]]), `playground` (str | None).
 - `TopicContent` grouped by concept_id via `get_content()`.
-- Currently populated: Arithmetic (9 sub-topics).
+- Currently populated: Arithmetic (9 sub-topics), Algebra (9 sub-topics).
+- Registered under both EN and ID concept IDs (e.g. `"algebra"` and `"aljabar"` share same subtopic list).
+- Playground IDs: `basic_ops`, `powers`, `mental_math`, `properties`, `number_types`, `factors`, `ratios`, `percentages`, `number_theory`, `expressions`, `equations`, `systems`, `polynomials`, `factoring`, `quadratics`, `functions`, `inequalities`, `exponents_logs`. See `_gen_question()` in topic_screen.py for implementations.
 - `# ruff: noqa: RUF001` for math symbols (×, −, etc.).
+
+## Content Pattern — Arithmetic Template
+
+Use this exact pattern when adding new topics (Geometry, Trigonometry, etc.). Arithmetic is the reference.
+
+### Data Structure Per SubTopic
+
+```python
+SubTopic(
+    title={"id": "...", "en": "..."},
+    description={
+        "id": "Deskripsi umum tentang sub-topik ini (1-2 kalimat).",
+        "en": "General overview of what this subtopic is about (1-2 sentences).",
+    },
+    explanation={
+        "id": (
+            "Penjelasan contoh ke-1, mendeskripsikan konsep yang ditunjukkan contoh.\n"
+            "Penjelasan contoh ke-2.\n"
+            "Penjelasan contoh ke-n."
+        ),
+        "en": (
+            "Explanation of example 1, describing the concept shown.\n"
+            "Explanation of example 2.\n"
+            "Explanation of example n."
+        ),
+    },
+    examples={
+        "id": [
+            "Contoh ke-1",
+            "Contoh ke-2",
+            "",                    # Empty string = visual separator between groups
+            "Contoh ke-3",
+        ],
+        "en": [
+            "Example 1",
+            "Example 2",
+            "",
+            "Example 3",
+        ],
+    },
+    playground="playground_id",   # or None if no playground
+)
+```
+
+### Rules
+
+1. **`description`** — General subtopic overview. Shown in list view preview (8-line box). 1-2 sentences per locale. Must NOT reference specific examples.
+
+2. **`explanation`** — One line per **non-blank** example. Each line explains the concept that the corresponding example demonstrates. Must NOT just repeat the example text — must be genuinely descriptive/educational. Lines separated by `\n` (last line has no `\n`). Iterated in sync with non-blank examples in `_render_detail()`.
+
+3. **`examples`** — List of strings. Non-blank = example lines. Blank `""` = group separators (rendered as empty rows). Examples should be self-explanatory enough to stand alone, with `explanation` providing the educational context. Each locale list must have identical structure (same blank positions).
+
+4. **`playground`** — String ID matching a handler in `_gen_question()` in topic_screen.py. Set to `None` if no playground available. Must be registered in both EN and ID concept IDs.
+
+5. **Bilingual parity** — Every subtopic must have identical `title`, `description`, `explanation`, and `examples` keys for both `"en"` and `"id"`. Shared subtopic list registered under both concept IDs (e.g. `_reg("algebra", _algebra_subtopics)` + `_reg("aljabar", _algebra_subtopics)`).
+
+6. **Count matching** — `len(non_blank_examples)` must equal `len(explanation_lines)`. Use `pytest` or the validation script to verify.
+
+### Registration
+
+```python
+_my_topic_subtopics = [SubTopic(...), SubTopic(...), ...]  # 9 subtopics
+_reg("topic_en", _my_topic_subtopics)
+_reg("topic_id", _my_topic_subtopics)
+```
+
+### Playground Registration
+
+In `topic_screen.py`, `_gen_question()` function's `if/elif` chain — add a new `elif pid == "new_id":` block returning `(question_text, correct_answer, max_value)`.
 
 ### Fonts
 - STIX Two Text OTF fonts in `gui/fonts/` for scientific typesetting, loaded via `QFontDatabase`.
