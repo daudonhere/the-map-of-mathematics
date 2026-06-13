@@ -437,10 +437,7 @@ def _build_playground_content(
     tw: int,
     locale: str,
     question: str,
-    correct: int,
-    total: int,
     *,
-    title: str = "",
     feedback: tuple[str, str, bool] | None = None,
 ) -> None:
     if tw >= BANNER_WIDTH:
@@ -454,17 +451,6 @@ def _build_playground_content(
         content_lines.append((None, None))
 
     content_lines.append(("Playground", "bold cyan"))
-
-    score_str = (
-        f"Score: {correct}/{total} correct"
-        if locale == "en"
-        else f"Nilai: {correct}/{total} benar"
-    )
-    title_str = f"  {title}"
-    line = title_str + " " * (tw - len(title_str) - len(score_str)) + score_str
-    content_lines.append((None, None))
-    content_lines.append((line, None))
-
     content_lines.append((None, None))
 
     if feedback:
@@ -509,9 +495,7 @@ def _build_playground_content(
         content_lines.append((None, None))
 
 
-def _playground(console: Console, playground: str, locale: str, title: str = "") -> int | None:
-    correct = 0
-    total = 0
+def _playground(console: Console, playground: str, locale: str) -> int | None:
     while True:
         question, answer_str, _ = _gen_question(playground)
 
@@ -519,9 +503,7 @@ def _playground(console: Console, playground: str, locale: str, title: str = "")
         th = shutil.get_terminal_size().lines
 
         content_lines: list[tuple[str | None, str | None]] = []
-        _build_playground_content(
-            content_lines, tw, locale, question, correct, total, title=title,
-        )
+        _build_playground_content(content_lines, tw, locale, question)
         _render_content(
             console, tw, th, content_lines,
             "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit",
@@ -544,18 +526,15 @@ def _playground(console: Console, playground: str, locale: str, title: str = "")
         if result is None:
             return None
 
-        total += 1
         is_correct = result.strip() == answer_str
-        if is_correct:
-            correct += 1
 
         tw = shutil.get_terminal_size().columns
         th = shutil.get_terminal_size().lines
 
         content_lines = []
         _build_playground_content(
-            content_lines, tw, locale, question, correct, total,
-            title=title, feedback=(result, answer_str, is_correct),
+            content_lines, tw, locale, question,
+            feedback=(result, answer_str, is_correct),
         )
         _render_content(
             console, tw, th, content_lines,
@@ -592,8 +571,7 @@ def run_topic_screen(
             _render_detail(console, detail_subtopic, locale, concept_id)
             key = _read_key()
             if key == "enter" and detail_subtopic.playground:
-                sub_title = detail_subtopic.title.get(locale, detail_subtopic.title.get("en", ""))
-                if _playground(console, detail_subtopic.playground, locale, title=sub_title) is None:
+                if _playground(console, detail_subtopic.playground, locale) is None:
                     return None
                 detail_subtopic = None
             elif key == "tab":
