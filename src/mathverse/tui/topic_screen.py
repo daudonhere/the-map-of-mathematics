@@ -779,7 +779,7 @@ def _render_content(
     chalkboard: bool = False,
     header_count: int = 8,
 ) -> None:
-    sys.stdout.write("\x1b[2J\x1b[H")
+    sys.stdout.write("\x1b[H")
     top_pad = 3
     max_content = max(1, th - 1 - top_pad)
 

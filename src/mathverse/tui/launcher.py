@@ -69,7 +69,7 @@ def _render(
     th = shutil.get_terminal_size().lines
     tw = shutil.get_terminal_size().columns
 
-    sys.stdout.write("\x1b[2J\x1b[H")
+    sys.stdout.write("\x1b[H")
 
     content: list[tuple[str | None, str | None]] = []
 
