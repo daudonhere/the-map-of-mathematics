@@ -102,7 +102,7 @@ def _render(
         item_str = prefix + item
         pad_r = inner_w - len(item_str)
         if i == current:
-            rt = Text(" " * bx_pad + "\u2502 ")
+            rt = Text(" " * bx_pad + "\u2502 ", style=bg_black)
             rt.append(item_str, style="reverse")
             rt.append(" " * pad_r + " \u2502")
             content.append((rt, None))
