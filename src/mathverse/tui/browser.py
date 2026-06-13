@@ -115,18 +115,19 @@ def _render_list(
     if tw >= BANNER_WIDTH:
         left_pad = max(0, (tw - BANNER_WIDTH) // 2)
         for b in BANNER:
-            content.append((" " * left_pad + b, "bold cyan"))
+            content.append((" " * left_pad + b, "bold"))
         content.append((None, None))
         subtitle = "For minds losing their edge"
         sub_left_pad = max(0, (tw - len(subtitle)) // 2)
         content.append((" " * sub_left_pad + subtitle, "italic"))
+        content.append((None, None))
         content.append((None, None))
 
     for i, c in enumerate(concepts):
         prefix = "> " if i == current else "  "
         content.append((f"{prefix}{c.name}", "reverse" if i == current else None))
 
-    header_count = 8 if tw >= BANNER_WIDTH else 0
+    header_count = 9 if tw >= BANNER_WIDTH else 0
     _render_content(
         console,
         tw,
@@ -149,7 +150,7 @@ def _render_detail(
 
     content: list[tuple[str | None, str | None]] = []
 
-    content.append((concept.name, "bold cyan"))
+    content.append((concept.name, "bold"))
     content.append((concept.category, "dim"))
     content.append((concept.description, None))
     content.append((None, None))
@@ -201,8 +202,6 @@ def _render_content(
             content = [(x, y) for x, y in content if y != "dim"]
         if len(content) > max_content:
             content = [(x, y) for x, y in content if y != "bold"]
-        if len(content) > max_content:
-            content = [(x, y) for x, y in content if y != "bold cyan"]
 
     bg_black = "on #000000"
     fg_green = "white on #1a3a1a"

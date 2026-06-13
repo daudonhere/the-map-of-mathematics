@@ -452,14 +452,15 @@ def _build_playground_content(
     if tw >= BANNER_WIDTH:
         left_pad = max(0, (tw - BANNER_WIDTH) // 2)
         for b in BANNER:
-            content_lines.append((" " * left_pad + b, "bold cyan"))
+            content_lines.append((" " * left_pad + b, "bold"))
         content_lines.append((None, None))
         subtitle = "For minds losing their edge"
         sub_left_pad = max(0, (tw - len(subtitle)) // 2)
         content_lines.append((" " * sub_left_pad + subtitle, "italic"))
         content_lines.append((None, None))
+        content_lines.append((None, None))
 
-    content_lines.append(("Playground", "bold cyan"))
+    content_lines.append(("Playground", "bold"))
     content_lines.append((None, None))
 
     pad = max(2, tw // 20)
@@ -482,7 +483,7 @@ def _build_playground_content(
     if feedback:
         user_answer, correct_answer, is_correct = feedback
         content_lines.append(
-            ("Question:" if locale == "en" else "Soal:", "bold yellow")
+            ("Question:" if locale == "en" else "Soal:", "bold")
         )
         content_lines.append((question, None))
         content_lines.append((None, None))
@@ -515,11 +516,11 @@ def _build_playground_content(
         )
         spaces = max(0, inner_w - len(result_word) - len(hint))
         content_lines.append(
-            (result_word + " " * spaces + hint, "bold green" if is_correct else "bold red")
+            (result_word + " " * spaces + hint, "bold")
         )
     else:
         content_lines.append(
-            ("Question:" if locale == "en" else "Soal:", "bold yellow")
+            ("Question:" if locale == "en" else "Soal:", "bold")
         )
         content_lines.append((question, None))
         content_lines.append((None, None))
@@ -545,7 +546,7 @@ def _playground(console: Console, playground: str, locale: str, title: str = "")
             console, tw, th, content_lines,
             "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit",
             chalkboard=True,
-            header_count=8 if tw >= BANNER_WIDTH else 0,
+            header_count=9 if tw >= BANNER_WIDTH else 0,
         )
 
         fd2 = sys.stdin.fileno()
@@ -581,7 +582,7 @@ def _playground(console: Console, playground: str, locale: str, title: str = "")
             console, tw, th, content_lines,
             "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit",
             chalkboard=True,
-            header_count=8 if tw >= BANNER_WIDTH else 0,
+            header_count=9 if tw >= BANNER_WIDTH else 0,
         )
 
         while True:
@@ -650,11 +651,12 @@ def _render_list(
     if tw >= BANNER_WIDTH:
         left_pad = max(0, (tw - BANNER_WIDTH) // 2)
         for b in BANNER:
-            content_lines.append((" " * left_pad + b, "bold cyan"))
+            content_lines.append((" " * left_pad + b, "bold"))
         content_lines.append((None, None))
         subtitle = "For minds losing their edge"
         sub_left_pad = max(0, (tw - len(subtitle)) // 2)
         content_lines.append((" " * sub_left_pad + subtitle, "italic"))
+        content_lines.append((None, None))
         content_lines.append((None, None))
 
     concept_name = {
@@ -663,7 +665,7 @@ def _render_list(
         "aljabar": "Aljabar",
         "algebra": "Algebra",
     }.get(concept_id, concept_id.replace("-", " ").title())
-    content_lines.append((concept_name, "bold cyan"))
+    content_lines.append((concept_name, "bold"))
     content_lines.append((None, None))
 
     for i, st in enumerate(subtopics):
@@ -699,7 +701,7 @@ def _render_list(
         content_lines,
         "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit",
         chalkboard=True,
-        header_count=8 if tw >= BANNER_WIDTH else 0,
+        header_count=9 if tw >= BANNER_WIDTH else 0,
     )
 
 
@@ -717,11 +719,12 @@ def _render_detail(
     if tw >= BANNER_WIDTH:
         left_pad = max(0, (tw - BANNER_WIDTH) // 2)
         for b in BANNER:
-            content_lines.append((" " * left_pad + b, "bold cyan"))
+            content_lines.append((" " * left_pad + b, "bold"))
         content_lines.append((None, None))
         subtitle = "For minds losing their edge"
         sub_left_pad = max(0, (tw - len(subtitle)) // 2)
         content_lines.append((" " * sub_left_pad + subtitle, "italic"))
+        content_lines.append((None, None))
         content_lines.append((None, None))
 
     concept_name = {
@@ -730,7 +733,7 @@ def _render_detail(
         "aljabar": "Aljabar",
         "algebra": "Algebra",
     }.get(concept_id, concept_id.replace("-", " ").title())
-    content_lines.append((concept_name, "bold cyan"))
+    content_lines.append((concept_name, "bold"))
     content_lines.append((None, None))
 
     content_lines.append(
@@ -763,7 +766,7 @@ def _render_detail(
                 "Press Enter to start playground"
                 if locale == "en"
                 else "Tekan Enter untuk memulai latihan",
-                "italic yellow",
+                "italic",
             )
         )
 
@@ -771,7 +774,7 @@ def _render_detail(
     _render_content(
         console, tw, th, content_lines, keybar,
         chalkboard=True,
-        header_count=8 if tw >= BANNER_WIDTH else 0,
+        header_count=9 if tw >= BANNER_WIDTH else 0,
     )
 
 
@@ -804,8 +807,6 @@ def _render_content(
             content = [(x, y) for x, y in content if y != "dim"]
         if len(content) > max_content:
             content = [(x, y) for x, y in content if y != "bold"]
-        if len(content) > max_content:
-            content = [(x, y) for x, y in content if y != "bold cyan"]
 
     bg_black = "on #000000"
     fg_green = "white on #1a3a1a"

@@ -76,11 +76,12 @@ def _render(
     if tw >= BANNER_WIDTH:
         left_pad = max(0, (tw - BANNER_WIDTH) // 2)
         for b in BANNER:
-            content.append((" " * left_pad + b, "bold cyan"))
+            content.append((" " * left_pad + b, "bold"))
         content.append((None, None))
         subtitle = "For minds losing their edge"
         sub_left_pad = max(0, (tw - len(subtitle)) // 2)
         content.append((" " * sub_left_pad + subtitle, "italic"))
+        content.append((None, None))
         content.append((None, None))
 
     if lang_menu:
@@ -93,7 +94,7 @@ def _render(
     bx_pad = max(0, (tw - box_w) // 2)
 
     box_top = " " * bx_pad + "\u250c" + "\u2500" * (inner_w + 2) + "\u2510"
-    content.append((box_top, "bold cyan"))
+    content.append((box_top, "bold"))
 
     for i, item in enumerate(items):
         prefix = "> " if i == current else "  "
@@ -109,7 +110,7 @@ def _render(
             content.append((line, None))
 
     box_bot = " " * bx_pad + "\u2514" + "\u2500" * (inner_w + 2) + "\u2518"
-    content.append((box_bot, "bold cyan"))
+    content.append((box_bot, "bold"))
 
     keybar_line = _keybar(tw)
     top_pad = 3
@@ -128,8 +129,6 @@ def _render(
             content = [(x, y) for x, y in content if y != "italic"]
         if len(content) > max_content:
             content = [(x, y) for x, y in content if y != "bold"]
-        if len(content) > max_content:
-            content = [(x, y) for x, y in content if y != "bold cyan"]
 
     for _ in range(min(top_pad, th - 1)):
         console.print(" " * tw)
