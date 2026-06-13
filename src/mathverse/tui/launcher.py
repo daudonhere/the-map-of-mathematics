@@ -13,13 +13,14 @@ from rich.text import Text
 from mathverse.core.i18n import t
 
 BANNER = [
-    "████████╗██╗  ██╗███████╗    ███╗   ███╗ █████╗ ████████╗██╗  ██╗",
-    "╚══██╔══╝██║  ██║██╔════╝    ████╗ ████║██╔══██╗╚══██╔══╝██║  ██║",
-    "   ██║   ███████║█████╗      ██╔████╔██║███████║   ██║   ███████║",
-    "   ██║   ██╔══██║██╔══╝      ██║╚██╔╝██║██╔══██║   ██║   ██╔══██║",
-    "   ██║   ██║  ██║███████╗    ██║ ╚═╝ ██║██║  ██║   ██║   ██║  ██║",
-    "   ╚═╝   ╚═╝  ╚═╝╚══════╝    ╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝",
+    "███╗   ███╗ █████╗ ████████╗██╗  ██╗██╗   ██╗███████╗██████╗ ███████╗███████╗",
+    "████╗ ████║██╔══██╗╚══██╔══╝██║  ██║██║   ██║██╔════╝██╔══██╗██╔════╝██╔════╝",
+    "██╔████╔██║███████║   ██║   ███████║██║   ██║█████╗  ██████╔╝███████╗█████╗  ",
+    "██║╚██╔╝██║██╔══██║   ██║   ██╔══██║╚██╗ ██╔╝██╔══╝  ██╔══██╗╚════██║██╔══╝  ",
+    "██║ ╚═╝ ██║██║  ██║   ██║   ██║  ██║ ╚████╔╝ ███████╗██║  ██║███████║███████╗",
+    "╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝",
 ]
+BANNER_WIDTH = len(BANNER[0])
 
 
 def _read_key() -> str:
@@ -48,8 +49,13 @@ def _read_key() -> str:
         termios.tcsetattr(fd, termios.TCSADRAIN, old)
 
 
-def _keybar() -> str:
-    return "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit"
+def _keybar(tw: int) -> str:
+    kb = "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit"
+    credit = "\u24b8 D. Daud Yusup"
+    gap = tw - len(kb) - len(credit) - 1
+    if gap >= 0:
+        return kb + " " * gap + credit
+    return kb
 
 
 def _render(
@@ -63,29 +69,51 @@ def _render(
     th = shutil.get_terminal_size().lines
     tw = shutil.get_terminal_size().columns
 
-    sys.stdout.write("\x1b[H")
+    sys.stdout.write("\x1b[2J\x1b[H")
 
     content: list[tuple[str | None, str | None]] = []
 
-    if tw >= 65:
+    if tw >= BANNER_WIDTH:
+        left_pad = max(0, (tw - BANNER_WIDTH) // 2)
         for b in BANNER:
-            content.append((b, "bold cyan"))
+            content.append((" " * left_pad + b, "bold cyan"))
         content.append((None, None))
-        indent = max(0, int(tw * 0.1))
-        content.append((" " * indent + "For minds losing their edge", "italic"))
+        subtitle = "For minds losing their edge"
+        sub_left_pad = max(0, (tw - len(subtitle)) // 2)
+        content.append((" " * sub_left_pad + subtitle, "italic"))
         content.append((None, None))
 
     if lang_menu:
         content.append((t("select_language", locale), "bold"))
         content.append((None, None))
 
+    max_item = max(len(f"> {item}") for item in items)
+    inner_w = max_item + 6
+    box_w = inner_w + 4
+    bx_pad = max(0, (tw - box_w) // 2)
+
+    box_top = " " * bx_pad + "\u250c" + "\u2500" * (inner_w + 2) + "\u2510"
+    content.append((box_top, "bold cyan"))
+
     for i, item in enumerate(items):
         prefix = "> " if i == current else "  "
-        content.append((f"{prefix}{item}", "reverse" if i == current else None))
+        item_str = prefix + item
+        pad_r = inner_w - len(item_str)
+        if i == current:
+            rt = Text(" " * bx_pad + "\u2502 ")
+            rt.append(item_str, style="reverse")
+            rt.append(" " * pad_r + " \u2502")
+            content.append((rt, None))
+        else:
+            line = " " * bx_pad + "\u2502 " + item_str.ljust(inner_w) + " \u2502"
+            content.append((line, None))
 
+    box_bot = " " * bx_pad + "\u2514" + "\u2500" * (inner_w + 2) + "\u2518"
+    content.append((box_bot, "bold cyan"))
+
+    keybar_line = _keybar(tw)
     top_pad = 3
-    keybar_line = _keybar()
-    max_content = th - 1 - top_pad
+    max_content = max(1, th - 1 - top_pad)
 
     if len(content) > max_content:
         trimmed: list[tuple[str | None, str | None]] = []
@@ -109,6 +137,9 @@ def _render(
     for text, style in content:
         if text is None:
             console.print(" " * tw)
+        elif isinstance(text, Text):
+            text.append(" " * (tw - len(text.plain)))
+            console.print(text)
         elif style == "reverse":
             rt = Text(text, style="reverse")
             rt.append(" " * (tw - len(text)))

@@ -13,7 +13,7 @@ from rich.console import Console
 from rich.text import Text
 
 from mathverse.core.content import SubTopic, get_content
-from mathverse.tui.launcher import BANNER
+from mathverse.tui.launcher import BANNER, BANNER_WIDTH
 
 _LOCALE: str = "en"
 
@@ -59,11 +59,14 @@ def _read_input(prompt: str) -> str | None:
                 r, _, _ = select.select([fd], [], [], 0.1)
                 if r:
                     os.read(fd, 2)
+                    continue
                 return None
             elif ch in (b"\n", b"\r"):
                 sys.stdout.write("\r\n")
                 sys.stdout.flush()
                 return buf
+            elif ch == b"\t":
+                return None
             elif ch == b"\x7f":
                 buf = buf[:-1]
             else:
@@ -74,6 +77,39 @@ def _read_input(prompt: str) -> str | None:
                     continue
             line = prompt + " " + buf
             sys.stdout.write("\r" + " " * 80 + "\r" + line)
+            sys.stdout.flush()
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old)
+
+
+def _read_input_at_cursor(fd: int, tw: int) -> str | None:
+    old = termios.tcgetattr(fd)
+    buf = ""
+    try:
+        tty.setraw(fd)
+        while True:
+            ch = os.read(fd, 1)
+            if ch == b"\x1b":
+                r, _, _ = select.select([fd], [], [], 0.1)
+                if r:
+                    os.read(fd, 2)
+                    continue
+                return None
+            elif ch in (b"\n", b"\r"):
+                sys.stdout.write("\r\n")
+                sys.stdout.flush()
+                return buf
+            elif ch == b"\t":
+                return None
+            elif ch == b"\x7f":
+                buf = buf[:-1]
+            else:
+                try:
+                    c = ch.decode()
+                    buf += c
+                except UnicodeDecodeError:
+                    continue
+            sys.stdout.write("\r" + " " * tw + "\r" + ">> " + buf)
             sys.stdout.flush()
     finally:
         termios.tcsetattr(fd, termios.TCSADRAIN, old)
@@ -391,105 +427,139 @@ def _gen_question(playground: str) -> tuple[str, str, float]:
     return ("?", "0", 0.0)
 
 
-def _playground(console: Console, playground: str, locale: str) -> None:
+def _build_playground_content(
+    content_lines: list[tuple[str | None, str | None]],
+    tw: int,
+    locale: str,
+    question: str,
+    correct: int,
+    total: int,
+    *,
+    title: str = "",
+    feedback: tuple[str, str, bool] | None = None,
+) -> None:
+    if tw >= BANNER_WIDTH:
+        left_pad = max(0, (tw - BANNER_WIDTH) // 2)
+        for b in BANNER:
+            content_lines.append((" " * left_pad + b, "bold cyan"))
+        content_lines.append((None, None))
+        subtitle = "For minds losing their edge"
+        sub_left_pad = max(0, (tw - len(subtitle)) // 2)
+        content_lines.append((" " * sub_left_pad + subtitle, "italic"))
+        content_lines.append((None, None))
+
+    content_lines.append(("Playground", "bold cyan"))
+
+    score_str = (
+        f"Score: {correct}/{total} correct"
+        if locale == "en"
+        else f"Nilai: {correct}/{total} benar"
+    )
+    title_str = f"  {title}"
+    line = title_str + " " * (tw - len(title_str) - len(score_str)) + score_str
+    content_lines.append((None, None))
+    content_lines.append((line, None))
+
+    content_lines.append((None, None))
+
+    if feedback:
+        user_answer, correct_answer, is_correct = feedback
+        content_lines.append(
+            ("Question:" if locale == "en" else "Soal:", "bold yellow")
+        )
+        content_lines.append((question, None))
+        content_lines.append((None, None))
+        content_lines.append(
+            (
+                f"Your answer: {user_answer}"
+                if locale == "en"
+                else f"Jawabanmu: {user_answer}",
+                None,
+            )
+        )
+        content_lines.append(
+            (
+                f"Correct answer: {correct_answer}"
+                if locale == "en"
+                else f"Jawaban benar: {correct_answer}",
+                "dim",
+            )
+        )
+        content_lines.append((None, None))
+        content_lines.append(
+            (
+                ("CORRECT!" if is_correct else "WRONG")
+                if locale == "en"
+                else ("BENAR!" if is_correct else "SALAH"),
+                "bold green" if is_correct else "bold red",
+            )
+        )
+    else:
+        content_lines.append(
+            ("Question:" if locale == "en" else "Soal:", "bold yellow")
+        )
+        content_lines.append((question, None))
+        content_lines.append((None, None))
+        content_lines.append((">> ", None))
+        content_lines.append((None, None))
+
+
+def _playground(console: Console, playground: str, locale: str, title: str = "") -> int | None:
     correct = 0
     total = 0
     while True:
         question, answer_str, _ = _gen_question(playground)
+
         tw = shutil.get_terminal_size().columns
+        th = shutil.get_terminal_size().lines
 
-        sys.stdout.write("\x1b[2J\x1b[H")
+        content_lines: list[tuple[str | None, str | None]] = []
+        _build_playground_content(
+            content_lines, tw, locale, question, correct, total, title=title,
+        )
+        _render_content(
+            console, tw, th, content_lines,
+            "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit",
+        )
 
-        lines = [
-            ("Playground", "bold cyan"),
-            (None, None),
-            ("Question:" if locale == "en" else "Soal:", "bold yellow"),
-            (question, None),
-            (None, None),
-            (
-                f"Score: {correct}/{total} correct"
-                if locale == "en"
-                else f"Nilai: {correct}/{total} benar",
-                "reverse",
-            ),
-            (None, None),
-            (
-                "Type your answer (Esc to exit):"
-                if locale == "en"
-                else "Ketik jawaban (Esc untuk keluar):",
-                "dim",
-            ),
-        ]
-        for _ in range(3):
-            console.print(" " * tw)
-        for text, style in lines:
-            if text is None:
-                console.print(" " * tw)
-            else:
-                console.print(text.ljust(tw), style=style)
+        fd2 = sys.stdin.fileno()
+        prompt_idx = next(
+            i for i, (t, _) in enumerate(content_lines) if t == ">> "
+        )
+        target_line = 3 + prompt_idx
+        lines_up = th - 1 - target_line
+        if lines_up > 0:
+            sys.stdout.write(f"\x1b[{lines_up}A\x1b[4G")
+            sys.stdout.flush()
 
-        result = _read_input(">>")
+        result = _read_input_at_cursor(fd2, tw)
         if result is None:
-            break
+            return None
 
         total += 1
         is_correct = result.strip() == answer_str
         if is_correct:
             correct += 1
 
-        sys.stdout.write("\x1b[2J\x1b[H")
-        fb_lines = [
-            ("Playground", "bold cyan"),
-            (None, None),
-            ("Question:" if locale == "en" else "Soal:", "bold yellow"),
-            (question, None),
-            (None, None),
-            (
-                f"Your answer: {result}" if locale == "en" else f"Jawabanmu: {result}",
-                None,
-            ),
-            (
-                f"Correct answer: {answer_str}"
-                if locale == "en"
-                else f"Jawaban benar: {answer_str}",
-                "dim",
-            ),
-            (None, None),
-            (
-                ("CORRECT!" if is_correct else "WRONG")
-                if locale == "en"
-                else ("BENAR!" if is_correct else "SALAH"),
-                "bold green" if is_correct else "bold red",
-            ),
-            (None, None),
-            (
-                f"Score: {correct}/{total} correct"
-                if locale == "en"
-                else f"Nilai: {correct}/{total} benar",
-                "reverse",
-            ),
-            (None, None),
-            (
-                "Press Enter to continue, Esc to exit"
-                if locale == "en"
-                else "Tekan Enter untuk lanjut, Esc untuk keluar",
-                "dim",
-            ),
-        ]
-        for _ in range(3):
-            console.print(" " * tw)
-        for text, style in fb_lines:
-            if text is None:
-                console.print(" " * tw)
-            else:
-                console.print(text.ljust(tw), style=style)
+        tw = shutil.get_terminal_size().columns
+        th = shutil.get_terminal_size().lines
+
+        content_lines = []
+        _build_playground_content(
+            content_lines, tw, locale, question, correct, total,
+            title=title, feedback=(result, answer_str, is_correct),
+        )
+        _render_content(
+            console, tw, th, content_lines,
+            "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit",
+        )
 
         while True:
             k = _read_key()
             if k == "enter":
                 break
             elif k in ("esc", "tab", "q"):
-                return
+                return None
 
 
 def run_topic_screen(
@@ -512,7 +582,9 @@ def run_topic_screen(
             _render_detail(console, detail_subtopic, locale, concept_id)
             key = _read_key()
             if key == "enter" and detail_subtopic.playground:
-                _playground(console, detail_subtopic.playground, locale)
+                sub_title = detail_subtopic.title.get(locale, detail_subtopic.title.get("en", ""))
+                if _playground(console, detail_subtopic.playground, locale, title=sub_title) is None:
+                    return None
                 detail_subtopic = None
             elif key == "tab":
                 detail_subtopic = None
@@ -543,16 +615,16 @@ def _render_list(
     th = shutil.get_terminal_size().lines
     tw = shutil.get_terminal_size().columns
 
-    sys.stdout.write("\x1b[H")
-
     content_lines: list[tuple[str | None, str | None]] = []
 
-    if tw >= 65:
+    if tw >= BANNER_WIDTH:
+        left_pad = max(0, (tw - BANNER_WIDTH) // 2)
         for b in BANNER:
-            content_lines.append((b, "bold cyan"))
+            content_lines.append((" " * left_pad + b, "bold cyan"))
         content_lines.append((None, None))
-        indent = max(0, int(tw * 0.1))
-        content_lines.append((" " * indent + "For minds losing their edge", "italic"))
+        subtitle = "For minds losing their edge"
+        sub_left_pad = max(0, (tw - len(subtitle)) // 2)
+        content_lines.append((" " * sub_left_pad + subtitle, "italic"))
         content_lines.append((None, None))
 
     concept_name = {
@@ -608,16 +680,16 @@ def _render_detail(
     th = shutil.get_terminal_size().lines
     tw = shutil.get_terminal_size().columns
 
-    sys.stdout.write("\x1b[H")
-
     content_lines: list[tuple[str | None, str | None]] = []
 
-    if tw >= 65:
+    if tw >= BANNER_WIDTH:
+        left_pad = max(0, (tw - BANNER_WIDTH) // 2)
         for b in BANNER:
-            content_lines.append((b, "bold cyan"))
+            content_lines.append((" " * left_pad + b, "bold cyan"))
         content_lines.append((None, None))
-        indent = max(0, int(tw * 0.1))
-        content_lines.append((" " * indent + "For minds losing their edge", "italic"))
+        subtitle = "For minds losing their edge"
+        sub_left_pad = max(0, (tw - len(subtitle)) // 2)
+        content_lines.append((" " * sub_left_pad + subtitle, "italic"))
         content_lines.append((None, None))
 
     concept_name = {
@@ -674,8 +746,9 @@ def _render_content(
     content: list[tuple[str | None, str | None]],
     keybar_line: str,
 ) -> None:
+    sys.stdout.write("\x1b[2J\x1b[H")
     top_pad = 3
-    max_content = th - 1 - top_pad
+    max_content = max(1, th - 1 - top_pad)
 
     if len(content) > max_content:
         trimmed: list[tuple[str | None, str | None]] = []
@@ -712,4 +785,8 @@ def _render_content(
     for _ in range(max(0, th - 1 - used)):
         console.print(" " * tw)
 
+    credit = "\u24b8 D. Daud Yusup"
+    gap = tw - len(keybar_line) - len(credit) - 1
+    if gap >= 0:
+        keybar_line = keybar_line + " " * gap + credit
     console.print(keybar_line.ljust(tw), end="")

@@ -13,7 +13,7 @@ from rich.text import Text
 from mathverse.core.content import get_content
 from mathverse.core.models import MathConcept
 from mathverse.core.service import MapService
-from mathverse.tui.launcher import BANNER
+from mathverse.tui.launcher import BANNER, BANNER_WIDTH
 from mathverse.tui.topic_screen import run_topic_screen
 
 
@@ -110,16 +110,16 @@ def _render_list(
     th = shutil.get_terminal_size().lines
     tw = shutil.get_terminal_size().columns
 
-    sys.stdout.write("\x1b[H")
-
     content: list[tuple[str | None, str | None]] = []
 
-    if tw >= 65:
+    if tw >= BANNER_WIDTH:
+        left_pad = max(0, (tw - BANNER_WIDTH) // 2)
         for b in BANNER:
-            content.append((b, "bold cyan"))
+            content.append((" " * left_pad + b, "bold cyan"))
         content.append((None, None))
-        indent = max(0, int(tw * 0.1))
-        content.append((" " * indent + "For minds losing their edge", "italic"))
+        subtitle = "For minds losing their edge"
+        sub_left_pad = max(0, (tw - len(subtitle)) // 2)
+        content.append((" " * sub_left_pad + subtitle, "italic"))
         content.append((None, None))
 
     for i, c in enumerate(concepts):
@@ -143,8 +143,6 @@ def _render_detail(
 ) -> None:
     th = shutil.get_terminal_size().lines
     tw = shutil.get_terminal_size().columns
-
-    sys.stdout.write("\x1b[H")
 
     content: list[tuple[str | None, str | None]] = []
 
@@ -176,6 +174,7 @@ def _render_content(
     content: list[tuple[str | None, str | None]],
     keybar_line: str,
 ) -> None:
+    sys.stdout.write("\x1b[2J\x1b[H")
     top_pad = 3
     max_content = th - 1 - top_pad
 
@@ -214,6 +213,10 @@ def _render_content(
     for _ in range(max(0, th - 1 - used)):
         console.print(" " * tw)
 
+    credit = "\u24b8 D. Daud Yusup"
+    gap = tw - len(keybar_line) - len(credit) - 1
+    if gap >= 0:
+        keybar_line = keybar_line + " " * gap + credit
     console.print(keybar_line.ljust(tw), end="")
 
 
