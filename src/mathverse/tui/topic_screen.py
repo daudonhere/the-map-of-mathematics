@@ -759,13 +759,24 @@ def _render_detail(
     content_lines.append((None, None))
     ex_list = subtopic.examples.get(locale, subtopic.examples.get("en", []))
     expl_idx = 0
+    pad = max(2, tw // 20)
+    inner_w = tw - 2 * pad - 2
     for ex in ex_list:
         if ex == "":
             content_lines.append((None, None))
         else:
-            content_lines.append((ex, "dim"))
+            if len(ex) > inner_w:
+                for chunk in [ex[i:i+inner_w] for i in range(0, len(ex), inner_w)]:
+                    content_lines.append((chunk, "dim"))
+            else:
+                content_lines.append((ex, "dim"))
             if expl_idx < len(expl_lines):
-                content_lines.append((expl_lines[expl_idx], "italic"))
+                el = expl_lines[expl_idx]
+                if len(el) > inner_w:
+                    for chunk in [el[i:i+inner_w] for i in range(0, len(el), inner_w)]:
+                        content_lines.append((chunk, "italic"))
+                else:
+                    content_lines.append((el, "italic"))
                 expl_idx += 1
 
     if subtopic.playground:
