@@ -71,6 +71,7 @@ def _render(
 
     sys.stdout.write("\x1b[H")
 
+    bg_black = "on #000000"
     content: list[tuple[str | None, str | None]] = []
 
     if tw >= BANNER_WIDTH:
@@ -131,26 +132,26 @@ def _render(
             content = [(x, y) for x, y in content if y != "bold"]
 
     for _ in range(min(top_pad, th - 1)):
-        console.print(" " * tw)
+        console.print(" " * tw, style=bg_black)
 
     for text, style in content:
         if text is None:
-            console.print(" " * tw)
+            console.print(" " * tw, style=bg_black)
         elif isinstance(text, Text):
-            text.append(" " * (tw - len(text.plain)))
+            text.append(" " * (tw - len(text.plain)), style=bg_black)
             console.print(text)
         elif style == "reverse":
             rt = Text(text, style="reverse")
-            rt.append(" " * (tw - len(text)))
+            rt.append(" " * (tw - len(text)), style=bg_black)
             console.print(rt)
         else:
-            console.print(text.ljust(tw), style=style)
+            console.print(text.ljust(tw), style=f"{style} {bg_black}" if style else bg_black)
 
     used = top_pad + len(content)
     for _ in range(max(0, th - 1 - used)):
-        console.print(" " * tw)
+        console.print(" " * tw, style=bg_black)
 
-    console.print(keybar_line.ljust(tw), end="")
+    console.print(keybar_line.ljust(tw), style=bg_black, end="")
 
 
 def run_launcher(locale: str = "en") -> tuple[str, str] | None:
