@@ -23,13 +23,15 @@ algebra_core_subtopics: list[SubTopic] = [
                 "x, y, z adalah variabel — simbol huruf yang mewakili bilangan yang belum diketahui nilainya.\n"
                 "5, 10, −3 adalah konstanta — bilangan tetap yang nilainya tidak berubah.\n"
                 "Dalam 3x + 5, x adalah variabel, 3 dan 5 adalah konstanta.\n"
-                "Koefisien adalah konstanta yang mengalikan variabel, seperti 3 pada 3x."
+                "Koefisien adalah konstanta yang mengalikan variabel, seperti 3 pada 3x.\n"
+                "Pada 3x + 5, x adalah variabel, sementara 3 dan 5 adalah konstanta."
             ),
             "en": (
                 "x, y, z are variables — letter symbols representing unknown values.\n"
                 "5, 10, −3 are constants — fixed numbers whose values do not change.\n"
                 "In 3x + 5, x is the variable, 3 and 5 are constants.\n"
-                "A coefficient is a constant that multiplies a variable, like 3 in 3x."
+                "A coefficient is a constant that multiplies a variable, like 3 in 3x.\n"
+                "In 3x + 5, x is the variable while 3 and 5 are constants."
             ),
         },
         examples={
@@ -133,8 +135,7 @@ algebra_core_subtopics: list[SubTopic] = [
                 "Penjumlahan: 3x + 2x = 5x",
                 "Pengurangan: 7y − 3y = 4y",
                 "",
-                "Perkalian: (x + 2)(x + 3)",
-                "  = x² + 5x + 6",
+                "Perkalian: (x + 2)(x + 3) = x² + 5x + 6",
                 "",
                 "Pembagian: (6x²)/(2x) = 3x",
             ],
@@ -142,8 +143,7 @@ algebra_core_subtopics: list[SubTopic] = [
                 "Addition: 3x + 2x = 5x",
                 "Subtraction: 7y − 3y = 4y",
                 "",
-                "Multiplication: (x + 2)(x + 3)",
-                "  = x² + 5x + 6",
+                "Multiplication: (x + 2)(x + 3) = x² + 5x + 6",
                 "",
                 "Division: (6x²)/(2x) = 3x",
             ],
@@ -164,12 +164,14 @@ algebra_core_subtopics: list[SubTopic] = [
             "id": (
                 "Faktorisasi adalah kebalikan dari perkalian — mengembalikan ekspresi ke faktor-faktornya.\n"
                 "x² + 5x + 6 = (x + 2)(x + 3) — cari dua bilangan yang hasil kalinya 6 dan jumlahnya 5.\n"
-                "Faktor persekutuan: 6x² + 9x = 3x(2x + 3) — keluarkan faktor yang sama dari setiap suku."
+                "Faktor persekutuan: 6x² + 9x = 3x(2x + 3) — keluarkan faktor yang sama dari setiap suku.\n"
+                "Setelah difaktorkan, kita dapatkan perkalian dua faktor yang lebih sederhana."
             ),
             "en": (
                 "Factoring is the reverse of multiplication — breaking an expression into its factors.\n"
                 "x² + 5x + 6 = (x + 2)(x + 3) — find two numbers whose product is 6 and sum is 5.\n"
-                "Common factor: 6x² + 9x = 3x(2x + 3) — factor out the common term from each term."
+                "Common factor: 6x² + 9x = 3x(2x + 3) — factor out the common term from each term.\n"
+                "After factoring, we obtain a product of two simpler expressions."
             ),
         },
         examples={

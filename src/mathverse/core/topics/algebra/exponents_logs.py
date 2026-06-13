@@ -20,24 +20,32 @@ algebra_exponents_subtopics: list[SubTopic] = [
         },
         explanation={
             "id": (
-                "Eksponen: x\u00b2 = x \u00d7 x, dibaca x kuadrat.\n"
-                "Eksponen: x\u00b3 = x \u00d7 x \u00d7 x, dibaca x pangkat tiga.\n"
-                "Bilangan apa pun pangkat 0 sama dengan 1: x\u2070 = 1.\n"
-                "Eksponen negatif berarti kebalikan: 2\u207b\u00b9 = \u00bd.\n"
-                "Logaritma: log\u2082(8) = 3 karena 2\u00b3 = 8.\n"
-                "Logaritma: log\u2081\u2080(1000) = 3 karena 10\u00b3 = 1000.\n"
-                "Logaritma: log\u2083(9) = 2 karena 3\u00b2 = 9.\n"
-                "Secara umum: log\u2090(b) = c \u2194 a\u1d9c = b."
+                "Berikut contoh-contoh eksponen.\n"
+                "x\u00b2 dibaca x kuadrat — x dikalikan dengan dirinya sendiri sebanyak 2 kali.\n"
+                "x\u00b3 dibaca x pangkat tiga — x dikalikan dengan dirinya sendiri sebanyak 3 kali.\n"
+                "2\u00b3 = 2 \u00d7 2 \u00d7 2 = 8 — contoh perhitungan eksponen.\n"
+                "5\u00b2 = 5 \u00d7 5 = 25 — contoh lain perhitungan eksponen.\n"
+                "Bilangan apa pun pangkat 0 sama dengan 1: 10\u2070 = 1.\n"
+                "Eksponen negatif berarti kebalikan: 2\u207b\u00b9 = 1/2 = 0,5.\n"
+                "Berikut contoh-contoh logaritma.\n"
+                "log\u2082(8) = 3 karena 2\u00b3 = 8 — logaritma adalah kebalikan eksponen.\n"
+                "log\u2081\u2080(1000) = 3 karena 10\u00b3 = 1000.\n"
+                "log\u2083(9) = 2 karena 3\u00b2 = 9.\n"
+                "log\u2085(25) = 2 karena 5\u00b2 = 25 — pola yang sama."
             ),
             "en": (
-                "Exponent: x\u00b2 = x \u00d7 x, read as x squared.\n"
-                "Exponent: x\u00b3 = x \u00d7 x \u00d7 x, read as x cubed.\n"
-                "Any number to the power of 0 equals 1: x\u2070 = 1.\n"
-                "Negative exponent means reciprocal: 2\u207b\u00b9 = \u00bd.\n"
-                "Logarithm: log\u2082(8) = 3 because 2\u00b3 = 8.\n"
-                "Logarithm: log\u2081\u2080(1000) = 3 because 10\u00b3 = 1000.\n"
-                "Logarithm: log\u2083(9) = 2 because 3\u00b2 = 9.\n"
-                "In general: log\u2090(b) = c \u2194 a\u1d9c = b."
+                "Here are examples of exponents.\n"
+                "x\u00b2 is read as x squared — x multiplied by itself 2 times.\n"
+                "x\u00b3 is read as x cubed — x multiplied by itself 3 times.\n"
+                "2\u00b3 = 2 \u00d7 2 \u00d7 2 = 8 — a worked exponent calculation.\n"
+                "5\u00b2 = 5 \u00d7 5 = 25 — another worked exponent calculation.\n"
+                "Any number to the power of 0 equals 1: 10\u2070 = 1.\n"
+                "Negative exponent means reciprocal: 2\u207b\u00b9 = 1/2 = 0.5.\n"
+                "Here are examples of logarithms.\n"
+                "log\u2082(8) = 3 because 2\u00b3 = 8 — a logarithm is the inverse of an exponent.\n"
+                "log\u2081\u2080(1000) = 3 because 10\u00b3 = 1000.\n"
+                "log\u2083(9) = 2 because 3\u00b2 = 9.\n"
+                "log\u2085(25) = 2 because 5\u00b2 = 25 — the same pattern."
             ),
         },
         examples={

@@ -228,7 +228,7 @@ def _render_content(
                 console.print(rt)
             else:
                 combined = f"{style} {bg_black}" if style else bg_black
-                console.print(text.ljust(tw), style=combined)
+                console.print(text.ljust(tw), style=combined, markup=False)
 
         console.print(" " * pad, style=bg_black, end="")
         console.print("┌" + "─" * (tw - 2 * pad - 2) + "┐", style=fg_green, end="")
@@ -252,7 +252,9 @@ def _render_content(
                 combined = f"{style} on #1a3a1a" if style else fg_green
                 console.print(" " * pad, style=bg_black, end="")
                 console.print("│", style=fg_green, end="")
-                console.print(text.ljust(tw - 2 * pad - 2), style=combined, end="")
+                console.print(
+                    text.ljust(tw - 2 * pad - 2), style=combined, end="", markup=False
+                )
                 console.print("│", style=fg_green, end="")
                 console.print(" " * pad, style=bg_black)
 
@@ -272,7 +274,7 @@ def _render_content(
                 rt.append(" " * (tw - len(text)))
                 console.print(rt)
             else:
-                console.print(text.ljust(tw), style=style)
+                console.print(text.ljust(tw), style=style, markup=False)
 
         used = top_pad + len(content)
         for _ in range(max(0, th - 1 - used)):

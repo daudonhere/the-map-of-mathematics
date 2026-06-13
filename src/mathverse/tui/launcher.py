@@ -139,7 +139,8 @@ def _render(
             console.print(rt)
         else:
             console.print(
-                text.ljust(tw), style=f"{style} {bg_black}" if style else bg_black
+                text.ljust(tw), style=f"{style} {bg_black}" if style else bg_black,
+                markup=False,
             )
 
     used = top_pad + len(content)

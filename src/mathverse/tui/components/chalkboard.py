@@ -8,6 +8,19 @@ from rich.text import Text
 from mathverse.tui.launcher import BANNER, BANNER_WIDTH
 
 
+def _wrap_text(text: str, width: int) -> list[str]:
+    lines: list[str] = []
+    for paragraph in text.split("\n"):
+        if not paragraph:
+            lines.append("")
+            continue
+        while len(paragraph) > width:
+            lines.append(paragraph[:width])
+            paragraph = paragraph[width:]
+        lines.append(paragraph)
+    return lines
+
+
 def _render_content(
     console: Console,
     tw: int,
@@ -18,7 +31,7 @@ def _render_content(
     chalkboard: bool = False,
     header_count: int = 8,
 ) -> None:
-    sys.stdout.write("\x1b[H")
+    sys.stdout.write("\x1b[2J\x1b[H")
     top_pad = 3
     max_content = max(1, th - 1 - top_pad)
 
@@ -60,7 +73,7 @@ def _render_content(
                 console.print(rt)
             else:
                 combined = f"{style} {bg_black}" if style else bg_black
-                console.print(text.ljust(tw), style=combined)
+                console.print(text.ljust(tw), style=combined, markup=False)
 
         console.print(" " * pad, style=bg_black, end="")
         console.print("┌" + "─" * (tw - 2 * pad - 2) + "┐", style=fg_green, end="")
@@ -82,17 +95,26 @@ def _render_content(
                 console.print(" " * pad, style=bg_black)
             else:
                 combined = f"{style} on #1a3a1a" if style else fg_green
-                console.print(" " * pad, style=bg_black, end="")
-                console.print("│", style=fg_green, end="")
-                console.print(text.ljust(tw - 2 * pad - 2), style=combined, end="")
-                console.print("│", style=fg_green, end="")
-                console.print(" " * pad, style=bg_black)
+                inner_w = tw - 2 * pad - 2
+                for segment in _wrap_text(text, inner_w):
+                    console.print(" " * pad, style=bg_black, end="")
+                    console.print("│", style=fg_green, end="")
+                    console.print(segment.ljust(inner_w), style=combined, end="", markup=False)
+                    console.print("│", style=fg_green, end="")
+                    console.print(" " * pad, style=bg_black)
 
         console.print(" " * pad, style=bg_black, end="")
         console.print("└" + "─" * (tw - 2 * pad - 2) + "┘", style=fg_green, end="")
         console.print(" " * pad, style=bg_black)
 
-        used = top_pad + len(content) + 2
+        inner_w = tw - 2 * pad - 2
+        visual_lines = top_pad
+        for i, (txt, sty) in enumerate(content):
+            if i < hc or txt is None or sty == "reverse":
+                visual_lines += 1
+            else:
+                visual_lines += len(_wrap_text(txt, inner_w))
+        used = visual_lines + 2
         for _ in range(max(0, th - 1 - used)):
             console.print(" " * tw, style=bg_black)
     else:
@@ -104,7 +126,7 @@ def _render_content(
                 rt.append(" " * (tw - len(text)))
                 console.print(rt)
             else:
-                console.print(text.ljust(tw), style=style)
+                console.print(text.ljust(tw), style=style, markup=False)
 
         used = top_pad + len(content)
         for _ in range(max(0, th - 1 - used)):
@@ -158,7 +180,8 @@ def _build_playground_content(
     if feedback:
         user_answer, correct_answer, is_correct = feedback
         content_lines.append(("Question:" if locale == "en" else "Soal:", "bold"))
-        content_lines.append((question, None))
+        for qline in question.split("\n"):
+            content_lines.append((qline, None))
         content_lines.append((None, None))
         content_lines.append(
             (
@@ -191,7 +214,8 @@ def _build_playground_content(
         content_lines.append((result_word + " " * spaces + hint, "bold"))
     else:
         content_lines.append(("Question:" if locale == "en" else "Soal:", "bold"))
-        content_lines.append((question, None))
+        for qline in question.split("\n"):
+            content_lines.append((qline, None))
         content_lines.append((None, None))
         content_lines.append((">> ", None))
         content_lines.append((None, None))

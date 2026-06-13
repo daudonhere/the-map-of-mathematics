@@ -9,6 +9,7 @@ from mathverse.core.quiz import gen_question
 from mathverse.tui.components.chalkboard import (
     _build_playground_content,
     _render_content,
+    _wrap_text,
 )
 from mathverse.tui.components.input import _read_input_at_cursor, _read_key
 from mathverse.tui.launcher import BANNER_WIDTH
@@ -59,10 +60,18 @@ def _playground(
         )
 
         fd2 = sys.stdin.fileno()
+        hc = 9 if tw >= BANNER_WIDTH else 0
         prompt_idx = next(i for i, (t, _) in enumerate(content_lines) if t == ">> ")
-        target_line = 5 + prompt_idx
-        lines_up = th - target_line
         pad = max(2, tw // 20)
+        inner_w = tw - 2 * pad - 2
+        visual_body = 0
+        for text, _ in content_lines[hc:prompt_idx]:
+            if text is None:
+                visual_body += 1
+            else:
+                visual_body += len(_wrap_text(text, inner_w))
+        target_line = 3 + hc + 1 + visual_body
+        lines_up = th - 1 - target_line
         if lines_up > 0:
             sys.stdout.write(f"\x1b[{lines_up}A\x1b[{pad + 5}G")
             sys.stdout.flush()

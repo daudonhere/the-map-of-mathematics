@@ -20,6 +20,10 @@ pytest tests/test_core/   # single package
 pip install -e ".[dev]"   # install with dev deps
 ```
 
+## Workflow
+
+`code → test → fix → commit`. Always run `ruff check .` and `pytest tests/ -v` after every change and before committing. Fix all lint errors and test failures before committing. **Never `git push` unless explicitly instructed.**
+
 ## Style
 
 - `from __future__ import annotations` in every file.
@@ -29,7 +33,7 @@ pip install -e ".[dev]"   # install with dev deps
 - `pathlib.Path` for filesystem ops.
 - Ruff rules: `select = ["E", "F", "I", "N", "W", "UP", "B", "SIM", "ARG", "RUF"]`.
 - STIX Two Text OTF fonts bundled in `gui/fonts/` for scientific typesetting - loaded via `QFontDatabase`.
-- **Never `git add` or `git commit` or `git push` unless the user explicitly says so.**
+- **Never `git push` unless explicitly instructed.**
 
 ## Testing
 
