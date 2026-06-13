@@ -511,9 +511,6 @@ def _build_playground_content(
                 "bold green" if is_correct else "bold red",
             )
         )
-        content_lines.append((None, None))
-        score_fb = f"Score: {correct}/{total} correct" if locale == "en" else f"Nilai: {correct}/{total} benar"
-        content_lines.append((score_fb, None))
     else:
         content_lines.append(
             ("Question:" if locale == "en" else "Soal:", "bold yellow")
