@@ -50,6 +50,16 @@ pip install -e ".[dev]"   # install with dev deps
 - Typer `CliRunner` not used in tests yet.
 - Kivy tests would need `kivy.clock` + mocking (not yet implemented).
 
+## Chalkboard Theme
+
+- **Launcher**: Black background (`on #000000`) everywhere — no chalkboard.
+- **Browser & Topic screens**: Three visual areas:
+  - **Header** (banner + subtitle): Black background
+  - **Content** (concept list, detail, examples, playground): Green chalkboard background (`on #2d5a27`) with full-width horizontal `─` border lines at top and bottom of the content area
+  - **Footer** (keybar + credit): Black background
+- `_render_content()` in both `browser.py` and `topic_screen.py` accepts `chalkboard: bool` and `header_count: int` parameters. `header_count=8` when the MATHVERSE banner is visible (6 banner lines + blank + subtitle + blank), `header_count=0` when terminal is too narrow.
+- `_render_detail` in browser.py has no banner, so `header_count=0` — the entire content area gets green chalkboard.
+
 ## Launcher Details (`src/mathverse/tui/launcher.py`)
 
 ### Key handling
@@ -91,6 +101,7 @@ blanks → description → subtitle → banner
 - Shown when Enter on a concept WITHOUT topic content but WITH related concepts.
 - Same keybar + credit footer.
 - Esc exits, Tab goes back to list.
+- No banner header — entire content gets green chalkboard background.
 
 ## Topic Screen (`src/mathverse/tui/topic_screen.py`)
 

@@ -520,6 +520,8 @@ def _playground(console: Console, playground: str, locale: str, title: str = "")
         _render_content(
             console, tw, th, content_lines,
             "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit",
+            chalkboard=True,
+            header_count=8 if tw >= BANNER_WIDTH else 0,
         )
 
         fd2 = sys.stdin.fileno()
@@ -552,6 +554,8 @@ def _playground(console: Console, playground: str, locale: str, title: str = "")
         _render_content(
             console, tw, th, content_lines,
             "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit",
+            chalkboard=True,
+            header_count=8 if tw >= BANNER_WIDTH else 0,
         )
 
         while True:
@@ -668,6 +672,8 @@ def _render_list(
         th,
         content_lines,
         "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit",
+        chalkboard=True,
+        header_count=8 if tw >= BANNER_WIDTH else 0,
     )
 
 
@@ -736,7 +742,11 @@ def _render_detail(
         )
 
     keybar = "\u2191 Up   \u2193 Down   \u21b5 Enter   \u21b9 Back   Esc Exit"
-    _render_content(console, tw, th, content_lines, keybar)
+    _render_content(
+        console, tw, th, content_lines, keybar,
+        chalkboard=True,
+        header_count=8 if tw >= BANNER_WIDTH else 0,
+    )
 
 
 def _render_content(
@@ -745,6 +755,9 @@ def _render_content(
     th: int,
     content: list[tuple[str | None, str | None]],
     keybar_line: str,
+    *,
+    chalkboard: bool = False,
+    header_count: int = 8,
 ) -> None:
     sys.stdout.write("\x1b[2J\x1b[H")
     top_pad = 3
@@ -768,25 +781,60 @@ def _render_content(
         if len(content) > max_content:
             content = [(x, y) for x, y in content if y != "bold cyan"]
 
+    bg_black = "on #000000"
+    bg_green = "on #2d5a27"
+
     for _ in range(min(top_pad, th - 1)):
-        console.print(" " * tw)
+        console.print(" " * tw, style=bg_black)
 
-    for text, style in content:
-        if text is None:
+    if chalkboard:
+        hc = min(header_count, len(content))
+        for text, style in content[:hc]:
+            if text is None:
+                console.print(" " * tw, style=bg_black)
+            elif style == "reverse":
+                rt = Text(text, style="reverse")
+                rt.append(" " * (tw - len(text)), style=bg_black)
+                console.print(rt)
+            else:
+                combined = f"{style} {bg_black}" if style else bg_black
+                console.print(text.ljust(tw), style=combined)
+
+        console.print("\u2500" * tw, style=bg_green)
+
+        for text, style in content[hc:]:
+            if text is None:
+                console.print(" " * tw, style=bg_green)
+            elif style == "reverse":
+                rt = Text(text, style="reverse")
+                rt.append(" " * (tw - len(text)), style=bg_green)
+                console.print(rt)
+            else:
+                combined = f"{style} {bg_green}" if style else bg_green
+                console.print(text.ljust(tw), style=combined)
+
+        console.print("\u2500" * tw, style=bg_green)
+
+        used = top_pad + len(content) + 2
+        for _ in range(max(0, th - 1 - used)):
+            console.print(" " * tw, style=bg_black)
+    else:
+        for text, style in content:
+            if text is None:
+                console.print(" " * tw)
+            elif style == "reverse":
+                rt = Text(text, style="reverse")
+                rt.append(" " * (tw - len(text)))
+                console.print(rt)
+            else:
+                console.print(text.ljust(tw), style=style)
+
+        used = top_pad + len(content)
+        for _ in range(max(0, th - 1 - used)):
             console.print(" " * tw)
-        elif style == "reverse":
-            rt = Text(text, style="reverse")
-            rt.append(" " * (tw - len(text)))
-            console.print(rt)
-        else:
-            console.print(text.ljust(tw), style=style)
-
-    used = top_pad + len(content)
-    for _ in range(max(0, th - 1 - used)):
-        console.print(" " * tw)
 
     credit = "\u24b8 D. Daud Yusup"
     gap = tw - len(keybar_line) - len(credit) - 1
     if gap >= 0:
         keybar_line = keybar_line + " " * gap + credit
-    console.print(keybar_line.ljust(tw), end="")
+    console.print(keybar_line.ljust(tw), style=bg_black, end="")
