@@ -4,8 +4,6 @@ from mathverse.core.models import MathConcept
 
 
 class Repository:
-    """Data access layer untuk matematika concepts."""
-
     def __init__(self) -> None:
         self._concepts: dict[str, MathConcept] = {}
 

@@ -4,8 +4,6 @@ from mathverse.core.models import GraphData, MathConcept
 
 
 class GraphBuilder:
-    """Membangun graph data dari konsep matematika."""
-
     def __init__(self) -> None:
         self._nodes: dict[str, MathConcept] = {}
         self._edges: list[tuple[str, str]] = []

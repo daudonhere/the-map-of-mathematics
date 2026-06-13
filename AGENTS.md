@@ -10,26 +10,12 @@
 
 Routing in `src/mathverse/__main__.py`: extracts `--lang en|id`, dispatches to launcher. After launcher, loops: browser returns `"back"` → re-enter launcher; browser returns `None` → exit.
 
-## Architecture
-
-- `core/` = domain logic (models, repository, service, graph builder). MUST NOT import from `cli/` or `gui/`.
-- `cli/` and `gui/` both depend on `core/` only.
-- `core/seed.py` populates the in-memory `Repository` with 28 `MathConcept` entries (14 EN + 14 ID, each with `locale: "en"` or `"id"`). `seed_repo()` calls both `seed_repo_en()` and `seed_repo_id()`.
-- `core/i18n.py` provides bilingual UI labels (`t(key, locale) -> str`). `MapService._()` shortcut method uses current locale.
-- `.gitignore` lists `AGENTS.md` itself - changes to this file won't appear in `git diff` unless staged manually.
-- `cli/commands/` contains Typer functions (`explore_cmd`, `search_cmd`, `visualize_cmd`) but no Typer app registers them - they are callable directly but not reachable from `python -m mathverse`.
-
-## Quirks & Discrepancies
-
-- `src/mathverse/app.py` does **not exist** (listed in old docs; the file was never created).
-- `tests/test_cli/` and `tests/test_gui/` have only `__init__.py` - actual tests exist only under `tests/test_core/`.
-
 ## Dev Commands
 
 ```bash
 ruff check .              # lint
 ruff format .             # format
-pytest tests/ -v          # run all tests (only test_core/ has tests)
+pytest tests/ -v          # run all tests
 pytest tests/test_core/   # single package
 pip install -e ".[dev]"   # install with dev deps
 ```
@@ -47,9 +33,9 @@ pip install -e ".[dev]"   # install with dev deps
 
 ## Testing
 
+- `tests/test_core/` (18 tests), `tests/test_cli/` (6 tests), `tests/test_gui/` (22 tests) — total 46.
 - `conftest.py` provides `sample_repo` fixture (4 concepts with relations).
-- Typer `CliRunner` not used in tests yet.
-- Kivy tests would need `kivy.clock` + mocking (not yet implemented).
+- CLI tests use Typer `CliRunner` + `unittest.mock.patch`.
 
 ## Chalkboard Theme
 
@@ -58,7 +44,7 @@ pip install -e ".[dev]"   # install with dev deps
   - **Header** (banner + subtitle): Black background
   - **Content** (concept list, detail, examples, playground): Dark green chalkboard background (`on #1a3a1a`) enclosed in a box with `┌─┐` top border, `│` side walls, and `└─┘` bottom border. Side padding (`pad = max(2, tw // 20)`) outside the box walls keeps green area from touching terminal edges. Default text is white; styled text uses bright colors (`bold cyan`, `bold yellow`, etc.) on the green background.
   - **Footer** (keybar + credit): Black background
-- `chalkboard: bool` and `header_count: int` parameters. `header_count=8` when the MATHVERSE banner is visible (6 banner lines + blank + subtitle + blank), `header_count=0` when terminal is too narrow.
+- `chalkboard: bool` and `header_count: int` parameters. `header_count=9` when the MATHVERSE banner is visible (6 banner lines + blank + subtitle + blank + blank), `header_count=0` when terminal is too narrow.
 - `_render_detail` in browser.py has no banner, so `header_count=0` — the entire content area gets green chalkboard.
 
 ## Launcher Details (`src/mathverse/tui/launcher.py`)
@@ -68,7 +54,7 @@ pip install -e ".[dev]"   # install with dev deps
 - Cursor hidden at launcher start via `\x1b[?25l`, restored in `finally`.
 
 ### Rendering
-- `_render()` uses `\x1b[2J\x1b[H` (clear + home) each frame.
+- `_render()` uses `\x1b[2J\x1b[H` (clear + home) each frame. Signature: `_render(console, items, current)` — `locale` and `lang_menu` params removed; "Select Language" text no longer rendered.
 - Each line is padded to full terminal width with `.ljust(tw)` or `" " * tw` for blanks to overwrite shell decorations.
 - Selection highlight (`"reverse"`) only covers the text content (via `rich.text.Text`), not the full line or box walls.
 - Keymap bar at bottom line (`end=""` to avoid scroll). Credit `Ⓒ D. Daud Yusup` appended right-aligned on keybar line.
@@ -127,7 +113,7 @@ List (↑↓ arrows) → Enter → Detail view → Enter → Playground. Esc exi
 - **Input**: `_read_input_at_cursor()` — reads at pre-positioned cursor, clears/rewrites the `">> "` line each keystroke.
 - **Score tracking**: correct/total, right-aligned on same line as subtopic title (left-aligned).
 - **Feedback**: Shows user answer, correct answer, CORRECT!/WRONG — press Enter to continue, Esc/Tab to exit.
-- `_read_input()` legacy for playground mode (not used in current playground; `_read_input_at_cursor` used instead).
+- `_read_input()` not used in current playground; `_read_input_at_cursor` used instead.
 
 ### Esc behavior — ALL screens
 | Screen | Esc | Tab |
@@ -140,13 +126,27 @@ List (↑↓ arrows) → Enter → Detail view → Enter → Playground. Esc exi
 | Playground input | Exit app | Back to topic |
 | Playground feedback | Exit app | Back to topic |
 
-### Identity Playgrounds (`_playground_identity` in `topic_screen.py`)
+### Identity Playgrounds (`_playground_identity` in `tui/playgrounds/identity.py`)
 - Two phases: **Exploration** (input a/b, see chart) → **Quiz** (answer questions, no chart).
 - Exploration: user enters a/b values (or Enter for random), Tab goes back, Esc exits.
 - Chart: proportional box-diagram with `▓░▒` shading, compact (max 30 cells total), labels on outside (side + top).
 - `_build_identity_chart_lines()`: compact proportional chart with Unicode shade fill + box-drawing borders.
 - `_read_value_chalkboard(fd, tw, label)`: inline chalkboard input with ANSI backgrounds.
 - All playground input functions (`_read_input_at_cursor`, `_read_value_chalkboard`): show cursor (`?25h`) before input, hide (`?25l`) after via `finally`.
+
+### Quadratic Playground (`_playground_quadratic` in `tui/playgrounds/quadratic.py`)
+- Two phases: **Exploration** (enter a/b/c, see chart) → **Quiz** (solve for one root).
+- Chart: 2-char columns, 11 rows, box-drawing border (`┌┐│└┘`), coordinate axes (`──` x-axis, `││` y-axis, `┼┼` origin), curve shown as `**`, y-labels at left edge, x-labels below. Centered in chalkboard via `left_pad`.
+- Random values generated immediately and displayed as actual numbers (not `(random)`).
+- Quiz: generates integer-root quadratics via x1×x2 approach, bilingual EN/ID.
+
+### Linear Chart Playground (`_playground_functions` in `tui/playgrounds/functions.py`)
+- Same chart design as quadratic: 2-char columns, axes, border, centered.
+- Exploration: enter slope m and intercept b, see line chart.
+- Quiz: evaluate f(x) = mx + b at given x, score tracking.
+
+### Exponents & Logarithms Playground (`_playground_exponents_logs` in `tui/playgrounds/exponents_logs.py`)
+- Quiz-only (no chart): randomly mixes exponent questions (`2³ = ?`) and logarithm questions (`log₂(8) = ?`) with Unicode superscripts/subscripts.
 
 ### Playground input helpers
 - `_read_input_at_cursor(fd, tw)`: reads input at `>> ` prompt with line redraw + cursor show/hide.
@@ -157,14 +157,18 @@ List (↑↓ arrows) → Enter → Detail view → Enter → Playground. Esc exi
 ### Content (`src/mathverse/core/content.py`)
 - `SubTopic` dataclass: `title` (dict[str,str]), `description` (dict[str,str]), `explanation` (dict[str,str]), `examples` (dict[str,list[str]]), `playground` (str | None).
 - `TopicContent` grouped by concept_id via `get_content()`.
-- Currently populated: Arithmetic (9 sub-topics), Algebra (6 sub-topics: Variables & Constants, Algebraic Forms, Algebraic Operations, Factoring, Perfect Square Identity, Difference of Two Squares).
+- Currently populated: Arithmetic (9 sub-topics), Algebra (11 sub-topics: Variables & Constants, Algebraic Forms, Algebraic Operations, Factoring, Perfect Square Identity, Difference of Two Squares, Linear Equations, Systems of Linear Equations, Quadratic Equations, Functions, Exponents and Logarithms).
 - Registered under both EN and ID concept IDs (e.g. `"algebra"` and `"aljabar"` share same subtopic list).
-- Playground IDs: `basic_ops`, `powers`, `mental_math`, `properties`, `number_types`, `factors`, `ratios`, `percentages`, `number_theory`, `variables`, `algebraic_forms`, `algebraic_ops`, `factoring`, `perfect_square`, `diff_squares`. See `_gen_question()` in topic_screen.py for implementations.
+- Playground IDs: `basic_ops`, `powers`, `mental_math`, `properties`, `number_types`, `factors`, `ratios`, `percentages`, `number_theory`, `variables`, `algebraic_forms`, `algebraic_ops`, `factoring`, `perfect_square`, `diff_squares`, `linear_equations`, `systems_of_equations`, `quadratic`, `functions`, `exponents_logs`. See `_gen_question()` handlers in `core/topics/{topic}.py`.
 - `# ruff: noqa: RUF001` for math symbols (×, −, etc.).
 
-## Content Pattern — Arithmetic Template
+## Topic Content
 
-Use this exact pattern when adding new topics (Geometry, Trigonometry, etc.). Arithmetic is the reference.
+Only **Arithmetic** (9 subtopics) and **Algebra** (11 subtopics) have content. All other concepts (`linear-algebra`, `abstract-algebra`, `boolean-algebra`, `computer-algebra`, `euclidean-geometry`, `differential-geometry`, `trigonometry`, `calculus`, `discrete-mathematics`, `probability-statistics`, `real-analysis`, `complex-analysis`, `topology`, `number-theory`) have empty `subtopics=[]` stubs ready for content.
+
+## Content Pattern
+
+Use Arithmetic as the reference when adding new topics.
 
 ### Data Structure Per SubTopic
 
@@ -222,14 +226,86 @@ SubTopic(
 ### Registration
 
 ```python
-_my_topic_subtopics = [SubTopic(...), SubTopic(...), ...]  # 9 subtopics
-_reg("topic_en", _my_topic_subtopics)
-_reg("topic_id", _my_topic_subtopics)
+_reg("concept_en", subtopics_list)
+_reg("concept_id", subtopics_list)
 ```
-
-### Playground Registration
-
-In `topic_screen.py`, `_gen_question()` function's `if/elif` chain — add a new `elif pid == "new_id":` block returning `(question_text, correct_answer, max_value)`.
 
 ### Fonts
 - STIX Two Text OTF fonts in `gui/fonts/` for scientific typesetting, loaded via `QFontDatabase`.
+
+---
+
+## Architecture
+
+- `core/` = domain logic — MUST NOT import from `cli/` or `gui/`.
+- `cli/` and `gui/` both depend on `core/` only.
+- `core/seed.py` populates in-memory `Repository` with 36 `MathConcept` (18 EN + 18 ID).
+- `core/i18n.py` provides bilingual UI labels (`t(key, locale) -> str`).
+- `.gitignore` lists `AGENTS.md` — changes won't appear in `git diff` unless staged.
+- `cli/commands/` has Typer functions not wired to `__main__`.
+
+### Directory Layout
+
+```
+src/mathverse/
+├── core/
+│   ├── models.py              # MathConcept, SubTopic, TopicContent
+│   ├── service.py              # MapService
+│   ├── i18n.py                 # bilingual labels
+│   ├── seed.py                 # 36 concepts (18 EN + 18 ID)
+│   ├── quiz.py                 # gen_question() router → topic modules
+│   ├── content.py              # _reg() registry: concept_id → subtopics list
+│   └── topics/                 # per-topic modules (14 total)
+│       ├── arithmetic.py       # 9 subtopics + quiz handlers
+│       ├── algebra/            # 11 subtopics across 6 files
+│       ├── geometry.py         # euclidean-geometry + differential-geometry
+│       ├── trigonometry.py
+│       ├── calculus.py
+│       ├── analysis.py         # real-analysis + complex-analysis
+│       ├── topology.py
+│       ├── number_theory.py
+│       ├── probability.py
+│       ├── discrete.py
+│       ├── linear_algebra.py
+│       ├── abstract_algebra.py
+│       ├── boolean_algebra.py
+│       └── computer_algebra.py
+│
+├── tui/
+│   ├── components/             # rendering helpers (input, chalkboard, charts)
+│   ├── screens/                # launcher, browser, topic_screen (list/detail only)
+│   └── playgrounds/            # identity, quadratic, functions, exponents_logs
+│
+└── gui/
+    ├── main.py
+    ├── components/             # charts (QPainter)
+    └── screens/                # splash, home, explore, topic
+```
+
+### Data Flow
+
+```
+core/quiz.py
+  → gen_question(playground, locale) routes to correct topic module
+
+core/topics/{topic}.py
+  → exports: subtopics[], gen_question(playground, locale)
+
+core/content.py
+  → get_content(concept_id) returns TopicContent with subtopics
+
+tui/playgrounds/{topic}.py
+  → imports core/topics/ for chart data
+  → imports tui/components/charts for ANSI rendering
+  → imports tui/components/input for keyboard
+```
+
+### Rules for Adding a New Topic
+
+1. **`core/topics/{topic}.py`** — Create a new module exporting:
+   - `subtopics: list[SubTopic]` — SubTopic entries for the topic
+   - `gen_question(playground, locale) → (question, answer, max_val) | None` — quiz handler for this topic's playground IDs
+2. **Register subtopics** in `core/content.py`: add import and `_reg("en_id", list)` + `_reg("id_id", list)`.
+3. **Register quiz** in `core/quiz.py`: add import and add playground IDs to `_PLAYGROUND_MAP`.
+4. **Playground** (if has chart exploration): Create `tui/playgrounds/{topic}.py` with the playground controller function. Import chart builders from `tui/components/charts.py`. Update `tui/playgrounds/__init__.py` to import and dispatch.
+5. **Chart** (if has chart): Add `_build_{topic}_chart_lines()` to `tui/components/charts.py`. For GUI, add corresponding `QWidget` subclass in `gui/components/charts.py`.

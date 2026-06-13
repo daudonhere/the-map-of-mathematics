@@ -1,8 +1,5 @@
 from __future__ import annotations
 
-import math
-import random
-
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QDialog,
@@ -20,6 +17,7 @@ from PyQt6.QtWidgets import (
 )
 
 from mathverse.core.content import SubTopic, get_content
+from mathverse.core.quiz import gen_question
 from mathverse.core.service import MapService
 
 
@@ -129,7 +127,7 @@ class PlaygroundDialog(QDialog):
         self.setLayout(layout)
 
     def _next_question(self) -> None:
-        self.question, self.answer_str, _ = _gen_question(self.playground)
+        self.question, self.answer_str, _ = gen_question(self.playground, self.locale)
         self.question_label.setText(self.question)
         self.answer_input.clear()
         self.answer_input.setEnabled(True)
@@ -180,317 +178,6 @@ class PlaygroundDialog(QDialog):
             self.close()
         else:
             super().keyPressEvent(event)
-
-
-def _gen_question(playground: str) -> tuple[str, str, float]:
-    if playground == "basic_ops":
-        ops = [
-            ("+", lambda a, b: a + b),
-            ("\u2212", lambda a, b: a - b),
-            ("\u00d7", lambda a, b: a * b),
-        ]
-        op_sym, op_fn = random.choice(ops)
-        if op_sym == "\u00d7":
-            a = random.randint(2, 12)
-            b = random.randint(2, 12)
-        else:
-            a = random.randint(10, 99)
-            b = random.randint(1, 50)
-        if op_sym == "\u2212" and a < b:
-            a, b = b, a
-        ans = op_fn(a, b)
-        q = f"{a} {op_sym} {b} = ?"
-        return q, str(ans), ans
-
-    elif playground == "powers":
-        kind = random.choice(["square", "cube", "sqrt", "cbrt"])
-        if kind == "square":
-            n = random.randint(2, 15)
-            ans = n * n
-            return f"{n}\u00b2 = ?", str(ans), ans
-        elif kind == "cube":
-            n = random.randint(2, 6)
-            ans = n * n * n
-            return f"{n}\u00b3 = ?", str(ans), ans
-        elif kind == "sqrt":
-            n = random.randint(2, 12)
-            ans = n * n
-            return f"\u221a{ans} = ?", str(n), n
-        else:
-            n = random.randint(2, 4)
-            ans = n * n * n
-            return f"\u221b{ans} = ?", str(n), n
-
-    elif playground == "mental_math":
-        kind = random.choice(["comp", "double", "eleven", "near100"])
-        if kind == "comp":
-            a = random.randint(95, 99)
-            b = random.randint(10, 50)
-            ans = a + b
-            return f"{a} + {b} = ?", str(ans), ans
-        elif kind == "double":
-            a = random.choice([25, 35, 45, 55, 65])
-            b = random.choice([12, 14, 16, 18])
-            ans = a * b
-            return f"{a} \u00d7 {b} = ?", str(ans), ans
-        elif kind == "eleven":
-            a = random.randint(11, 99)
-            ans = a * 11
-            return f"{a} \u00d7 11 = ?", str(ans), ans
-        else:
-            a = random.randint(90, 99)
-            b = random.randint(90, 99)
-            ans = a * b
-            return f"{a} \u00d7 {b} = ?", str(ans), ans
-
-    elif playground == "properties":
-        props = [
-            ("commutative", lambda a, b: a + b == b + a),
-            ("commutative", lambda a, b: a * b == b * a),
-            ("associative", lambda a, b, c: (a + b) + c == a + (b + c)),
-            ("associative", lambda a, b, c: (a * b) * c == a * (b * c)),
-            ("distributive", lambda a, b, c: a * (b + c) == a * b + a * c),
-        ]
-        choice = random.choice(props)
-        if choice[0] in ("commutative",):
-            a = random.randint(3, 12)
-            b = random.randint(3, 12)
-            q = f"Property shown: {a} + {b} = {b} + {a}"
-            return q, choice[0], 0.0
-        elif choice[0] == "associative":
-            a = random.randint(2, 8)
-            b = random.randint(2, 8)
-            c = random.randint(2, 8)
-            q = f"Property shown: ({a} + {b}) + {c} = {a} + ({b} + {c})"
-            return q, choice[0], 0.0
-        elif choice[0] == "distributive":
-            a = random.randint(2, 6)
-            b = random.randint(2, 6)
-            c = random.randint(2, 6)
-            q = f"Property shown: {a} \u00d7 ({b} + {c}) = {a}\u00d7{b} + {a}\u00d7{c}"
-            return q, choice[0], 0.0
-
-    elif playground == "number_types":
-        kind = random.choice(["prime", "square", "even", "odd"])
-        if kind == "prime":
-            primes = [2, 3, 5, 7, 11, 13, 17, 19, 23]
-            compos = [4, 6, 8, 9, 10, 12, 14, 15, 16]
-            ans = "prime"
-            n = random.choice(primes)
-            distract = random.choice(compos)
-            if random.randint(0, 1):
-                q = f"Is {n} prime or composite?"
-                return q, ans, 0.0
-            else:
-                q = f"Is {distract} prime or composite?"
-                return q, "composite", 0.0
-        elif kind == "square":
-            sq = random.choice([1, 4, 9, 16, 25, 36, 49, 64, 81, 100])
-            q = f"Which number squared equals {sq}?"
-            ans = int(sq**0.5)
-            return q, str(ans), ans
-        elif kind == "even":
-            n = random.choice([2, 4, 6, 8, 10, 12, 14, 16, 18, 20])
-            q = f"Is {n} even or odd?"
-            return q, "even", 0.0
-        elif kind == "odd":
-            n = random.choice([1, 3, 5, 7, 9, 11, 13, 15, 17, 19])
-            q = f"Is {n} even or odd?"
-            return q, "odd", 0.0
-
-    elif playground == "factors":
-        pairs = [
-            (4, 6),
-            (6, 8),
-            (3, 4),
-            (5, 6),
-            (4, 5),
-            (6, 10),
-            (5, 7),
-            (8, 10),
-            (8, 12),
-            (12, 18),
-            (15, 25),
-            (6, 9),
-            (10, 15),
-            (14, 21),
-            (16, 24),
-            (9, 15),
-        ]
-        kind = random.choice(["gcf", "lcm"])
-        if kind == "gcf":
-            a, b = random.choice(pairs)
-            ans = math.gcd(a, b)
-            q = f"GCF of {a} and {b} = ?"
-            return q, str(ans), ans
-        else:
-            a, b = random.choice(pairs)
-            ans = a * b // math.gcd(a, b)
-            q = f"LCM of {a} and {b} = ?"
-            return q, str(ans), ans
-
-    elif playground == "ratios":
-        kind = random.choice(["simplify", "find_part"])
-        if kind == "simplify":
-            pairs = [(6, 8), (10, 15), (12, 18), (8, 12), (14, 21), (9, 12)]
-            a, b = random.choice(pairs)
-            g = math.gcd(a, b)
-            q = f"Simplify ratio {a}:{b} = ?"
-            ans = f"1:{b // g}" if g == a else f"{a // g}:{b // g}"
-            return q, ans, 0.0
-        else:
-            a, b = random.choice([(2, 3), (3, 5), (4, 7), (5, 8), (1, 4), (3, 7)])
-            total = random.choice([30, 40, 50, 60, 70, 80])
-            if (a + b) > total:
-                total = (a + b) * random.randint(2, 5)
-            part_b = total // (a + b) * b
-            q = f"Ratio {a}:{b}, total {total}. Value of larger part = ?"
-            return q, str(part_b), part_b
-
-    elif playground == "percentages":
-        kind = random.choice(["of", "of_rev", "change"])
-        if kind == "of":
-            pct = random.choice([10, 20, 25, 30, 40, 50, 60, 75])
-            num = random.choice([40, 60, 80, 100, 120, 200, 300])
-            ans = num * pct // 100
-            q = f"What is {pct}% of {num}?"
-            return q, str(ans), ans
-        elif kind == "of_rev":
-            ans = random.choice([10, 20, 25, 30, 40, 50])
-            num = random.choice([40, 60, 80, 100, 120, 200])
-            pct = num * ans // 100
-            q = f"{ans} is what percent of {num}?"
-            return q, str(pct), pct
-        else:
-            old = random.choice([40, 50, 60, 80, 100, 120])
-            new = old + random.choice([10, 15, 20, 25, 30])
-            change = (new - old) * 100 // old
-            q = f"Change from {old} to {new} = ?% increase"
-            return q, str(change), change
-
-    elif playground == "number_theory":
-        kind = random.choice(["mod", "digits", "factorial"])
-        if kind == "mod":
-            a = random.randint(10, 30)
-            b = random.choice([3, 4, 5, 6, 7, 8, 9])
-            ans = a % b
-            q = f"{a} mod {b} = ?"
-            return q, str(ans), ans
-        elif kind == "digits":
-            n = random.randint(100, 999)
-            s = sum(int(d) for d in str(n))
-            q = f"Sum of digits of {n} = ?"
-            return q, str(s), s
-        else:
-            n = random.choice([4, 5, 6, 7])
-            ans = math.factorial(n)
-            q = f"{n}! = ?"
-            return q, str(ans), ans
-
-    elif playground == "expressions":
-        a = random.randint(2, 8)
-        b = random.randint(1, 10)
-        x = random.randint(1, 6)
-        kind = random.choice(["linear", "quad"])
-        if kind == "linear":
-            ans = a * x + b
-            q = f"If x = {x}, evaluate {a}x + {b}"
-            return q, str(ans), ans
-        else:
-            c = random.randint(1, 5)
-            ans = a * x * x + b * x + c
-            q = f"If x = {x}, evaluate {a}x\u00b2 + {b}x + {c}"
-            return q, str(ans), ans
-
-    elif playground == "equations":
-        a = random.randint(2, 6)
-        b = random.choice([3, 5, 7, 9, 11, 13])
-        c = a * random.randint(3, 8) + b
-        ans = (c - b) // a
-        q = f"Solve: {a}x + {b} = {c}"
-        return q, str(ans), ans
-
-    elif playground == "systems":
-        pairs = [
-            ((2, 3), (1, -1)),
-            ((3, 5), (2, -3)),
-            ((2, -1), (1, 2)),
-            ((3, 2), (1, -1)),
-            ((4, 1), (1, -2)),
-        ]
-        (a, b), (d, e) = random.choice(pairs)
-        x = random.randint(2, 5)
-        y = random.randint(1, 4)
-        c1 = a * x + b * y
-        c2 = d * x + e * y
-        q = f"Solve:\n{a}x + {b}y = {c1}\n{d}x + {e}y = {c2}\nEnter x value"
-        return q, str(x), x
-
-    elif playground == "polynomials":
-        kind = random.choice(["eval", "add"])
-        if kind == "eval":
-            a = random.randint(1, 5)
-            b = random.randint(1, 6)
-            x = random.randint(1, 4)
-            ans = a * x + b
-            q = f"If P(x) = {a}x + {b}, find P({x})"
-            return q, str(ans), ans
-        else:
-            a, b = random.randint(1, 4), random.randint(1, 4)
-            c, d = random.randint(1, 4), random.randint(1, 4)
-            x = random.randint(1, 3)
-            ans = (a + c) * x + (b + d)
-            q = f"({a}x + {b}) + ({c}x + {d}) at x={x} = ?"
-            return q, str(ans), ans
-
-    elif playground == "factoring":
-        pairs = [(2, 3), (3, 5), (2, 5), (3, 4), (2, 7), (3, 2), (4, 3), (5, 2)]
-        a, b = random.choice(pairs)
-        c = a * b
-        d = a + b
-        q = f"One factor of x\u00b2 + {d}x + {c} is (x + {a}). What is the other?"
-        return q, str(b), b
-
-    elif playground == "quadratics":
-        roots = [(2, 3), (3, 5), (2, 5), (1, 4), (3, 2), (4, 3), (2, 7), (3, 7)]
-        r1, r2 = random.choice(roots)
-        ans = r1 if random.randint(0, 1) else r2
-        q = f"Solve (x - {r1})(x - {r2}) = 0. Give one root."
-        return q, str(ans), ans
-
-    elif playground == "functions":
-        a = random.randint(1, 5)
-        b = random.randint(1, 10)
-        x = random.randint(1, 6)
-        ans = a * x + b
-        q = f"If f(x) = {a}x + {b}, find f({x})"
-        return q, str(ans), ans
-
-    elif playground == "inequalities":
-        a = random.randint(2, 5)
-        b = random.randint(1, 5)
-        c = a * random.randint(3, 8) + b
-        ans = (c - b) // a
-        q = f"Solve: {a}x + {b} > {c}. Enter smallest integer solution."
-        return q, str(ans + 1), ans + 1
-
-    elif playground == "exponents_logs":
-        kind = random.choice(["exp", "log"])
-        if kind == "exp":
-            base = random.choice([2, 3, 4, 5])
-            exp = random.choice([2, 3, 4])
-            ans = base**exp
-            q = f"Evaluate: {base}^{exp} = ?"
-            return q, str(ans), ans
-        else:
-            base = random.choice([2, 3, 4, 5])
-            exp = random.choice([2, 3, 4])
-            val = base**exp
-            q = f"log_{base}({val}) = ?"
-            ans = exp
-            return q, str(ans), ans
-
-    return ("?", "0", 0.0)
 
 
 class TopicScreen(QWidget):
@@ -544,7 +231,6 @@ class TopicScreen(QWidget):
 
         self.stack = QStackedWidget()
 
-        # Page 0: List view
         self.list_page = QWidget()
         list_layout = QVBoxLayout()
         list_layout.setContentsMargins(0, 0, 0, 0)
@@ -593,7 +279,6 @@ class TopicScreen(QWidget):
         self.list_page.setLayout(list_layout)
         self.stack.addWidget(self.list_page)
 
-        # Page 1: Detail view
         self.detail_page = QWidget()
         detail_layout = QVBoxLayout()
         detail_layout.setContentsMargins(0, 0, 0, 0)
