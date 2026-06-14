@@ -9,3 +9,4 @@ dist/
 build/
 .kivy/
 AGENTS.md
+.superdesign/

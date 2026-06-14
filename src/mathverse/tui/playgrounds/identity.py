@@ -45,9 +45,15 @@ def _playground_identity(
         expl_lines.append(("Playground", "bold"))
         expl_lines.append((None, None))
         fmt = (
-            _("(a+b)\u00b2 = a\u00b2 + 2ab + b\u00b2", "(a+b)\u00b2 = a\u00b2 + 2ab + b\u00b2")
+            _(
+                "(a+b)\u00b2 = a\u00b2 + 2ab + b\u00b2",
+                "(a+b)\u00b2 = a\u00b2 + 2ab + b\u00b2",
+            )
             if playground == "perfect_square"
-            else _("a\u00b2 \u2212 b\u00b2 = (a\u2212b)(a+b)", "a\u00b2 \u2212 b\u00b2 = (a\u2212b)(a+b)")
+            else _(
+                "a\u00b2 \u2212 b\u00b2 = (a\u2212b)(a+b)",
+                "a\u00b2 \u2212 b\u00b2 = (a\u2212b)(a+b)",
+            )
         )
         expl_lines.append((fmt, "bold"))
         expl_lines.append((None, None))
@@ -196,7 +202,9 @@ def _playground_identity(
             b = random.randint(1, a - 1)
             a2, b2 = a * a, b * b
             total_val = a2 - b2
-            question = _(f"{a}\u00b2 \u2212 {b}\u00b2 = ?", f"{a}\u00b2 \u2212 {b}\u00b2 = ?")
+            question = _(
+                f"{a}\u00b2 \u2212 {b}\u00b2 = ?", f"{a}\u00b2 \u2212 {b}\u00b2 = ?"
+            )
             answer_str = str(total_val)
 
         tw = shutil.get_terminal_size().columns

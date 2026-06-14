@@ -320,6 +320,13 @@ def _build_identity_chart_lines(
         content_lines.append((_(f"  a={a}, b={b}", f"  a={a}, b={b}"), None))
         content_lines.append((None, None))
 
+        diff_a = a - b
+        sum_a = a + b
+
+        top_label = (
+            side + sp + f"a={a}".center(cw + 1) + f"b={b}".center(rw + 2)
+        )
+        content_lines.append((top_label, "dim"))
         top = side + sp + "\u250c" + "\u2500" * cw + "\u252c" + "\u2500" * rw + "\u2510"
         content_lines.append((top, None))
         r1 = (
@@ -328,28 +335,31 @@ def _build_identity_chart_lines(
             + "\u2502"
             + shade_a2_l
             + "\u2502"
-            + shade_b2_r
+            + shade_ab_r
             + "\u2502"
         )
         content_lines.append((r1, None))
+        mid = side + sp + "\u251c" + "\u2500" * cw + "\u253c" + "\u2500" * rw + "\u2524"
+        content_lines.append((mid, None))
+        r2 = (
+            side
+            + "\u2212b".center(side_label_w)
+            + "\u2502"
+            + shade_ab_l
+            + "\u2502"
+            + shade_b2_r
+            + "\u2502"
+        )
+        content_lines.append((r2, None))
         bot = side + sp + "\u2514" + "\u2500" * cw + "\u2534" + "\u2500" * rw + "\u2518"
         content_lines.append((bot, None))
         content_lines.append((None, None))
 
-        diff_a = a - b
-        sum_a = a + b
-        content_lines.append(
-            (_(f"a² = {a}\u00d7{a} = {a2}", f"a² = {a}\u00d7{a} = {a2}"), None)
-        )
-        content_lines.append(
-            (_(f"b² = {b}\u00d7{b} = {b2}", f"b² = {b}\u00d7{b} = {b2}"), None)
-        )
-        content_lines.append((None, None))
         content_lines.append(
             (
                 _(
-                    f"a² − b² = {a2} − {b2} = {total}",
-                    f"a² − b² = {a2} − {b2} = {total}",
+                    f"a² = a\u00d7a = {a}\u00d7{a} = {a2}  |  ab = a\u00d7b = {a}\u00d7{b} = {ab}",
+                    f"a² = a\u00d7a = {a}\u00d7{a} = {a2}  |  ab = a\u00d7b = {a}\u00d7{b} = {ab}",
                 ),
                 None,
             )
@@ -357,8 +367,27 @@ def _build_identity_chart_lines(
         content_lines.append(
             (
                 _(
-                    f"= ({a}−{b})({a}+{b}) = {diff_a}\u00b7{sum_a} = {total}",
-                    f"= ({a}−{b})({a}+{b}) = {diff_a}\u00b7{sum_a} = {total}",
+                    f"\u2212ab = \u2212{ab}  |  \u2212b² = \u2212{b}\u00d7{b} = \u2212{b2}",
+                    f"\u2212ab = \u2212{ab}  |  \u2212b² = \u2212{b}\u00d7{b} = \u2212{b2}",
+                ),
+                None,
+            )
+        )
+        content_lines.append((None, None))
+        content_lines.append(
+            (
+                _(
+                    f"a² + ab \u2212 ab \u2212 b² = {a2} + {ab} \u2212 {ab} \u2212 {b2} = {total} \u2713",
+                    f"a² + ab \u2212 ab \u2212 b² = {a2} + {ab} \u2212 {ab} \u2212 {b2} = {total} \u2713",
+                ),
+                None,
+            )
+        )
+        content_lines.append(
+            (
+                _(
+                    f"= ({a}\u2212{b})({a}+{b}) = {diff_a}\u00b7{sum_a} = {total}",
+                    f"= ({a}\u2212{b})({a}+{b}) = {diff_a}\u00b7{sum_a} = {total}",
                 ),
                 "bold",
             )

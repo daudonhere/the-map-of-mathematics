@@ -72,63 +72,6 @@ algebra_identity_subtopics: list[SubTopic] = [
         explanation={
             "id": (
                 "x² − 25 adalah selisih dua kuadrat karena x² dan 25 adalah bilangan kuadrat.\n"
-                "Tulis 25 sebagai 5², sehingga bentuknya menjadi x² − 5².\n"
-                "Gunakan rumus a² − b² = (a−b)(a+b) dengan a=x, b=5.\n"
-                "Sekarang untuk 9a² − 16: 9a² = (3a)² dan 16 = 4².\n"
-                "Tulis sebagai (3a)² − 4², dengan a=3a, b=4.\n"
-                "Hasil faktorisasi: (3a − 4)(3a + 4)."
-            ),
-            "en": (
-                "x² − 25 is a difference of two squares because x² and 25 are square numbers.\n"
-                "Write 25 as 5², so the expression becomes x² − 5².\n"
-                "Apply the formula a² − b² = (a−b)(a+b) with a=x, b=5.\n"
-                "Now for 9a² − 16: 9a² = (3a)² and 16 = 4².\n"
-                "Write as (3a)² − 4², with a=3a, b=4.\n"
-                "Factored result: (3a − 4)(3a + 4)."
-            ),
-        },
-        examples={
-            "id": [
-                "x² − 25",
-                "  = x² − 5²",
-                "  = (x − 5)(x + 5)",
-                "",
-                "9a² − 16",
-                "  = (3a)² − 4²",
-                "  = (3a − 4)(3a + 4)",
-            ],
-            "en": [
-                "x² − 25",
-                "  = x² − 5²",
-                "  = (x − 5)(x + 5)",
-                "",
-                "9a² − 16",
-                "  = (3a)² − 4²",
-                "  = (3a − 4)(3a + 4)",
-            ],
-        },
-        playground="perfect_square",
-    ),
-    SubTopic(
-        title={
-            "id": "Identitas Selisih Dua Kuadrat",
-            "en": "Difference of Two Squares",
-        },
-        description={
-            "id": (
-                "Identitas selisih dua kuadrat menyatakan bahwa a² − b² = (a−b)(a+b). "
-                "Identitas ini berguna untuk memfaktorkan bentuk kuadrat yang merupakan "
-                "selisih dua bilangan kuadrat."
-            ),
-            "en": (
-                "The difference of two squares identity states that a² − b² = (a−b)(a+b). "
-                "This identity is useful for factoring quadratic forms that are the "
-                "difference of two squares."
-            ),
-        },
-        explanation={
-            "id": (
-                "x² − 25 adalah selisih dua kuadrat karena x² dan 25 adalah bilangan kuadrat.\n"
                 "Gunakan rumus a² − b² = (a−b)(a+b) dengan a=x, b=5.\n"
                 "Sekarang untuk 9a² − 16: 9a² = (3a)² dan 16 = 4².\n"
                 "Hasil faktorisasi: (3a − 4)(3a + 4)."
