@@ -69,7 +69,7 @@ def _render(
     sys.stdout.write("\x1b[H")
 
     bg_black = "on #000000"
-    content: list[tuple[str | None, str | None]] = []
+    content: list = []
 
     if tw >= BANNER_WIDTH:
         left_pad = max(0, (tw - BANNER_WIDTH) // 2)
@@ -87,31 +87,32 @@ def _render(
     box_w = inner_w + 4
     bx_pad = max(0, (tw - box_w) // 2)
 
-    box_top = " " * bx_pad + "\u250c" + "\u2500" * (inner_w + 2) + "\u2510"
-    content.append((box_top, "bold"))
+    content.append((" " * bx_pad + "┌" + "─" * (inner_w + 2) + "┐", "bold"))
 
     for i, item in enumerate(items):
         prefix = "> " if i == current else "  "
         item_str = prefix + item
         pad_r = inner_w - len(item_str)
+        rt = Text(" " * bx_pad, style=bg_black)
         if i == current:
-            rt = Text(" " * bx_pad + "\u2502 ", style=bg_black)
-            rt.append(item_str, style="reverse")
-            rt.append(" " * pad_r + " \u2502")
-            content.append((rt, None))
+            rt.append("│ ", style=bg_black)
+            rt.append(item_str + " " * pad_r, style="reverse")
+            rt.append(" │", style=bg_black)
         else:
-            line = " " * bx_pad + "\u2502 " + item_str.ljust(inner_w) + " \u2502"
-            content.append((line, None))
+            rt.append("│ ", style=bg_black)
+            rt.append(item_str + " " * pad_r, style=bg_black)
+            rt.append(" │", style=bg_black)
+        rt.append(" " * (tw - len(rt.plain)), style=bg_black)
+        content.append((rt, None))
 
-    box_bot = " " * bx_pad + "\u2514" + "\u2500" * (inner_w + 2) + "\u2518"
-    content.append((box_bot, "bold"))
+    content.append((" " * bx_pad + "└" + "─" * (inner_w + 2) + "┘", "bold"))
 
     keybar_line = _keybar(tw)
     top_pad = 3
     max_content = max(1, th - 1 - top_pad)
 
     if len(content) > max_content:
-        trimmed: list[tuple[str | None, str | None]] = []
+        trimmed: list = []
         for i, (txt, sty) in enumerate(content):
             is_blank = txt is None
             next_is_none = i + 1 >= len(content)
