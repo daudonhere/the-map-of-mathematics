@@ -1,4 +1,4 @@
-# The Map of Mathematics
+# MATHVERSE
 
 Interactive CLI, TUI, and desktop application for exploring mathematical concepts across 14 branches. Browse topics, read descriptions with examples, test your knowledge with playgrounds, and visualize connections between branches of mathematics.
 
